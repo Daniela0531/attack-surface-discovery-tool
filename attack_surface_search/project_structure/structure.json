@@ -17,12 +17,24 @@
                 {
                   "type": "METHOD",
                   "name": "LogicExecutor",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "executeActions",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "executingActionsQueue",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -41,68 +53,7 @@
             {
               "type": "CLASS",
               "name": "MapGenerator",
-              "children": [
-                {
-                  "type": "METHOD",
-                  "name": "loadLevelMap",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Random",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MapNode",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MapNode",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MapNode",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MapNode",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "LevelMap",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getLevelMap",
-                  "children": []
-                }
-              ]
+              "children": []
             }
           ]
         },
@@ -117,57 +68,13 @@
                 {
                   "type": "METHOD",
                   "name": "MapLoaderFromFile",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "loadLevelMap",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MapNode",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Scanner",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "RuntimeException",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MapNode",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "LevelMap",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getLevelMap",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "absoluteFilePath",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -190,7 +97,28 @@
                 {
                   "type": "METHOD",
                   "name": "LogicProperties",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tankMaxHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tankSpeed",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "bulletDamage",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "bulletSpeed",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -226,22 +154,38 @@
               "children": [
                 {
                   "type": "METHOD",
-                  "name": "TmxMapLoader",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "TmxMapLoader",
-                  "children": []
+                  "name": "GraphicProperties",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tiledMapImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tankTextureImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "treeTextureImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "bulletImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "healthBarDecorator",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "getBulletTexture",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Texture",
                   "children": []
                 },
                 {
@@ -251,27 +195,12 @@
                 },
                 {
                   "type": "METHOD",
-                  "name": "Texture",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
                   "name": "getTiledMap",
                   "children": []
                 },
                 {
                   "type": "METHOD",
-                  "name": "TmxMapLoader",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
                   "name": "getTreeTexture",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Texture",
                   "children": []
                 },
                 {
@@ -286,17 +215,7 @@
                 },
                 {
                   "type": "METHOD",
-                  "name": "TextureRegion",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
                   "name": "getTankRectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "createBoundingRectangle",
                   "children": []
                 },
                 {
@@ -306,17 +225,7 @@
                 },
                 {
                   "type": "METHOD",
-                  "name": "createBoundingRectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
                   "name": "getTreeTextureRegion",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "TextureRegion",
                   "children": []
                 },
                 {
@@ -341,12 +250,38 @@
             {
               "type": "METHOD",
               "name": "LevelMap",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "getNodes",
-              "children": []
+              "children": [
+                {
+                  "type": "ARGUMENT",
+                  "name": "nodesCoordinates",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "player",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "leftBound",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "rightBound",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "lowBound",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "upBound",
+                  "children": []
+                }
+              ]
             },
             {
               "type": "METHOD",
@@ -389,133 +324,7 @@
         {
           "type": "CLASS",
           "name": "GameConfiguration",
-          "children": [
-            {
-              "type": "METHOD",
-              "name": "MapGenerator",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "MapLoaderFromFile",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "mapLouder",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "MapGenerator",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "MapLoaderFromFile",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "graphicProperties",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "Color",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "Color",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "GraphicProperties",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "logicProperties",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "LogicProperties",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "healthBarDecorator",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "Color",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "Color",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "HealthBarDrower",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "batch",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "SpriteBatch",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "tiledMap",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "TiledMap",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "tiledMapTileLayer",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "TmxMapLoader",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "getSingleLayer",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "tileMovement",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "TmxMapLoader",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "TileMovement",
-              "children": []
-            }
-          ]
+          "children": []
         }
       ]
     },
@@ -539,112 +348,157 @@
                 {
                   "type": "METHOD",
                   "name": "createSingleLayerMapRenderer",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "OrthogonalTiledMapRenderer",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getSingleLayer",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "NoSuchElementException",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "IllegalArgumentException",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tiledMap",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "moveRectangleAtTileCenter",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileLayer",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileCoordinates",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "incrementedY",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "decrementedX",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "decrementedY",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "incrementedX",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "drawTextureRegionUnscaled",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "region",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rotation",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "createBoundingRectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Rectangle",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "region",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "continueProgress",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "clamp",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "previousProgress",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "deltaTime",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "speed",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "calculateTileCenter",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Rectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Vector2",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileLayer",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileCoordinates",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -661,7 +515,18 @@
                 {
                   "type": "METHOD",
                   "name": "TileMovement",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileLayer",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "interpolation",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -671,7 +536,28 @@
                 {
                   "type": "METHOD",
                   "name": "moveRectangleBetweenTileCenters",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "fromTileCoordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "toTileCoordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "progress",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -694,7 +580,18 @@
                 {
                   "type": "METHOD",
                   "name": "BatchGraphicRender",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -721,7 +618,18 @@
                 {
                   "type": "METHOD",
                   "name": "MovementGraphicRender",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -743,32 +651,29 @@
                 {
                   "type": "METHOD",
                   "name": "MainGraphicRender",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "SpriteBatch",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "TileMovement",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "BatchGraphicRender",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MovementGraphicRender",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "graphicProperties",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "render",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -795,60 +700,9 @@
           "name": "GameDesktopLauncher",
           "children": [
             {
-              "type": "METHOD",
-              "name": "create",
-              "children": []
-            },
-            {
               "type": "CLASS",
-              "name": ")",
-              "children": [
-                {
-                  "type": "METHOD",
-                  "name": "AnnotationConfigApplicationContext",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "render",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "resize",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "pause",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "resume",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "dispose",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "main",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Lwjgl3ApplicationConfiguration",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Lwjgl3Application",
-                  "children": []
-                }
-              ]
+              "name": ");",
+              "children": []
             }
           ]
         }
@@ -869,56 +723,22 @@
                 {
                   "type": "METHOD",
                   "name": "GeneratorActions",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "commandQueueHandler",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "getCommand",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Random",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "if",
                   "children": []
                 }
               ]
@@ -936,66 +756,22 @@
                 {
                   "type": "METHOD",
                   "name": "ButtonHandler",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "commandQueueHandler",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "readCommand",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MoveAction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MoveAction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MoveAction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Direction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "MoveAction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "ShootAction",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "SwitchHealthBarAction",
                   "children": []
                 }
               ]
@@ -1023,37 +799,24 @@
                 {
                   "type": "METHOD",
                   "name": "addAction",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "moveAction",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "process",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GridPoint2",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "command",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1077,13 +840,14 @@
                 },
                 {
                   "type": "METHOD",
-                  "name": "getActions",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
                   "name": "remove",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "action",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1116,7 +880,18 @@
                 {
                   "type": "METHOD",
                   "name": "MapNode",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "coordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "nodeType",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1131,7 +906,13 @@
                 {
                   "type": "METHOD",
                   "name": "setCoordinates",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "coordinates",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1140,7 +921,13 @@
         {
           "type": "FILE",
           "name": "NodeType.java",
-          "children": []
+          "children": [
+            {
+              "type": "ENUM",
+              "name": "NodeType",
+              "children": []
+            }
+          ]
         }
       ]
     },
@@ -1159,7 +946,13 @@
                 {
                   "type": "METHOD",
                   "name": "movementDrow",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1176,32 +969,39 @@
                 {
                   "type": "METHOD",
                   "name": "GraphicsForMovementLivableDecorator",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "GraphicsForMovable",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getRectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "draw",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "texture",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "healthBarDecorator",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "moveModel",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "drowHealthBar",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "dispose",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "model",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1228,7 +1028,13 @@
                 {
                   "type": "METHOD",
                   "name": "draw",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1250,37 +1056,39 @@
                 {
                   "type": "METHOD",
                   "name": "GraphicsForMovable",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "TextureRegion",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "movementDrow",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getRectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "draw",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "dispose",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "texture",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "moveModel",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "movementRender",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "node",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1297,12 +1105,54 @@
                 {
                   "type": "METHOD",
                   "name": "HealthBarDrower",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "width",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "height",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "existingHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "wastedHealth",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "drawHealthBar",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "livableModelRectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "maxHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "health",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1312,22 +1162,18 @@
                 {
                   "type": "METHOD",
                   "name": "getHealthBarTexture",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Pixmap",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Texture",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "TextureRegion",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "maxHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "health",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1349,27 +1195,13 @@
                 {
                   "type": "METHOD",
                   "name": "Graphics",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "TextureRegion",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getRectangle",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "dispose",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "draw",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "texture",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1389,7 +1221,13 @@
         {
           "type": "FILE",
           "name": "ButtonCommand.java",
-          "children": []
+          "children": [
+            {
+              "type": "ENUM",
+              "name": "ButtonCommand",
+              "children": []
+            }
+          ]
         }
       ]
     },
@@ -1413,16 +1251,17 @@
                 {
                   "type": "METHOD",
                   "name": "catchingNewActions",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "commandQueue",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "removeFinishedActions",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getActions",
                   "children": []
                 }
               ]
@@ -1441,13 +1280,39 @@
           "children": [
             {
               "type": "METHOD",
-              "name": "ExecutingActionsQueue",
-              "children": []
-            },
-            {
-              "type": "METHOD",
-              "name": "MainGraphicRender",
-              "children": []
+              "name": "Game",
+              "children": [
+                {
+                  "type": "ARGUMENT",
+                  "name": "buttonHandler",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "logicExecuter",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "commandQueueHandler",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "generatorActions",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "level",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "graphicProperties",
+                  "children": []
+                }
+              ]
             },
             {
               "type": "METHOD",
@@ -1480,7 +1345,13 @@
         {
           "type": "FILE",
           "name": "ActionType.java",
-          "children": []
+          "children": [
+            {
+              "type": "ENUM",
+              "name": "ActionType",
+              "children": []
+            }
+          ]
         },
         {
           "type": "FILE",
@@ -1498,7 +1369,13 @@
                 {
                   "type": "METHOD",
                   "name": "execute",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1518,13 +1395,24 @@
                   "children": [
                     {
                       "type": "METHOD",
-                      "name": "isFinished",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "execute",
-                      "children": []
+                      "name": "ShootAction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "shootableModel",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "damageDealerModel",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "direction",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -1534,7 +1422,13 @@
                     {
                       "type": "METHOD",
                       "name": "executeBulletMovement",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "level",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -1556,17 +1450,18 @@
                     {
                       "type": "METHOD",
                       "name": "MoveAction",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "isFinished",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "execute",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "tankMoveModel",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "direction",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -1581,12 +1476,24 @@
                     {
                       "type": "METHOD",
                       "name": "executeTankMovement",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "level",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
                       "name": "movementIsPossible",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "level",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -1608,17 +1515,13 @@
                     {
                       "type": "METHOD",
                       "name": "SwitchHealthBarAction",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "isFinished",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "execute",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "livableModel",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -1674,22 +1577,18 @@
                     {
                       "type": "METHOD",
                       "name": "TreeMoveModel",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getCoordinates",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "mainUpdateProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getRotation",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "coordinates",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1713,7 +1612,13 @@
                 {
                   "type": "METHOD",
                   "name": "damage",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "damage",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1749,131 +1654,43 @@
                     {
                       "type": "METHOD",
                       "name": "TankMoveModel",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "Direction",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "isMoving",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getDestination",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getDirection",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "coordinates",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "maxHealth",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "movementSpeed",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
                       "name": "updateProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "updateFireProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "mayShoot",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "finishShooting",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "finishMovement",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setRotation",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getCoordinates",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getRotation",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setDirection",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setMovingStatus",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getCurrentHealth",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "damage",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "switchHealthBar",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "deltaTime",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
                       "name": "updateHealthBar",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "mainUpdateProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "isHealthBarRaise",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getMaxHealth",
                       "children": []
                     }
                   ]
@@ -1893,7 +1710,13 @@
                 {
                   "type": "METHOD",
                   "name": "setMovingStatus",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "b",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1913,7 +1736,13 @@
                 {
                   "type": "METHOD",
                   "name": "setProgress",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "v",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1923,7 +1752,13 @@
                 {
                   "type": "METHOD",
                   "name": "setRotation",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rotation",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -1933,7 +1768,13 @@
                 {
                   "type": "METHOD",
                   "name": "setDirection",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "direction",
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
@@ -1980,68 +1821,41 @@
                   "children": [
                     {
                       "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
+                      "name": "Direction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "command",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
                       "name": "Direction",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
                       "name": "Direction",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "Direction",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "vector",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -2051,7 +1865,13 @@
                     {
                       "type": "METHOD",
                       "name": "setRotation",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -2061,7 +1881,13 @@
                     {
                       "type": "METHOD",
                       "name": "setVector",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "vector",
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 }
@@ -2084,7 +1910,28 @@
                     {
                       "type": "METHOD",
                       "name": "BulletMoveModel",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "coordinates",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "direction",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "damage",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "movementSpeed",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
@@ -2093,72 +1940,18 @@
                     },
                     {
                       "type": "METHOD",
-                      "name": "GridPoint2",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getDirection",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
                       "name": "updateProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setProgress",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "finishMovement",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "isMoving",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setRotation",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getCoordinates",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getProgress",
-                      "children": []
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "deltaTime",
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "type": "METHOD",
                       "name": "getRotation",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setMovingStatus",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "setDirection",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "getDamage",
-                      "children": []
-                    },
-                    {
-                      "type": "METHOD",
-                      "name": "mainUpdateProgress",
                       "children": []
                     }
                   ]
@@ -2200,7 +1993,13 @@
                 {
                   "type": "METHOD",
                   "name": "mainUpdateProgress",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "deltaTime",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -2227,27 +2026,28 @@
               "children": [
                 {
                   "type": "METHOD",
-                  "name": "TreeMoveModel",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Graphics",
-                  "children": []
+                  "name": "Level",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "map",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "graphicProperties",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "logicProperties",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "removeKilledTanks",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getTrees",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getTanks",
                   "children": []
                 },
                 {
@@ -2268,17 +2068,18 @@
                 {
                   "type": "METHOD",
                   "name": "putBulletInLevel",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "Graphics",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "getBullets",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "coord",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "direction",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
@@ -2298,27 +2099,56 @@
                 {
                   "type": "METHOD",
                   "name": "update",
-                  "children": []
-                },
-                {
-                  "type": "METHOD",
-                  "name": "allGraphicsEntities",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "deltaTime",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "drow",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "movementDrow",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",
                   "name": "movementRender",
-                  "children": []
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "node",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "type": "METHOD",

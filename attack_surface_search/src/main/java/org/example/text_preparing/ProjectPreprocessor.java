@@ -41,15 +41,14 @@ public class ProjectPreprocessor {
         processedContent = deleteComments(processedContent);
         processedContent = preprocessSpecialSimbol(processedContent);
         processedContent = preprocessOperation(processedContent);
-//        processedContent = preprocessMethods(processedContent);
-//        processedContent = normalizeSpaces(processedContent);
+//        processedContent = preprocessSpecialWords(processedContent);
+        processedContent = normalizeSpaces(processedContent);
+        processedContent = addEnters(processedContent);
         Files.writeString(sourceFile , processedContent);
     }
 
-//    private String preprocessMethods(String content) {
-//        String before = "(|public|private|protected|static|\\s+\\w+[\\w\\<\\>\\[\\]\\s]+\\w+\\s*\\([^)]*\\)\\s*[;\\{]?)";
-//        String after = "$1\n";
-//        return content.replaceAll(before , after);
+//    private String preprocessSpecialWords(String content) {
+//        return content.replaceAll("\\b(public|private|protected|static|final|class|interface|enum|if|else|for|while|do|switch|case|break|continue|try|catch|finally|import|package)\\b", "\n$1\n");
 //    }
 
     private String preprocessSpecialSimbol(String content) {
@@ -106,56 +105,25 @@ public class ProjectPreprocessor {
         processedContent = replaceAllWithoutStrings(processedContent,"\\:\\:", " :: ");
         processedContent = replaceAllWithoutStrings(processedContent,"(?<!\\:)\\:(?!\\:)", " : ");
         processedContent = replaceAllWithoutStrings(processedContent,"(?<![+-/*|<>!=%&^])=(?![+-/*|<>!=%&^])", " = ");
-//        String processedContent = content.replaceAll("\\+\\+" , " \\+\\+ ");
-//        processedContent = processedContent.replaceAll("\\+\\=", " += ");
-//        processedContent = processedContent.replaceAll("(?<!\\+)\\+(?!\\+)", " + ");
-//        processedContent = processedContent.replaceAll("\\-\\-" , " -- ");
-//        processedContent = processedContent.replaceAll("\\-\\=", " -= ");
-//        processedContent = processedContent.replaceAll("(?<!\\-)\\-(?!\\-)", " - ");
-//        processedContent = processedContent.replaceAll("\\=\\=" , " == ");
-//        processedContent = processedContent.replaceAll("(?<!\\>)\\>\\=" , " >= ");
-//        processedContent = processedContent.replaceAll("(?<!\\<)\\<\\=" , " <= ");
-//        processedContent = processedContent.replaceAll("\\<\\<\\<" , " <<< ");
-//        processedContent = processedContent.replaceAll("\\>\\>\\>" , " >>> ");
-//        processedContent = processedContent.replaceAll("(?<!\\>)\\>\\>(?!\\>)", " >> ");
-//        processedContent = processedContent.replaceAll("\\>\\>\\=", " >>= ");
-//        processedContent = processedContent.replaceAll("(?<!\\<)\\<\\<(?!\\<)", " << ");
-//        processedContent = processedContent.replaceAll("\\<\\<\\=", " <<= ");
-//        processedContent = processedContent.replaceAll("(?<![>=])\\>(?![>=])", " > ");
-//        processedContent = processedContent.replaceAll("(?<!\\<)\\<(?!\\<)", " < ");
-//        processedContent = processedContent.replaceAll("\\?" , " ? ");
-//        processedContent = processedContent.replaceAll("\\|\\|" , " || ");
-//        processedContent = processedContent.replaceAll("\\|\\=", " |= ");
-//        processedContent = processedContent.replaceAll("(?<![|=])\\|(?![|=])", " | ");
-//        processedContent = processedContent.replaceAll("\\&\\&" , " && ");
-//        processedContent = processedContent.replaceAll("\\&\\=", " &= ");
-//        processedContent = processedContent.replaceAll("(?<!\\&)\\&(?!\\&)", " & ");
-//        processedContent = processedContent.replaceAll("\\%\\=", " %= ");
-//        processedContent = processedContent.replaceAll("(?<![=])\\%(?![=])" , " % ");
-//        processedContent = processedContent.replaceAll("\\//", " // ");
-//        processedContent = processedContent.replaceAll("\\/\\=", " /= ");
-//        processedContent = processedContent.replaceAll("(?<![/=])\\/(?![/=])", " / ");
-//        processedContent = processedContent.replaceAll("\\*\\*", " ** ");
-//        processedContent = processedContent.replaceAll("\\*\\=", " *= ");
-//        processedContent = processedContent.replaceAll("(?<![*=])\\*(?![*=])", " * ");
-//        processedContent = processedContent.replaceAll("\\$" , " $ ");
-//        processedContent = processedContent.replaceAll("\\@" , " @ ");
-//        processedContent = processedContent.replaceAll("\\^\\=", " ^= ");
-//        processedContent = processedContent.replaceAll("\\^" , " ^ ");
-//        processedContent = processedContent.replaceAll("\\!\\=", " != ");
-//        processedContent = processedContent.replaceAll("\\!" , " ! ");
-//        processedContent = processedContent.replaceAll("\\~", " ~ ");
-//        processedContent = processedContent.replaceAll("\\:\\:", " :: ");
-//        processedContent = processedContent.replaceAll("(?<!\\:)\\:(?!\\:)", " : ");
-//        processedContent = processedContent.replaceAll("(?<![+-/*|<>!=%&^])=(?![+-/*|<>!=%&^])", " = ");
         return processedContent;
     }
 
     private String normalizeSpaces(String content) {
         String processedContent = replaceAllWithoutStrings(content,"[\\s\\t]+" , " ");
-        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*\\{[\\s\\t]*" , "\n\\{\n");
-        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*\\}[\\s\\t]*" , "\n\\}\n");
+//        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*\\{[\\s\\t]*" , "\n\\{\n");
+//        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*\\}[\\s\\t]*" , "\n\\}\n");
         processedContent = replaceAllWithoutStrings(processedContent,"[\n]+" , "\n");
+        return processedContent;
+    }
+
+    private String addEnters(String content) {
+//        String processedContent = replaceAllWithoutStrings(content,"[\\s\\t]+" , " ");
+        String processedContent = replaceAllWithoutStrings(content,"[\\s\\t]*\\{[\\s\\t]*" , "\n\\{\n");
+        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*\\}[\\s\\t]*" , "\n\\}\n");
+//        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*for[\\s\\t]*\\(" , "\nfor\n(");
+//        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*if*\\(" , "\nif\n(");
+        processedContent = replaceAllWithoutStrings(processedContent,"[\\s\\t]*;[\\s\\t]*" , ";\n");
+//        processedContent = replaceAllWithoutStrings(processedContent,"[\n]+" , "\n");
         return processedContent;
     }
 

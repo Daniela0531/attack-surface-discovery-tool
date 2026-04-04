@@ -1,2 +1,1 @@
-package ru . mipt . bit . platformer . graphics_objects ;
-
+package ru . mipt . bit . platformer . graphics_objects;
