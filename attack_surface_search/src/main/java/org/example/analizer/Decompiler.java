@@ -1,19 +1,23 @@
-package org.example;
+package org.example.analizer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Decompiler {
-    Integer decompile(String jarName) {
+//    public void printFunc(String text) {
+//            System.out.println("I am a help func" + text);
+//    }
+    public String testString;
+    String decompile(String jarName) {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 
         ProcessBuilder builder = new ProcessBuilder();
 
         if (isWindows) {
-            builder.command("cmd.exe", "/c", "dir");
+            builder.command("cmd.exe" , "/c" , "dir");
         } else {
-            builder.command("jadx", "-d", "decompiled_folder", jarName);
+            builder.command("jadx" , "-d" , "decompiled_folder" , jarName);
         }
 
         try {
@@ -29,7 +33,7 @@ public class Decompiler {
 
             // Ждем завершения процесса и получаем код выхода
             int exitCode = process.waitFor();
-            return exitCode;
+            return "decompiled_folder";
 
         } catch (IOException e) {
             e.printStackTrace();
