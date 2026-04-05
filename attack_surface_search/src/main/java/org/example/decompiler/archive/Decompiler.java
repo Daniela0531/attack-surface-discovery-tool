@@ -1,4 +1,4 @@
-package org.example.analizer;
+package org.example.decompiler.archive;
 
 import java.io.BufferedReader;
 import java.io.IOException;

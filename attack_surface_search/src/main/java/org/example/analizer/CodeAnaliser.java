@@ -6,12 +6,10 @@ import java.io.IOException;
 import java.util.*;
 
 public class CodeAnaliser {
-//    private CallGraph callGraph;
     private Map<String , ArrayList<String>> edjs = new HashMap<>();
 
     public CodeAnaliser(int size) {
         System.out.println(size);
-//        callGraph = new CallGraph(size);
         edjs = new HashMap<>();
     }
 
@@ -36,11 +34,9 @@ public class CodeAnaliser {
         boolean nextIsClassName = false;
         boolean isRightClass = false;
         boolean isRightMethod = false;
-//        Data newData = new Data();
         for (String line : content) {
             for (String token : line.split("[ , , ()?:]")) {
                 if (token.equals("class")) {
-//                    System.out.println("I am in class: " + token + "\n");
                     nextIsClassName = true;
                 }
                 if (nextIsClassName && token.equals(data.getJavaClass())) {
@@ -57,7 +53,6 @@ public class CodeAnaliser {
                 if (isRightClass && isRightMethod && token.equals(data.getData())) {
                     System.out.println("I am found data: " + token + "\n");
                     data.pushOperation(line);
-//                    return;
                 }
             }
         }
@@ -124,14 +119,6 @@ public class CodeAnaliser {
         return newData;
     }
 
-//    private String recognizeOperation() {
-//
-//    }
-//
-//    private String recognizeJavaClass() {
-//
-//    }
-
     public void print(FollowedData data) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("result.txt"))) {
             writer.write(data.getJavaClass() + "::");
@@ -145,11 +132,5 @@ public class CodeAnaliser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        for (int i = 0 , i < edjs.size() , ++i) {
-//            for (int j = 0 , j < edjs.size() , ++j) {
-//                String prefix = "|" + "-".repeat(j);
-//                System.out.println(prefix + edjs.getOperation(i , j) + ":" + callGraph.getTraceableData(i , j) + "\n");
-//            }
-//        }
     }
 }

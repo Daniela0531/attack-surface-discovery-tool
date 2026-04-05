@@ -172,11 +172,11 @@ public class StructureBuilder {
                     curEntity = childClass;
                 }
             }
-            if (str.equals("boolean isFinished ( );")) {
-                System.out.println("boolean isFinished ( );");
-                System.out.println("curScopeDepth : " + curScopeDepth);
-                System.out.println("requiedScopeDepth : " + requiedScopeDepth);
-            }
+//            if (str.equals("boolean isFinished ( );")) {
+//                System.out.println("boolean isFinished ( );");
+//                System.out.println("curScopeDepth : " + curScopeDepth);
+//                System.out.println("requiedScopeDepth : " + requiedScopeDepth);
+//            }
 
             if (curScopeDepth == requiedScopeDepth + 1) {
                 String methodRegex = "^\\s*(?:(?:public|private|protected|static|final|static)\\s+)*([\\w\\<\\>\\,\\[\\]]+)\\s+(\\w+)\\s*\\(([^)]*)\\);?";
@@ -185,9 +185,9 @@ public class StructureBuilder {
                 Matcher matcher = pattern.matcher(str);
 
                 if (matcher.matches()) {
-                    if (str.equals("boolean isFinished ( );")) {
-                        System.out.println("matchers : " + matcher.group());
-                    }
+//                    if (str.equals("boolean isFinished ( );")) {
+//                        System.out.println("matchers : " + matcher.group());
+//                    }
                     StructureEntity method = new StructureEntity("METHOD", curEntity.getPath(), curEntity.getLevel() + 1);
                     int size = matcher.groupCount();
                     String methodName = matcher.group(size - 1);

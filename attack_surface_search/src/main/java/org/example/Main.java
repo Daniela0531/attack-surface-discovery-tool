@@ -16,28 +16,28 @@ public class Main {
 
         // копирование проекта в вспомогательную директорию
 
-//        System.out.println("Клонирую проект ...");
-//        ProjectCopyPreparation projectCopyPreparation = new ProjectCopyPreparation();
-//        Path sourcePath = Paths.get(pathToProject);
-//        try {
-//            projectCopyPreparation.projectCopyPreparation(sourcePath , dirForProjectCopy);
-//        } catch (IOException exception) {
-//            System.err.println("Ошибка при обработке файла");
-//            return;
-//        }
-//        System.out.println("Создание клона проекта завершено!");
-//
-//        // при успешном переносе исходника в директорию для работы
-//        // выполнить препроцессинг кода
-//        System.out.println("Препроцессирую текст кода проекта ...");
-//        ProjectPreprocessor projectPreprocessor = new ProjectPreprocessor(dirForProjectCopy);
-//        try {
-//            projectPreprocessor.processProject();
-//            System.out.println("Препроцессинг копии проекта завершен!");
-//        } catch (IOException e) {
-//            System.out.println("Ошибка препроцессинга копии проекта");
-//            return;
-//        }
+        System.out.println("Клонирую проект ...");
+        ProjectCopyPreparation projectCopyPreparation = new ProjectCopyPreparation();
+        Path sourcePath = Paths.get(pathToProject);
+        try {
+            projectCopyPreparation.projectCopyPreparation(sourcePath , dirForProjectCopy);
+        } catch (IOException exception) {
+            System.err.println("Ошибка при обработке файла");
+            return;
+        }
+        System.out.println("Создание клона проекта завершено!");
+
+        // при успешном переносе исходника в директорию для работы
+        // выполнить препроцессинг кода
+        System.out.println("Препроцессирую текст кода проекта ...");
+        ProjectPreprocessor projectPreprocessor = new ProjectPreprocessor(dirForProjectCopy);
+        try {
+            projectPreprocessor.processProject();
+            System.out.println("Препроцессинг копии проекта завершен!");
+        } catch (IOException e) {
+            System.out.println("Ошибка препроцессинга копии проекта");
+            return;
+        }
         System.out.println("Построение структуры проекта ...");
         StructureBuilder structureBuilder = new StructureBuilder(dirForProjectCopy);
         try {

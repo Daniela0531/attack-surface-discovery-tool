@@ -2188,3 +2188,2193 @@
     }
   ]
 }
+{
+  "type": "PACKAGE",
+  "name": "preproccesed_project",
+  "children": [
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/logic_execution",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "LogicExecutor.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "LogicExecutor",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "LogicExecutor",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "executeActions",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "executingActionsQueue",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/map_louders",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "MapGenerator.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "MapGenerator",
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "MapLoaderFromFile.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "MapLoaderFromFile",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "MapLoaderFromFile",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "absoluteFilePath",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/level_properties",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "LogicProperties.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "LogicProperties",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "LogicProperties",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tankMaxHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tankSpeed",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "bulletDamage",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "bulletSpeed",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getBulletSpeed",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTankSpeed",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getBulletDamage",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTankMaxHealth",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "GraphicProperties.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "GraphicProperties",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "GraphicProperties",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tiledMapImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tankTextureImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "treeTextureImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "bulletImgPath",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "healthBarDecorator",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getBulletTexture",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTankTexture",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTiledMap",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTreeTexture",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTiledMapTileLayer",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTankTextureRegion",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTankRectangle",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTreeRectangle",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTreeTextureRegion",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getHealthBarDecorator",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "FILE",
+      "name": "LevelMap.java",
+      "children": [
+        {
+          "type": "CLASS",
+          "name": "LevelMap",
+          "children": [
+            {
+              "type": "METHOD",
+              "name": "LevelMap",
+              "children": [
+                {
+                  "type": "ARGUMENT",
+                  "name": "nodesCoordinates",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "player",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "leftBound",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "rightBound",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "lowBound",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "upBound",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "METHOD",
+              "name": "print",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getPlayer",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getLeftBound",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getLowBound",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getUpBound",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getRightBound",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "FILE",
+      "name": "GameConfiguration.java",
+      "children": [
+        {
+          "type": "CLASS",
+          "name": "GameConfiguration",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/util",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "GdxGameUtils.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "GdxGameUtils",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "GdxGameUtils",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "createSingleLayerMapRenderer",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tiledMap",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "moveRectangleAtTileCenter",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileLayer",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileCoordinates",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "incrementedY",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "decrementedX",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "decrementedY",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "incrementedX",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "point",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "drawTextureRegionUnscaled",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "region",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rotation",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "createBoundingRectangle",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "region",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "continueProgress",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "previousProgress",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "deltaTime",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "speed",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "calculateTileCenter",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileLayer",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileCoordinates",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "TileMovement.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "TileMovement",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "TileMovement",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileLayer",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "interpolation",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTileLayer",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "moveRectangleBetweenTileCenters",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "fromTileCoordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "toTileCoordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "progress",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/graphics_management",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "BatchGraphicRender.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "BatchGraphicRender",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "BatchGraphicRender",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "drow",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "dispose",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "MovementGraphicRender.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "MovementGraphicRender",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "MovementGraphicRender",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "drow",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "MainGraphicRender.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "MainGraphicRender",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "MainGraphicRender",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "graphicProperties",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "render",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "clear",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "dispose",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "FILE",
+      "name": "GameDesktopLauncher.java",
+      "children": [
+        {
+          "type": "CLASS",
+          "name": "GameDesktopLauncher",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": ");",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/game_input_management",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "GeneratorActions.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "GeneratorActions",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "GeneratorActions",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "commandQueueHandler",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getCommand",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "ButtonHandler.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "ButtonHandler",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "ButtonHandler",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "commandQueueHandler",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "readCommand",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "CommandQueue.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "CommandQueue",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "CommandQueue",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "moveActionAmount",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "addAction",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "moveAction",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "process",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "command",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "get",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "pop",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "isEmpty",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "size",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "remove",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "action",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "clear",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "printQueue",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/level_map",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "MapNode.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "MapNode",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "MapNode",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "coordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "nodeType",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getCoordinates",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getNodeType",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "setCoordinates",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "coordinates",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "NodeType.java",
+          "children": [
+            {
+              "type": "ENUM",
+              "name": "NodeType",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/graphics_objects",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "GraphicsMovementInterface.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "GraphicsMovementInterface",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "movementDrow",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "GraphicsForMovementLivableDecorator.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "GraphicsForMovementLivableDecorator",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "GraphicsForMovementLivableDecorator",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "texture",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "healthBarDecorator",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "moveModel",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "drowHealthBar",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "model",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "GraphicsInterface.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "GraphicsInterface",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "getRectangle",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "dispose",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "draw",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "GraphicsRotatingInterface.java",
+          "children": []
+        },
+        {
+          "type": "FILE",
+          "name": "GraphicsForMovable.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "GraphicsForMovable",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "GraphicsForMovable",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "texture",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "moveModel",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "movementRender",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "node",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "HealthBarDrower.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "HealthBarDrower",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "HealthBarDrower",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "width",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "height",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "existingHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "wastedHealth",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "drawHealthBar",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "livableModelRectangle",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "maxHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "health",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getRectangle",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getHealthBarTexture",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "maxHealth",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "health",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "dispose",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "Graphics.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "Graphics",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "Graphics",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "texture",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTextureRegion",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/button_commands",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "ButtonCommand.java",
+          "children": [
+            {
+              "type": "ENUM",
+              "name": "ButtonCommand",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/game_management",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "ExecutingActionsQueue.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "ExecutingActionsQueue",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "ExecutingActionsQueue",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "catchingNewActions",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "commandQueue",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "removeFinishedActions",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "FILE",
+      "name": "Game.java",
+      "children": [
+        {
+          "type": "CLASS",
+          "name": "Game",
+          "children": [
+            {
+              "type": "METHOD",
+              "name": "Game",
+              "children": [
+                {
+                  "type": "ARGUMENT",
+                  "name": "buttonHandler",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "logicExecuter",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "commandQueueHandler",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "generatorActions",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "level",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "graphicProperties",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "METHOD",
+              "name": "renderCurrentResultByTick",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "commandProcessing",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getNewCommands",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "stop",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/actions",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "ActionType.java",
+          "children": [
+            {
+              "type": "ENUM",
+              "name": "ActionType",
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "Action.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "Action",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "isFinished",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "execute",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "level",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "PACKAGE",
+          "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/actions/impl_action",
+          "children": [
+            {
+              "type": "FILE",
+              "name": "ShootAction.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "ShootAction",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "ShootAction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "shootableModel",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "damageDealerModel",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "direction",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "finished",
+                      "children": []
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "executeBulletMovement",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "level",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "finishShootAction",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "FILE",
+              "name": "MoveAction.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "MoveAction",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "MoveAction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "tankMoveModel",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "direction",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "finished",
+                      "children": []
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "getDestinationCoordinates",
+                      "children": []
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "executeTankMovement",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "level",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "movementIsPossible",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "level",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "finishMoveActionIfPossible",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "FILE",
+              "name": "SwitchHealthBarAction.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "SwitchHealthBarAction",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "SwitchHealthBarAction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "livableModel",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "finished",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "FILE",
+      "name": "MapLouder.java",
+      "children": [
+        {
+          "type": "INTERFACE",
+          "name": "MapLouder",
+          "children": [
+            {
+              "type": "METHOD",
+              "name": "loadLevelMap",
+              "children": []
+            },
+            {
+              "type": "METHOD",
+              "name": "getLevelMap",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/logic_objects",
+      "children": [
+        {
+          "type": "PACKAGE",
+          "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/logic_objects/tree",
+          "children": [
+            {
+              "type": "FILE",
+              "name": "TreeMoveModel.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "TreeMoveModel",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "TreeMoveModel",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "coordinates",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "LivableModel.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "LivableModel",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "getCurrentHealth",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "damage",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "damage",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "switchHealthBar",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "isHealthBarRaise",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getMaxHealth",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "PACKAGE",
+          "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/logic_objects/tank",
+          "children": [
+            {
+              "type": "FILE",
+              "name": "TankMoveModel.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "TankMoveModel",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "TankMoveModel",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "coordinates",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "maxHealth",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "movementSpeed",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "updateProgress",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "deltaTime",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "updateHealthBar",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "MoveModel.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "MoveModel",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "setMovingStatus",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "b",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "finishMovement",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "isMoving",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getDestination",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "setProgress",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "v",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getDirection",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "setRotation",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rotation",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getProgress",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "setDirection",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "direction",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "ShootableModel.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "ShootableModel",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "updateFireProgress",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "mayShoot",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "finishShooting",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "PACKAGE",
+          "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/logic_objects/properties",
+          "children": [
+            {
+              "type": "FILE",
+              "name": "Direction.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "Direction",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "Direction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "command",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "Direction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "Direction",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "vector",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "getVector",
+                      "children": []
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "setRotation",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "rotation",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "getRotation",
+                      "children": []
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "setVector",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "vector",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "PACKAGE",
+          "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/logic_objects/bullet",
+          "children": [
+            {
+              "type": "FILE",
+              "name": "BulletMoveModel.java",
+              "children": [
+                {
+                  "type": "CLASS",
+                  "name": "BulletMoveModel",
+                  "children": [
+                    {
+                      "type": "METHOD",
+                      "name": "BulletMoveModel",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "coordinates",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "direction",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "damage",
+                          "children": []
+                        },
+                        {
+                          "type": "ARGUMENT",
+                          "name": "movementSpeed",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "getDestination",
+                      "children": []
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "updateProgress",
+                      "children": [
+                        {
+                          "type": "ARGUMENT",
+                          "name": "deltaTime",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "METHOD",
+                      "name": "getRotation",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "DamageDealerModel.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "DamageDealerModel",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "getDamage",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FILE",
+          "name": "Model.java",
+          "children": [
+            {
+              "type": "INTERFACE",
+              "name": "Model",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "getCoordinates",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "mainUpdateProgress",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "deltaTime",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getRotation",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "PACKAGE",
+      "name": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/level",
+      "children": [
+        {
+          "type": "FILE",
+          "name": "Level.java",
+          "children": [
+            {
+              "type": "CLASS",
+              "name": "Level",
+              "children": [
+                {
+                  "type": "METHOD",
+                  "name": "Level",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "map",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "graphicProperties",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "logicProperties",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "removeKilledTanks",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getPlayerTank",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getPlayerGraphics",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "moveNodesSize",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "putBulletInLevel",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "coord",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "direction",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "removeFinishedBullets",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "removeInvalidEntities",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "isPlayerKilled",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "update",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "deltaTime",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "drow",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "batch",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "movementDrow",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "movementRender",
+                  "children": [
+                    {
+                      "type": "ARGUMENT",
+                      "name": "tileMovement",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "node",
+                      "children": []
+                    },
+                    {
+                      "type": "ARGUMENT",
+                      "name": "rectangle",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "METHOD",
+                  "name": "dispose",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getLeftBound",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getRightBound",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getUpBound",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getLowBound",
+                  "children": []
+                },
+                {
+                  "type": "METHOD",
+                  "name": "getTiledMap",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
