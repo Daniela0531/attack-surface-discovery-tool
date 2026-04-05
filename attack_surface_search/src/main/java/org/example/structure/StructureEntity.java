@@ -29,33 +29,6 @@ public class StructureEntity {
         this.name = null;
     }
 
-//    public StructureEntity(String type, Path path, int level, StructureEntity parent) {
-//        this.path = path;
-//        this.children = new ArrayList<>();
-//        this.type = type;
-//        this.parent = parent;
-//        this.level = level;
-//        this.name = null;
-//    }
-//
-//    public StructureEntity(String type, Path path, String name, int level) {
-//        this.path = path;
-//        this.children = new ArrayList<>();
-//        this.parent = null;
-//        this.type = type;
-//        this.level = level;
-//        this.name = name;
-//    }
-//
-//    public StructureEntity(String type, Path path, String name, int level, StructureEntity parent) {
-//        this.path = path;
-//        this.children = new ArrayList<>();
-//        this.type = type;
-//        this.parent = parent;
-//        this.level = level;
-//        this.name = name;
-//    }
-
     public void addChild(StructureEntity child) {
         children.add(child);
     }

@@ -1,4 +1,4 @@
-package org.example.analizer;
+package org.example.analizer.structures;
 
 public enum OperationType {
     ASSIGNMENT,

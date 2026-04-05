@@ -7,10 +7,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-public class ToJsonWriter {
+public class ClassToJsonWriter {
     private Path target;
     private ObjectMapper mapper = new ObjectMapper();
-    public ToJsonWriter(Path target) {
+    public ClassToJsonWriter(Path target) {
         this.target = target;
         this.mapper = new ObjectMapper();
     }

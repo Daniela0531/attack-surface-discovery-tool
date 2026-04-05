@@ -1,8 +1,5 @@
 package org.example.structure;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -63,7 +60,7 @@ public class StructureBuilder {
         }
 
         projectStructure.setMainParent(parentEntity);
-        ToJsonWriter toJsonWriter = new ToJsonWriter(target);
+        ClassToJsonWriter toJsonWriter = new ClassToJsonWriter(target);
         toJsonWriter.writeToJson(parentEntity);
 
         return projectStructure;
@@ -172,11 +169,6 @@ public class StructureBuilder {
                     curEntity = childClass;
                 }
             }
-//            if (str.equals("boolean isFinished ( );")) {
-//                System.out.println("boolean isFinished ( );");
-//                System.out.println("curScopeDepth : " + curScopeDepth);
-//                System.out.println("requiedScopeDepth : " + requiedScopeDepth);
-//            }
 
             if (curScopeDepth == requiedScopeDepth + 1) {
                 String methodRegex = "^\\s*(?:(?:public|private|protected|static|final|static)\\s+)*([\\w\\<\\>\\,\\[\\]]+)\\s+(\\w+)\\s*\\(([^)]*)\\);?";
@@ -185,28 +177,19 @@ public class StructureBuilder {
                 Matcher matcher = pattern.matcher(str);
 
                 if (matcher.matches()) {
-//                    if (str.equals("boolean isFinished ( );")) {
-//                        System.out.println("matchers : " + matcher.group());
-//                    }
                     StructureEntity method = new StructureEntity("METHOD", curEntity.getPath(), curEntity.getLevel() + 1);
                     int size = matcher.groupCount();
                     String methodName = matcher.group(size - 1);
                     method.setName(methodName);
                     String rawArgs = matcher.group(size).trim();
-//                    System.out.println("method ::: " + method.getName());
-//                    System.out.println("from string ::: " + matcher.group());
-//                    System.out.println(rawArgs);
                     if (rawArgs.isEmpty()) {
-//                    System.out.println("  Аргументы: [нет]");
                         method.setChildren(new ArrayList<>());
                     } else {
                         // Сплитим аргументы по запятой, игнорируя запятые внутри < >
                         String[] argsArray = rawArgs.split(",\\s*(?![^<]*>)");
-//                    System.out.println("  Количество аргументов: " + argsArray.length);
 
 //                    System.out.println("  Аргументы: [");
                         for (int j = 0; j < argsArray.length; ++j) {
-//                        System.out.println(argsArray[j]);
                             ArrayList<String> argumentInfo = new ArrayList<>(List.of(argsArray[j].split(" ")));
                             String argumentName = argumentInfo.remove(argumentInfo.size() - 1);
                             String argumentType = String.join(" ", argumentInfo);

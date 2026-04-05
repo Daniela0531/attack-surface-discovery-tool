@@ -17,6 +17,15 @@ dependencies {
 
     // Дополнительно: поддержка Java 8 (времена/даты) — рекомендуется
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.0'
+    // Основное ядро для генерации классов из JSON
+    implementation 'org.jsonschema2pojo:jsonschema2pojo-core:1.2.1'
+
+    // Аннотации Jackson (нужны, если вы выбрали AnnotationStyle.JACKSON2 в коде)
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+
+    // Дополнительно: javax.annotation (часто требуется для сгенерированного кода)
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
 }
 
 test {
