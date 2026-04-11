@@ -1,10 +1,11 @@
 {
-  "package": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/GameConfiguration.java",
+  "package": "preproccesed_project",
   "class": "GameConfiguration",
   "file": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/GameConfiguration.java",
+  "name": "absoluteFilePath",
+  "positionInMethod": 2,
   "method": {
     "name": "levelMap",
     "numberOfArguments": 2
-  },
-  "data": "absoluteFilePath"
+  }
 }

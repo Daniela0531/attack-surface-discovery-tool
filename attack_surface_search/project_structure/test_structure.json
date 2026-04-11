@@ -9,6 +9,7 @@
         {
           "type": "CLASS",
           "name": "LevelMap",
+          "content": [],
           "children": [
             {
               "type": "METHOD",
@@ -87,7 +88,54 @@
         {
           "type": "CLASS",
           "name": "GameConfiguration",
-          "children": []
+          "children": [
+            {
+              "type": "METHOD",
+              "name": "levelMap",
+              "content": [
+                "if ( mapLouderType . equalsIgnoreCase ( \"generate\" ) )",
+                "{",
+                "MapGenerator mapGenerator = new MapGenerator ( );",
+                "mapGenerator . loadLevelMap ( );",
+                "return mapGenerator . getLevelMap ( );",
+                "}",
+                "if ( mapLouderType . equalsIgnoreCase ( \"file\" ) )",
+                "{",
+                "MapLoaderFromFile mapLoaderFromFile = tiledMapTileLayer ( absoluteFilePath );",
+                "mapLoaderFromFile . loadLevelMap ( );",
+                "return mapLoaderFromFile . getLevelMap ( );",
+                "}",
+                "return null;"
+              ],
+              "children": [
+                {
+                  "type": "ARGUMENT",
+                  "name": "mapLouderType",
+                  "children": []
+                },
+                {
+                  "type": "ARGUMENT",
+                  "name": "absoluteFilePath",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "METHOD",
+              "name": "tiledMapTileLayer",
+              "content": [
+                "TiledMap tiledMap = new TmxMapLoader ( ) . load ( \"level . tmx\" );",
+                "return getSingleLayer ( tiledMap );"
+              ],
+              "children": [
+                {
+                  "type": "ARGUMENT",
+                  "name": "mapLouderType",
+                  "children": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -115,6 +163,7 @@
         {
           "type": "CLASS",
           "name": "Game",
+          "content": [],
           "children": [
             {
               "type": "METHOD",
@@ -205,10 +254,14 @@
         {
           "type": "CLASS",
           "name": "MapLoaderFromFile",
+          "content": [],
           "children": [
             {
               "type": "METHOD",
               "name": "MapLoaderFromFile",
+              "content": [
+                "this . filePath = absoluteFilePath;"
+              ],
               "children": [
                 {
                   "type": "ARGUMENT",

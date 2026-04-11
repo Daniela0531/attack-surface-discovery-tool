@@ -1,6 +1,7 @@
 package org.example;
 import org.example.analizer.ProjectAnalizer;
-import org.example.analizer.structures.FollowedData;
+import org.example.analizer.result_structure.ResultStructureNode;
+import org.example.structure.StructureBuilder;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -47,11 +48,13 @@ public class Main {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
-        String inputDataJson = "project_structure/data.json";
-        String inputStructureJson = "project_structure/structure.json";
-        ProjectAnalizer projectAnalizer = new ProjectAnalizer(inputDataJson, inputStructureJson, dirForProjectCopy);
-        projectAnalizer.analiseProject();
-
+//        String inputDataJson = "project_structure/data.json";
+//        String inputStructureJson = "project_structure/structure.json";
+//        ProjectAnalizer projectAnalizer = new ProjectAnalizer(inputDataJson, inputStructureJson, dirForProjectCopy);
+//        ResultStructureNode resultStructureNode = projectAnalizer.analiseProject();
+//        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
+//        resultStructureNode.print(0);
+        System.out.println(Main.class.getProtectionDomain().getCodeSource().getLocation());
     }
 
 //    private static FollowedData getInputPoints() {

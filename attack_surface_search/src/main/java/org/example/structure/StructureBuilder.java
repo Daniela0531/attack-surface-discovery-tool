@@ -13,8 +13,13 @@ import java.util.stream.Stream;
 public class StructureBuilder {
     private Path source;
     private Path target = Paths.get("project_structure/structure.json");
+    private String vocabulary = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
     public StructureBuilder(Path source) {
         this.source = source;
+    }
+    private boolean parseOperandName(String str) {
+        String regex = "^[" + vocabulary + "]+$";
+        return str.matches(regex);
     }
     public ProjectStructure createProjectStructure() throws Exception {
         ProjectStructure projectStructure = new ProjectStructure();
@@ -111,12 +116,14 @@ public class StructureBuilder {
         }
     }
 
-    private StructureEntity findMethodsAndSubClasses(StructureEntity curEntity) throws IOException {
+    private void findMethodsAndSubClasses(StructureEntity curEntity) throws IOException {
         String content = Files.readString(curEntity.getPath());
         String[] strings = content.split("\\R");
         int curScopeDepth = 0;
-        int requiedScopeDepth = 0;
+        int requiedScopeDepthForClass = 0;
         Stack<String> stackForCheckingIfBracketsBalanced = new Stack<>();
+        boolean methodIsStarts = false;
+//        boolean methodIsEnds = true;
 
         for (String str : strings) {
             // обработка области видимости
@@ -137,9 +144,9 @@ public class StructureBuilder {
                 --curScopeDepth;
             }
 
-            if (requiedScopeDepth > curScopeDepth) {
+            if (requiedScopeDepthForClass > curScopeDepth) {
                 curEntity = curEntity.getParent();
-                --requiedScopeDepth;
+                --requiedScopeDepthForClass;
             }
 
             String[] tokens = str.split("\\s+");
@@ -147,21 +154,21 @@ public class StructureBuilder {
             for (int i = 0; i < tokens.length; ++i) {
                 // обработка
                 if (tokens[i].equals("class")) {
-                    requiedScopeDepth = curScopeDepth;
+                    requiedScopeDepthForClass = curScopeDepth;
                     StructureEntity childClass = new StructureEntity("CLASS", curEntity.getPath(), curEntity.getLevel() + 1);
                     childClass.setName(tokens[i + 1]);
                     childClass.setParent(curEntity);
                     curEntity.addChild(childClass);
                     curEntity = childClass;
                 } else if (tokens[i].equals("interface")) {
-                    requiedScopeDepth = curScopeDepth;
+                    requiedScopeDepthForClass = curScopeDepth;
                     StructureEntity childClass = new StructureEntity("INTERFACE", curEntity.getPath(), curEntity.getLevel() + 1);
                     childClass.setName(tokens[i + 1]);
                     childClass.setParent(curEntity);
                     curEntity.addChild(childClass);
                     curEntity = childClass;
                 } else if (tokens[i].equals("enum")) {
-                    requiedScopeDepth = curScopeDepth;
+                    requiedScopeDepthForClass = curScopeDepth;
                     StructureEntity childClass = new StructureEntity("ENUM", curEntity.getPath(), curEntity.getLevel() + 1);
                     childClass.setName(tokens[i + 1]);
                     childClass.setParent(curEntity);
@@ -170,13 +177,14 @@ public class StructureBuilder {
                 }
             }
 
-            if (curScopeDepth == requiedScopeDepth + 1) {
+            if (curScopeDepth == requiedScopeDepthForClass + 1) {
                 String methodRegex = "^\\s*(?:(?:public|private|protected|static|final|static)\\s+)*([\\w\\<\\>\\,\\[\\]]+)\\s+(\\w+)\\s*\\(([^)]*)\\);?";
 
                 Pattern pattern = Pattern.compile(methodRegex);
                 Matcher matcher = pattern.matcher(str);
 
                 if (matcher.matches()) {
+                    methodIsStarts = true;
                     StructureEntity method = new StructureEntity("METHOD", curEntity.getPath(), curEntity.getLevel() + 1);
                     int size = matcher.groupCount();
                     String methodName = matcher.group(size - 1);
@@ -206,89 +214,19 @@ public class StructureBuilder {
                     }
                     method.setParent(curEntity);
                     curEntity.addChild(method);
+                } else {
+                    // поля класса ??
+                    // что ещё может быть ??
+                }
+            } else if (curScopeDepth > requiedScopeDepthForClass) {
+                if (methodIsStarts) {
+                    curEntity.getContent().add(str);
+                }
+            } else if (curScopeDepth == requiedScopeDepthForClass) {
+                if (methodIsStarts) {
+                    methodIsStarts = false;
                 }
             }
         }
-        return curEntity;
     }
 }
-
-
-// внутренний класс
-// использование:
-// вар 1:
-//public class Outer {
-//    private String secret = "Пароль";
-//
-//    class Inner {
-//        void show() {
-//            // Имеет доступ к приватным полям Outer
-//            System.out.println("Доступ к: " + secret);
-//        }
-//    }
-//}
-//
-//    // Использование:
-//    Outer out = new Outer();
-//    Outer.Inner in = out.new Inner(); // Создаем через объект out
-//in.show();
-// вар 2:
-//public class Outer {
-//    static class Nested {
-//        void msg() {
-//            System.out.println("Я независим от объектов Outer");
-//        }
-//    }
-//}
-//
-//    // Использование:
-//    Outer.Nested n = new Outer.Nested(); // Объект Outer не нужен
-//n.msg();
-// вар 3
-//public class Outer {
-//    void process() {
-//        class Local {
-//            void doWork() { System.out.println("Работаю внутри метода"); }
-//        }
-//        Local l = new Local();
-//        l.doWork();
-//    }
-//}
-//вар 4
-//Runnable r = new Runnable() {
-//    @Override
-//    public void run() {
-//        System.out.println("Анонимный запуск");
-//    }
-//};
-//
-// второй класс - находится в одном файле и не может быть использован за пределами пакета
-// оформляется также, но не имеет ключа public
-
-
-
-//    Stack<String> tokensStack = new Stack<>();
-//    Stack<String> stackForCheckingIfBracketsBalanced = new Stack<>();
-//
-//        for (String token : tokens) {
-//                // Если скобка открывающая — кладем в стек
-//                if (Objects.equals(token, "(") || Objects.equals(token, "[") || Objects.equals(token, "{")) {
-//                    stackForCheckingIfBracketsBalanced.push(token);
-//                }
-//                // Если закрывающая — проверяем соответствие, закрылась область видимости
-//                else if (Objects.equals(token, ")") || Objects.equals(token, "]") || Objects.equals(token, "}")) {
-//                    if (stackForCheckingIfBracketsBalanced.isEmpty()) {
-//                        System.out.println("Плохой код или неверный препроцессинг!");
-//                        throw new IOException("неверное количество скобок");
-//                    }
-//
-//                    String top = stackForCheckingIfBracketsBalanced.pop();
-//                    if (Objects.equals(top, "(") && Objects.equals(token, ")") ||
-//                        Objects.equals(top, "{") && Objects.equals(token, "}") ||
-//                        Objects.equals(top, "[") && Objects.equals(token, "]"))  {
-//                        System.out.println("Плохой код или неверный препроцессинг!");
-//                        throw new IOException("неверное количество скобок");
-//                    }
-//                }
-//        }
-

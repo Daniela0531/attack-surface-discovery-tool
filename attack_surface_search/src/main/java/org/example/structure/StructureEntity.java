@@ -11,6 +11,7 @@ public class StructureEntity {
     private ArrayList<StructureEntity> children;
     private StructureEntity parent;
     private int level;
+    private ArrayList<String> content;
 
     public StructureEntity() {
         this.path = null;
@@ -19,6 +20,7 @@ public class StructureEntity {
         this.type = null;
         this.level = 0;
         this.name = null;
+        this.content = new ArrayList<>();
     }
     public StructureEntity(String type, Path path, int level) {
         this.path = path;
@@ -27,6 +29,7 @@ public class StructureEntity {
         this.type = type;
         this.level = level;
         this.name = null;
+        this.content = new ArrayList<>();
     }
 
     public void addChild(StructureEntity child) {
@@ -50,6 +53,12 @@ public class StructureEntity {
     }
     public String getName() {
         return this.name;
+    }
+    public void setContent(ArrayList<String> content) {
+        this.content = content;
+    }
+    public ArrayList<String> getContent() {
+        return this.content;
     }
 
     public void print() {

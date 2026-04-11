@@ -1,9 +1,9 @@
 package org.example.analizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.analizer.structures.FollowedData;
-import org.example.analizer.structures.ProjectStructureGraph;
-import org.example.analizer.structures.ProjectStructureNode;
+import org.example.analizer.followed_data.FollowedData;
+import org.example.analizer.project_structure.ProjectStructureGraph;
+import org.example.analizer.project_structure.ProjectStructureNode;
 
 import java.io.File;
 

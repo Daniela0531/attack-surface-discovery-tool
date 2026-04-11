@@ -22,13 +22,27 @@ public class ClassToJsonWriter {
     private void writeToJson(StructureEntity curEntity, int extraTabs, Boolean isLast) throws Exception {
         String startTabs = "  ".repeat(curEntity.getLevel() + extraTabs);
         String bodyTabs = "  ".repeat(curEntity.getLevel() + 1 + extraTabs);
+        String contentTabs = "  ".repeat(curEntity.getLevel() + 2 + extraTabs);
         String type = curEntity.getType();
         String name = curEntity.getName();
+        ArrayList<String> content = curEntity.getContent();
 
         String jsonString = startTabs + "{\n" +
                 bodyTabs + "\"type\": \"" + type + "\",\n" +
-                bodyTabs + "\"name\": \"" + name + "\",\n" +
-                bodyTabs + "\"children\": [";
+                bodyTabs + "\"name\": \"" + name + "\",\n";
+//        if (!content.isEmpty()) {
+//            jsonString += bodyTabs + "\"content\": [\n";
+//            for (int i = 0; i < content.size(); ++i) {
+//                String str = String.join("\\\"", content.get(i).split("\""));
+//                if (i < content.size() - 1) {
+//                    jsonString += contentTabs + "\"" + str + "\",\n";
+//                } else {
+//                    jsonString += contentTabs + "\"" + str + "\"\n";
+//                }
+//            }
+//            jsonString += bodyTabs + "],\n";
+//        }
+        jsonString += bodyTabs + "\"children\": [";
         if (curEntity.getChildren().isEmpty()) {
             jsonString += "]\n" + startTabs + "}";
             if (!isLast) {
