@@ -1,7 +1,8 @@
 package org.example;
-import org.example.analizer.ProjectAnalizer;
+import org.example.analizer.AnalizerAfterSpoon;
 import org.example.analizer.result_structure.ResultStructureNode;
-import org.example.structure.StructureBuilder;
+import org.example.structure.StructureBuilderSpoon;
+import spoon.reflect.CtModel;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -11,7 +12,7 @@ import java.nio.file.*;
 public class Main {
     private static Path dirForProjectCopy = Paths.get("preproccesed_project");
     public static void main(String[] args) throws Exception {
-        String pathToProject = "/Users/daniela/Desktop/maga_diplom/test/";
+//        String pathToProject = "/Users/daniela/Desktop/maga_diplom/test/";
 
         // копирование проекта в вспомогательную директорию
 
@@ -48,13 +49,33 @@ public class Main {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
-//        String inputDataJson = "project_structure/data.json";
+        System.out.println("Построение структуры проекта ...");
+        StructureBuilderSpoon structureBuilderSpoon = new StructureBuilderSpoon(dirForProjectCopy);
+
+        String inputDataJson = "project_structure/data.json";
 //        String inputStructureJson = "project_structure/structure.json";
 //        ProjectAnalizer projectAnalizer = new ProjectAnalizer(inputDataJson, inputStructureJson, dirForProjectCopy);
 //        ResultStructureNode resultStructureNode = projectAnalizer.analiseProject();
 //        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
 //        resultStructureNode.print(0);
-        System.out.println(Main.class.getProtectionDomain().getCodeSource().getLocation());
+//        System.out.println(Main.class.getProtectionDomain().getCodeSource().getLocation());
+        CtModel structure = null;
+        try {
+            structure = structureBuilderSpoon.createProjectStructure();
+            System.out.println("Пострроение структуры завершено!");
+        } catch (IOException e) {
+            System.out.println("Ошибка пострроение структуры проекта");
+            return;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Анализ структуры проекта ...");
+        AnalizerAfterSpoon analizerAfterSpoon = new AnalizerAfterSpoon(inputDataJson);
+        analizerAfterSpoon.setModel(structure);
+        ResultStructureNode resultStructureNode = analizerAfterSpoon.analyze();
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
+        resultStructureNode.print(0);
+        System.out.println("Анализ структуры проекта завершён!");
     }
 
 //    private static FollowedData getInputPoints() {

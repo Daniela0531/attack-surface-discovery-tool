@@ -1,11 +1,9 @@
 {
-  "package": "preproccesed_project",
-  "class": "GameConfiguration",
-  "file": "preproccesed_project/src/main/java/ru/mipt/bit/platformer/GameConfiguration.java",
-  "name": "absoluteFilePath",
-  "positionInMethod": 2,
+  "package": "ru.mipt.bit.platformer.actions.impl_action",
+  "class": "MoveAction",
+  "positionInMethod": 0,
   "method": {
-    "name": "levelMap",
-    "numberOfArguments": 2
+    "name": "execute",
+    "numberOfArguments": 1
   }
 }

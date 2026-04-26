@@ -2,6 +2,7 @@ package org.example.analizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.analizer.followed_data.FollowedData;
+import org.example.analizer.followed_data.MethodArgumentLocation;
 import org.example.analizer.project_structure.ProjectStructureGraph;
 import org.example.analizer.project_structure.ProjectStructureNode;
 
@@ -27,20 +28,22 @@ public class JsonToClassGenerator {
         return new ProjectStructureGraph(node);
     }
 
-    public static FollowedData createDataFromJson(String inputDataJson) throws Exception {
+    public static FollowedData createDataFromLocationJson(String inputDataJson) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        FollowedData followedData = new FollowedData();
+        MethodArgumentLocation location = new MethodArgumentLocation();
 
         try {
             File jsonFile = new File(inputDataJson);
 
             // Читаем JSON и создаем объект
-            mapper.readerForUpdating(followedData).readValue(jsonFile);
+            mapper.readerForUpdating(location).readValue(jsonFile);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return followedData;
+        FollowedData newData = new FollowedData();
+        newData.setLocation(location);
+        return newData;
     }
 //        GenerationConfig config = new DefaultGenerationConfig() {
 //            @Override
