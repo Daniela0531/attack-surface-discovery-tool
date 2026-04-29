@@ -12,21 +12,21 @@ public class JsonToClassGenerator {
 //    String inputStructureJson = "project_structure/structure.json"; // Путь к вашему JSON-файлу
 
 //    String inputDataJson = "project_structure/data.json";
-    public static ProjectStructureGraph createStructureGraphFromJson(String inputStructureJson) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ProjectStructureNode node = new ProjectStructureNode();
-
-        try {
-            File jsonFile = new File(inputStructureJson);
-
-            // Читаем JSON и создаем объект
-            mapper.readerForUpdating(node).readValue(jsonFile);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ProjectStructureGraph(node);
-    }
+//    public static ProjectStructureGraph createStructureGraphFromJson(String inputStructureJson) throws Exception {
+//        ObjectMapper mapper = new ObjectMapper();
+//        ProjectStructureNode node = new ProjectStructureNode();
+//
+//        try {
+//            File jsonFile = new File(inputStructureJson);
+//
+//            // Читаем JSON и создаем объект
+//            mapper.readerForUpdating(node).readValue(jsonFile);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return new ProjectStructureGraph(node);
+//    }
 
     public static FollowedData createDataFromLocationJson(String inputDataJson) throws Exception {
         ObjectMapper mapper = new ObjectMapper();

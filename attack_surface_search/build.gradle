@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'scala' // Обязательно для работы зависимостей Joern
 }
 
 group = 'org.example'
@@ -7,6 +8,9 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://sonatype.org"
+    }
 }
 
 dependencies {
@@ -26,12 +30,36 @@ dependencies {
 
     // Дополнительно: javax.annotation (часто требуется для сгенерированного кода)
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
-    // javaparser
-    implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.10'
+
     // spoon
     implementation 'fr.inria.gforge.spoon:spoon-core:10.4.0'
     // Эта библиотека просто направит логи Spoon в консоль
     implementation 'org.slf4j:slf4j-simple:2.0.9'
+
+//    // 1. Фронтенд (используем версию под Scala 2.13 для совместимости с ядром)
+//    implementation 'io.joern:javasrc2cpg_2.13:4.0.21'
+
+    // 2. Ядро CPG (актуальная стабильная версия)
+    // Используем всё строго на Scala 2.13
+
+    // Основной "движок" для генерации графа из исходников
+    implementation 'io.joern:javasrc2cpg_3:2.0.262' // Версия для примера
+
+    // Ядро CPG и язык запросов
+    implementation 'io.joern:semanticcpg_3:2.0.262'
+    implementation 'io.joern:dataflowengineoss_3:2.0.262'
+//
+//    // 2. Ядро Code Property Graph (определения узлов и графа)
+//    // Основная библиотека CPG
+//    implementation("io.shiftleft:codepropertygraph_2.13:1.3.605")
+//    // Доменные классы (если требуются)
+//    implementation("io.shiftleft:codepropertygraph-domain-classes_2.13:1.3.549")
+//
+//    // Для работы со структурами данных Scala (List, Option) из Java
+//    implementation 'org.scala-lang:scala-library:2.13.12'
+    // Обязательно добавьте логгер, иначе CPG будет падать с ошибкой инициализации
+//    implementation "org.slf4j:slf4j-simple:2.0.7"
+
 }
 
 test {
