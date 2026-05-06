@@ -1,0 +1,5 @@
+{
+  "package": "ru.mipt.bit.platformer",
+  "class": "GameDesktopLauncher",
+  "methodName": "main"
+}

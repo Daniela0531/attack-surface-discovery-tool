@@ -8,23 +8,23 @@ public interface StructureEntityInterface {
 //    public void addChild(StructureEntityInterface child);
 
 //    public ArrayList<StructureEntityInterface> getChildren();
-    public void setPath(Path path);
-    public void setType(String type);
+//    void setPath(Path path);
+    void setType(String type);
 //    public void setParent(StructureEntityInterface parent);
-    public void setName(String name);
-    public String getName();
+//    void setName(String name);
+    String getName();
 
-    public void print();
+    void print();
 
-    public String getType();
+    String getType();
 
-    public Path getPath();
+//    Path getPath();
 
 //    public void setChildren(ArrayList<StructureEntityInterface> children);
 
-    public int getLevel();
-
-    public void setLevel(int level);
+//    int getLevel();
+//
+//    void setLevel(int level);
 
 //    public StructureEntityInterface getParent();
 }

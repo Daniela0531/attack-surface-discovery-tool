@@ -1,9 +1,9 @@
 {
-  "package": "ru.mipt.bit.platformer.actions.impl_action",
-  "class": "MoveAction",
-  "positionInMethod": 0,
+  "package": "ru.mipt.bit.platformer",
+  "class": "Game",
+  "positionInMethod": 4,
   "method": {
-    "name": "execute",
-    "numberOfArguments": 1
+    "name": "Game",
+    "numberOfArguments": 6
   }
 }

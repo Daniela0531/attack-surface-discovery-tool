@@ -1,37 +1,43 @@
-package org.example.analizer.result_structure;
+package org.example.result_structure;
 
-import org.example.analizer.Method;
-import org.example.analizer.followed_data.FollowedDataLocation;
+import org.example.analizer.followed_data.FollowedDatumLocation;
 
 import java.util.ArrayList;
 
-public class ResultStructureNode {
-    private FollowedDataLocation location;
-    private ArrayList<ResultStructureNode> children;
+public class ResultNode {
+    public String methodName;
+    private FollowedDatumLocation location;
+    private ArrayList<ResultNode> operations;
+//    private ResultStructureNode child;
 
-    public ResultStructureNode() {
-        this.children = new ArrayList<>();
+    public ResultNode() {
+        this.operations = new ArrayList<>();
 //        this.positionInMethod = -1;
 //        this.method = new Method();
     }
-    public ResultStructureNode(FollowedDataLocation location) {
-        this.children = new ArrayList<>();
+    public ResultNode(FollowedDatumLocation location) {
+        this.operations = new ArrayList<>();
         this.location = location;
+//        this.child = null;
     }
 
 //    public String getMethodName() {
 //        return this.method.getName();
 //    }
-    public void addChild(ResultStructureNode child) {
-        children.add(child);
+    public void addOperation(ResultNode child) {
+        operations.add(child);
     }
 
-    public ArrayList<ResultStructureNode> getChildren() {
-        return children;
+//    public void addChild(ResultStructureNode child) {
+//        this.child = child;
+//    }
+
+    public ArrayList<ResultNode> getOperations() {
+        return operations;
     }
 
     public void print(int i) {
-//        String tabs = "   ".repeat(i);
+        String tabs = "   ".repeat(i);
 //        System.out.println(tabs + "package ::" + this.javaPackage);
 //        System.out.println(tabs + "class ::" + this.javaClass);
 //        System.out.println(tabs + "method.getName ::" + this.method.getName());
@@ -39,15 +45,22 @@ public class ResultStructureNode {
 //        System.out.println(tabs + "positionInMethod ::" + this.positionInMethod);
 
         System.out.println(i + ":::");
-        location.print();
-        for (ResultStructureNode child : children) {
-            child.print(i + 1);
+        if (location != null)
+            location.print(i);
+        for (ResultNode child : operations) {
+            child.print(i);
         }
+//        if (child != null)
+//            child.print(i + 1);
     }
 
-    public void setChildren(ArrayList<ResultStructureNode> children) {
-        this.children = children;
+    public void setOperations(ArrayList<ResultNode> operations) {
+        this.operations = operations;
     }
+
+//    public ResultStructureNode getChild() {
+//        return child;
+//    }
 //    public void setPositionInMethod(int positionInMethod) {
 //        this.positionInMethod = positionInMethod;
 //    }

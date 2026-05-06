@@ -51,3 +51,111 @@ LGPL (Lesser General Public License) — позволяет использова
 Apache License 2.0 — максимально разрешительная лицензия. Она позволяет использовать, изменять и распространять код как в открытых, так и в коммерческих (закрытых) проектах без особых ограничений.
 
 Нужно сравнивать типы аргументов тоже
+
+CtExecutable
+├── CtMethod          - обычные методы
+├── CtConstructor     - конструкторы
+├── CtLambda          - лямбда-выражения
+└── CtAnonymousExecutable - статические/нестатические инициализаторы
+
+
+CtType
+├── CtClass          — классы (обычные, абстрактные, внутренние, анонимные) - есть конструкторы
+├── CtInterface      — интерфейсы - нет
+├── CtEnum           — перечисления (enum) - специальные конструкторы
+└── CtAnnotationType — аннотации (@interface) - нет
+
+
+CtExpression
+├── CtInvocation                    — вызов метода (myMethod())
+│   ├── CtExecutableReference       — ссылка на вызываемый метод
+│   └── getArguments()              — аргументы вызова
+│
+├── CtConstructorCall               — вызов конструктора (new MyClass())
+│   ├── CtExecutableReference       — ссылка на конструктор
+│   └── getArguments()              — аргументы конструктора
+│
+├── CtLambda                        — лямбда-выражение (x -> x * 2)
+│   ├── getExpression()             — тело лямбды
+│   └── getParameters()             — параметры лямбды
+│
+├── CtExecutableReferenceExpression  — ссылка на метод (MyClass::myMethod)
+│   └── getExecutable()             — ссылка на метод
+│
+├── CtTypeAccess                    — доступ к типу (MyClass.class)
+│   └── getAccessedType()           — тип, к которому обращаются
+│
+├── CtLiteral                       — литерал (42, "hello")
+│   └── getValue()                  — значение литерала
+│
+├── CtVariableRead                  — чтение переменной (myVar)
+│   └── getVariable()               — ссылка на переменную
+│
+├── CtVariableWrite                 — запись переменной (myVar = value)
+│   ├── getVariable()               — ссылка на переменную
+│   └── getAssigned()               — присваиваемое значение
+│
+├── CtFieldRead                     — чтение поля (obj.field)
+│   └── getVariable()               — ссылка на поле
+│
+├── CtFieldWrite                    — запись поля (obj.field = value)
+│   ├── getVariable()               — ссылка на поле
+│   └── getAssigned()               — присваиваемое значение
+│
+├── CtArrayRead                     — чтение элемента массива (arr[0])
+│   └── getIndexExpression()        — индекс
+│
+├── CtArrayWrite                    — запись в массив (arr[0] = value)
+│   ├── getIndexExpression()        — индекс
+│   └── getAssigned()               — присваиваемое значение
+│
+├── CtBinaryOperator                — бинарная операция (a + b)
+│   ├── getLeftHandOperand()        — левый операнд
+│   └── getRightHandOperand()       — правый операнд
+│
+├── CtUnaryOperator                 — унарная операция (!flag, -value)
+│   └── getOperand()                — операнд
+│
+├── CtConditional                   — тернарный оператор (x > 0 ? a : b)
+│   ├── getCondition()              — условие
+│   ├── getThenExpression()         — выражение для true
+│   └── getElseExpression()         — выражение для false
+│
+├── CtNewArray                      — создание массива (new int[]{1, 2})
+│   └── getElements()               — элементы массива
+│
+├── CtNewClass                      — создание анонимного класса
+│   └── getAnonymousClass()         — тело анонимного класса
+│
+├── CtCast                          — приведение типа ((String) obj)
+│   ├── getType()                   — тип приведения
+│   └── getExpression()             — приводимое выражение
+│
+├── CtThisAccess                    — доступ к this
+│   └── getTarget()                 — целевой тип (для this в анонимных классах)
+│
+├── CtSuperAccess                   — доступ к super
+│   └── getTarget()                 — целевой тип
+│
+├── CtEnumValueRead                 — чтение значения enum (MyEnum.VALUE)
+│   └── getVariable()               — ссылка на значение enum
+│
+├── CtAssert                        — assert выражение
+│   ├── getAssertExpression()       — проверяемое выражение
+│   └── getExpression()             — сообщение об ошибке
+│
+├── CtBreak                         — break оператор
+│   └── getTargetLabel()            — метка (если есть)
+│
+├── CtContinue                      — continue оператор
+│   └── getTargetLabel()            — метка (если есть)
+│
+├── CtReturn                        — return оператор
+│   └── getReturnedExpression()     — возвращаемое выражение
+│
+├── CtThrow                         — throw оператор
+│   └── getThrownExpression()       — выбрасываемое исключение
+│
+└── CtAnnotation                    — аннотация (@Override)
+├── getAnnotationType()         — тип аннотации
+└── getValues()                 — значения параметров аннотации

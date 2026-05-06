@@ -1,8 +1,8 @@
 package org.example.analizer;
 
 import org.example.analizer.followed_data.EquatingLocation;
-import org.example.analizer.followed_data.FollowedData;
-import org.example.analizer.followed_data.FollowedDataLocation;
+import org.example.analizer.followed_data.FollowedDatum;
+import org.example.analizer.followed_data.FollowedDatumLocation;
 import org.example.analizer.followed_data.MethodArgumentLocation;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
@@ -17,8 +17,8 @@ public class ActionAnalyzer {
     // data передается куда-то как аргумент:
 
     // CtInvocation — вызов обычного метода (не конструктора).
-    public static FollowedData analyzeActionCtInvocation(CtInvocation<?> call, CtVariableRead<?> access) {
-        FollowedData newData = new FollowedData();
+    public static FollowedDatum analyzeActionCtInvocation(CtInvocation<?> call, CtVariableRead<?> access) {
+        FollowedDatum newDatum = new FollowedDatum();
         // список всех аргументов
         List<CtExpression<?>> args = call.getArguments();
         // количество аргументов
@@ -37,7 +37,7 @@ public class ActionAnalyzer {
         if (target != null) {
             System.out.println("Данные переданы в метод объекта: " + target.toString());
 
-            // 2. Если цель — это обращение к переменной (anotherData.method(data))
+            // 2. Если цель — это обращение к переменной (anotherDatum.method(data))
             if (target instanceof CtVariableAccess) {
                 System.out.println("цель — это обращение к переменной");
 
@@ -68,17 +68,17 @@ public class ActionAnalyzer {
                         System.out.println("Создается объект типа: " + consCall.getType().getQualifiedName());
                     } else {
                         CtVariableAccess<?> targetAccess = (CtVariableAccess<?>) target;
-                        String anotherDataName = targetAccess.getVariable().getSimpleName();
-                        String anotherDataType = targetAccess.getVariable().getType().getQualifiedName();
+                        String anotherDatumName = targetAccess.getVariable().getSimpleName();
+                        String anotherDatumType = targetAccess.getVariable().getType().getQualifiedName();
 
-                        System.out.println("Найдена переменная-приемник: " + anotherDataName + " [тип: " + anotherDataType + "]");
+                        System.out.println("Найдена переменная-приемник: " + anotherDatumName + " [тип: " + anotherDatumType + "]");
 
-                        // Здесь вы можете создать новый объект FollowedData
-                        // и пометить, что теперь мы "следим" за anotherData в этом методе
-                        newData = new FollowedData();
-//                newData.setName(anotherDataName);
-                        // newData.setClassName(anotherDataType); // и т.д.
-                        return newData;
+                        // Здесь вы можете создать новый объект FollowedDatum
+                        // и пометить, что теперь мы "следим" за anotherDatum в этом методе
+                        newDatum = new FollowedDatum();
+//                newDatum.setName(anotherDatumName);
+                        // newDatum.setClassName(anotherDatumType); // и т.д.
+                        return newDatum;
                     }
                 }
                 // параметр анализируемого метода
@@ -89,17 +89,17 @@ public class ActionAnalyzer {
                     // повторить до тех пор, пока не найден, рекурсия
                     // может ли быть никогда не найден?
                     CtVariableAccess<?> targetAccess = (CtVariableAccess<?>) target;
-                    String anotherDataName = targetAccess.getVariable().getSimpleName();
-                    String anotherDataType = targetAccess.getVariable().getType().getQualifiedName();
+                    String anotherDatumName = targetAccess.getVariable().getSimpleName();
+                    String anotherDatumType = targetAccess.getVariable().getType().getQualifiedName();
 
-                    System.out.println("Найдена переменная-приемник: " + anotherDataName + " [тип: " + anotherDataType + "]");
+                    System.out.println("Найдена переменная-приемник: " + anotherDatumName + " [тип: " + anotherDatumType + "]");
 
-                    // Здесь вы можете создать новый объект FollowedData
-                    // и пометить, что теперь мы "следим" за anotherData в этом методе
-                    newData = new FollowedData();
-//                newData.setName(anotherDataName);
-                    // newData.setClassName(anotherDataType); // и т.д.
-                    return newData;
+                    // Здесь вы можете создать новый объект FollowedDatum
+                    // и пометить, что теперь мы "следим" за anotherDatum в этом методе
+                    newDatum = new FollowedDatum();
+//                newDatum.setName(anotherDatumName);
+                    // newDatum.setClassName(anotherDatumType); // и т.д.
+                    return newDatum;
                 }
                 // поле анализируемого класса
                 else if (declaration instanceof CtField) {
@@ -109,17 +109,17 @@ public class ActionAnalyzer {
                     // повторить до тех пор, пока не найден, рекурсия
                     // может ли быть никогда не найден?
                     CtVariableAccess<?> targetAccess = (CtVariableAccess<?>) target;
-                    String anotherDataName = targetAccess.getVariable().getSimpleName();
-                    String anotherDataType = targetAccess.getVariable().getType().getQualifiedName();
+                    String anotherDatumName = targetAccess.getVariable().getSimpleName();
+                    String anotherDatumType = targetAccess.getVariable().getType().getQualifiedName();
 
-                    System.out.println("Найдена переменная-приемник: " + anotherDataName + " [тип: " + anotherDataType + "]");
+                    System.out.println("Найдена переменная-приемник: " + anotherDatumName + " [тип: " + anotherDatumType + "]");
 
-                    // Здесь вы можете создать новый объект FollowedData
+                    // Здесь вы можете создать новый объект FollowedDatum
                     // и пометить, что теперь мы "следим" за anotherData в этом методе
-                    newData = new FollowedData();
+                    newDatum = new FollowedDatum();
 //                newData.setName(anotherDataName);
                     // newData.setClassName(anotherDataType); // и т.д.
-                    return newData;
+                    return newDatum;
                 } else {
                     // CtCatchVariable
                     // CtEnumConstant
@@ -163,16 +163,16 @@ public class ActionAnalyzer {
             MethodArgumentLocation location = new MethodArgumentLocation(
                     packageName, className, method, argumentIndex
             );
-            newData.setLocation(location);
+            newDatum.setLocation(location);
 
             System.out.println("Вызов: Параметр передан в метод [" + methodName + "] класса [" + className + "] пакета [" + packageName + "]");
         }
-        return newData;
+        return newDatum;
     }
 
     // CtConstructorCall — вызов конструктора (new MyClass(data)).
-    public static FollowedData analyzeActionCtConstructorCall(CtConstructorCall<?> call, CtVariableRead<?> access) {
-        FollowedData newData = new FollowedData();
+    public static FollowedDatum analyzeActionCtConstructorCall(CtConstructorCall<?> call, CtVariableRead<?> access) {
+        FollowedDatum newData = new FollowedDatum();
         // список всех аргументов
         List<CtExpression<?>> args = call.getArguments();
         // количество аргументов
@@ -226,22 +226,22 @@ public class ActionAnalyzer {
     // TODO
 
     // CtAssignment — присваивание (data = 5).
-    public static FollowedData analyzeActionCtAssignment(CtAssignment<?,?> assignment, CtVariableRead<?> access) {
-        FollowedData newData = new FollowedData();
+    public static FollowedDatum analyzeActionCtAssignment(CtAssignment<?,?> assignment, CtVariableRead<?> access) {
+        FollowedDatum newData = new FollowedDatum();
         // куда присваиваем
         CtExpression<?> leftHand = assignment.getAssigned();
 
         // имя переменной, в которую присвоили
-        String dataName = "unknown";
+        String datumName = "unknown";
 
         if (leftHand instanceof CtVariableAccess<?> varAccess) {
-            // Если это просто переменная (anotherData = data)
-            dataName = varAccess.getVariable().getSimpleName();
-            System.out.println("Значение присвоено в: " + dataName);
+            // Если это просто переменная (anotherData = datum)
+            datumName = varAccess.getVariable().getSimpleName();
+            System.out.println("Значение присвоено в: " + datumName);
         } else {
-            // Если это что-то сложное (например, массив: array[0] = data)
-            dataName = leftHand.toString();
-            System.out.println("Присваивание в сложную конструкцию: " + dataName);
+            // Если это что-то сложное (например, массив: array[0] = datum)
+            datumName = leftHand.toString();
+            System.out.println("Присваивание в сложную конструкцию: " + datumName);
         }
         // Поднимаемся выше по дереву, чтобы найти контекст
 

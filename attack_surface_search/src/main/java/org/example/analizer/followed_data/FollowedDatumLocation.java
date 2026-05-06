@@ -1,8 +1,8 @@
 package org.example.analizer.followed_data;
 
-public interface FollowedDataLocation {
+public interface FollowedDatumLocation {
     LocationType getType();
-    void print();
+    void print(int i);
 
     String getJavaClass();
     String getJavaPackage();

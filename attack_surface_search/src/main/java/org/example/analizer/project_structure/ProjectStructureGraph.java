@@ -1,6 +1,6 @@
 package org.example.analizer.project_structure;
 
-import org.example.analizer.followed_data.FollowedData;
+import org.example.analizer.followed_data.FollowedDatum;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

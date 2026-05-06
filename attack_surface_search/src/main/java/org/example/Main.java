@@ -1,10 +1,9 @@
 package org.example;
+import org.example.result_structure.ResultGraph;
+import org.example.structure.StructureSpoon;
 import org.example.analizer.AnalizerAfterSpoon;
-import org.example.analizer.result_structure.ResultStructureNode;
-import org.example.structure.StructureBuilderSpoon;
-import spoon.reflect.CtModel;
+import org.example.result_structure.ResultNode;
 
-import java.io.IOException;
 import java.nio.file.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -50,35 +49,43 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
         System.out.println("Построение структуры проекта ...");
-        StructureBuilderSpoon structureBuilderSpoon = new StructureBuilderSpoon(dirForProjectCopy);
+        StructureSpoon structureSpoon = new StructureSpoon(dirForProjectCopy);
 
-        String inputDataJson = "project_structure/data.json";
+        String inputDatumJson = "project_structure/data.json";
 //        String inputStructureJson = "project_structure/structure.json";
-//        ProjectAnalizer projectAnalizer = new ProjectAnalizer(inputDataJson, inputStructureJson, dirForProjectCopy);
+//        ProjectAnalizer projectAnalizer = new ProjectAnalizer(inputDatumJson, inputStructureJson, dirForProjectCopy);
 //        ResultStructureNode resultStructureNode = projectAnalizer.analiseProject();
 //        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
 //        resultStructureNode.print(0);
 //        System.out.println(Main.class.getProtectionDomain().getCodeSource().getLocation());
-        CtModel structure = null;
-        try {
-            structure = structureBuilderSpoon.createProjectStructure();
-            System.out.println("Пострроение структуры завершено!");
-        } catch (IOException e) {
-            System.out.println("Ошибка пострроение структуры проекта");
-            return;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        CtModel structure = null;
+//        try {
+//            structure = structureBuilderSpoon.createProjectStructure();
+//            System.out.println("Пострроение структуры завершено!");
+//        } catch (IOException e) {
+//            System.out.println("Ошибка пострроение структуры проекта");
+//            return;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+
+        Path sourceDir = Paths.get("preproccesed_project");
+        String jsonOutputPath = "cpg_graph.json";
+
+        structureSpoon.initSpoon();
+        structureSpoon.initCpgGraph();
+
         System.out.println("Анализ структуры проекта ...");
-        AnalizerAfterSpoon analizerAfterSpoon = new AnalizerAfterSpoon(inputDataJson);
-        analizerAfterSpoon.setModel(structure);
-        ResultStructureNode resultStructureNode = analizerAfterSpoon.analyze();
-        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
-        resultStructureNode.print(0);
-        System.out.println("Анализ структуры проекта завершён!");
+        AnalizerAfterSpoon analizerAfterSpoon = new AnalizerAfterSpoon(inputDatumJson);
+        ResultGraph resultNode = analizerAfterSpoon.analyze(structureSpoon);
+//        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
+//        resultNode.print();
+//        System.out.println("Анализ структуры проекта завершён!");
     }
 
-//    private static FollowedData getInputPoints() {
-//        return new FollowedData("JavaFileReader" , "analise" , "data");
+//    private static FollowedDatum getInputPoints() {
+//        return new FollowedDatum("JavaFileReader" , "analise" , "data");
 //    }
 }

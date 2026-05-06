@@ -3,7 +3,7 @@ package org.example.analizer.followed_data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.example.analizer.Method;
 
-public class MethodArgumentLocation implements FollowedDataLocation {
+public class MethodArgumentLocation implements FollowedDatumLocation {
     @JsonProperty("package")
     private String javaPackage = "";
     @JsonProperty("class")
@@ -30,8 +30,14 @@ public class MethodArgumentLocation implements FollowedDataLocation {
     }
 
     @Override
-    public void print() {
-        System.out.println("type :: argument of method");
+    public void print(int i) {
+//        String tabs = "   ".repeat(i);
+//        System.out.println(tabs + i + ":::\n" + tabs + "type :: argument of method");
+//        System.out.println(tabs + "package = " + javaPackage);
+//        System.out.println(tabs + "class = " + javaClass);
+//        System.out.println(tabs + "method = " + method.getName());
+//        System.out.println(tabs + "positionInMethod = " + positionInMethod);
+        System.out.println(i + ":::\n" + "type :: argument of method");
         System.out.println("package = " + javaPackage);
         System.out.println("class = " + javaClass);
         System.out.println("method = " + method.getName());
