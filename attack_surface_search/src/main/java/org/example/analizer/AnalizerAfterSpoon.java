@@ -127,7 +127,7 @@ public class AnalizerAfterSpoon {
                                 newData.add(new FollowedDatum(
                                         new MethodArgumentLocation(
                                                 methodTo.getDeclaringType().getPackage().getQualifiedName(),
-                                                methodTo.getSimpleName(),
+                                                methodTo.getDeclaringType().getSimpleName(),
                                                 new Method(edge.getTo().getSimpleName(), edge.getTo().getParameters().size()),
                                                 argInd
                                         )
