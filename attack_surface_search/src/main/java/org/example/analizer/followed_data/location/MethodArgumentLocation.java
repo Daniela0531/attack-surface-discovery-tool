@@ -1,7 +1,9 @@
-package org.example.analizer.followed_data;
+package org.example.analizer.followed_data.location;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.example.analizer.Method;
+import org.example.analizer.followed_data.LocationType;
+import org.example.analizer.followed_data.location.FollowedDatumLocation;
 
 public class MethodArgumentLocation implements FollowedDatumLocation {
     @JsonProperty("package")

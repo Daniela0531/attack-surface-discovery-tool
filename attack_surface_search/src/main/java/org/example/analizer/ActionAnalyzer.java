@@ -1,9 +1,8 @@
 package org.example.analizer;
 
-import org.example.analizer.followed_data.EquatingLocation;
+import org.example.analizer.followed_data.location.EquatingLocation;
 import org.example.analizer.followed_data.FollowedDatum;
-import org.example.analizer.followed_data.FollowedDatumLocation;
-import org.example.analizer.followed_data.MethodArgumentLocation;
+import org.example.analizer.followed_data.location.MethodArgumentLocation;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtTypeReference;

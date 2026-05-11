@@ -1,6 +1,6 @@
 package org.example.result_structure;
 
-import org.example.analizer.followed_data.FollowedDatumLocation;
+import org.example.analizer.followed_data.location.FollowedDatumLocation;
 
 import java.util.ArrayList;
 

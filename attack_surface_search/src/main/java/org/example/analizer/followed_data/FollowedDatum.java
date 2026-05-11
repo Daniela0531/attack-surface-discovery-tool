@@ -1,7 +1,10 @@
 package org.example.analizer.followed_data;
 
+import org.example.analizer.followed_data.location.FollowedDatumLocation;
+
 public class FollowedDatum {
     private FollowedDatumLocation location;
+    private boolean neededToAnalyze;
 
     public FollowedDatum() {
     }
@@ -29,5 +32,12 @@ public class FollowedDatum {
 //        System.out.println("datum location :::");
 //        location.print(i);
 //    }
+
+    public void setNeededToAnalyze(boolean flag) {
+        neededToAnalyze = flag;
+    }
+    public boolean getNeededToAnalyze() {
+        return neededToAnalyze;
+    }
 }
 

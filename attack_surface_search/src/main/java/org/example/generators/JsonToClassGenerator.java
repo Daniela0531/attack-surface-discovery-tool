@@ -2,7 +2,7 @@ package org.example.generators;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.analizer.followed_data.FollowedDatum;
-import org.example.analizer.followed_data.MethodArgumentLocation;
+import org.example.analizer.followed_data.location.MethodArgumentLocation;
 import org.example.analizer.project_structure.ProjectStructureGraph;
 import org.example.analizer.project_structure.ProjectStructureNode;
 import org.example.structure.StartMethod;

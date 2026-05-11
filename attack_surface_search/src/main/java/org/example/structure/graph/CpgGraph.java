@@ -16,9 +16,12 @@ public class CpgGraph {
         nodes.add(node);
     }
 
-    public void addEdge(CtExecutable<?> from, CtExecutable<?> to, RelationType type,
-                        CtExpression<?> callExpression, Label label, Condition condition) {
-        edges.add(new Edge(from, to, type, callExpression, label, condition));
+    //    public void addEdge(CtExecutable<?> from, CtExecutable<?> to, RelationType type,
+//                        CtExpression<?> callExpression, Label label, Condition condition) {
+//        edges.add(new Edge(from, to, type, callExpression, label, condition));
+//    }
+    public void addEdge(Edge edge) {
+        edges.add(edge);
     }
 
     public void printStats() {
@@ -47,6 +50,14 @@ public class CpgGraph {
     public List<Edge> getEdges() {
         return edges;
     }
+//    public Map<Edge, Node> getNeighbors(Node node) {
+//        Map<Edge, Node> neighbors = new HashMap<>();
+//        for (Edge edge : edges) {
+//            if (edge.getFrom() == node.executable) {
+//                neighbors.put(edge, new Node(edge.to));
+//            }
+//        }
+//    }
 
     public void setStart(CtMethod<?> startMethod) {
         this.start = startMethod;

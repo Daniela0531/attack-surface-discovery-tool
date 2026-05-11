@@ -1,4 +1,6 @@
-package org.example.analizer.followed_data;
+package org.example.analizer.followed_data.location;
+
+import org.example.analizer.followed_data.LocationType;
 
 public interface FollowedDatumLocation {
     LocationType getType();

@@ -2,8 +2,8 @@ package org.example.analizer;
 
 import org.example.generators.JsonToClassGenerator;
 import org.example.analizer.followed_data.FollowedDatum;
-import org.example.analizer.followed_data.FollowedDatumLocation;
-import org.example.analizer.followed_data.MethodArgumentLocation;
+import org.example.analizer.followed_data.location.FollowedDatumLocation;
+import org.example.analizer.followed_data.location.MethodArgumentLocation;
 import org.example.result_structure.ResultEdge;
 import org.example.result_structure.ResultGraph;
 import org.example.result_structure.ResultNode;
@@ -17,19 +17,19 @@ import spoon.reflect.path.CtRole;
 
 import java.util.*;
 
-public class AnalizerAfterSpoon {
+public class AnalizerAfterSpoonForDatum {
 //    private CtModel model;
-    private FollowedDatum startFollowedDatum;
-    public AnalizerAfterSpoon(String inputDatumJson) throws Exception {
+    private final FollowedDatum startFollowedDatum;
+    public AnalizerAfterSpoonForDatum(String inputDatumJson) throws Exception {
         this.startFollowedDatum = JsonToClassGenerator.createDatumFromLocationJson(inputDatumJson);
     }
-//    public void setModel(CtModel model) {
-//        this.model = model;
-//    }
-    public ResultGraph analyze(StructureSpoon structureSpoon) {
-        ResultGraph resultGraph = new ResultGraph(new ResultNode(
+    public ResultGraph analyzeDatumAndGetResult(StructureSpoon structureSpoon) {
+        ResultGraph resultGraph = new ResultGraph(
+                new ResultNode(
                     startFollowedDatum.getLocation()
-        ));
+                )
+        );
+
         ArrayList<FollowedDatum> results = new ArrayList<>();
         results.add(startFollowedDatum);
         Queue<FollowedDatum> queueForNextClass = new ArrayDeque<>();
@@ -49,7 +49,7 @@ public class AnalizerAfterSpoon {
                 resultGraph.addNode(fromNode);
             // TODO сделать поведение не как список, а как дерево
 
-            ArrayList<FollowedDatum> newData = analiseDatum(curDatum, structureSpoon);
+            ArrayList<FollowedDatum> newData = oneStepOfAnalyzingDatum(curDatum, structureSpoon);
             results.addAll(newData);
             if (!newData.isEmpty()) {
                 queueForNextClass.addAll(newData);
@@ -78,7 +78,8 @@ public class AnalizerAfterSpoon {
         return resultGraph;
     }
 
-    private ArrayList<FollowedDatum> analiseDatum(FollowedDatum followedDatum, StructureSpoon structureSpoon) {
+    // анализируем метод и конструктор, все операции в нём
+    private ArrayList<FollowedDatum> oneStepOfAnalyzingDatum(FollowedDatum followedDatum, StructureSpoon structureSpoon) {
         ArrayList<FollowedDatum> newData = new ArrayList<>();
         FollowedDatumLocation rowLocation = followedDatum.getLocation();
         if (rowLocation instanceof MethodArgumentLocation) {
@@ -104,15 +105,23 @@ public class AnalizerAfterSpoon {
         return newData;
     }
 
+//    for all startData
+//    analyzeOneStartDatum
+//    BFS: while not all children analyzed get datum and analyze it
+//    analyzeOneDatum
+//    - assignment
+//    - newVariable
+//    - invocation
+//    - constructor
+//    - dirty
+
     private List<FollowedDatum> analiseOperation(MethodArgumentLocation location, CtExecutable<?> executable, StructureSpoon structureSpoon) {
         List<FollowedDatum> newData = new ArrayList<>();
         String datumName = executable.getParameters().get(location.getPositionInMethod()).getSimpleName();
         System.out.println("!!!!! ищем аргумент ::: номер = " + location.getPositionInMethod() + " имя = " + datumName);
         System.out.println("Ищем нужный вызов");
         for (Edge edge : structureSpoon.getGraph().getEdges()) {
-//            System.out.println("нашли метод " + edge.getFrom().getSimpleName());
             if (edge.getFrom() == executable && edge.getTo() != null) {
-//                System.out.println("нашли переход в " + edge.getTo().getSimpleName());
                 CtExpression<?> callExpression = edge.getCallExpression();
                 if (callExpression instanceof CtInvocation<?>) {
                     int argInd = 0;
@@ -122,13 +131,14 @@ public class AnalizerAfterSpoon {
                         // Если это переменная - получить её имя
                         if (arg instanceof CtVariableRead) {
                             String argName = ((CtVariableRead<?>) arg).getVariable().getSimpleName();
+                            System.out.println("нашли invocation с переменной " + argName);
                             if (argName.equals(datumName)) {
-                                System.out.println("datum ушла в " + methodTo.getSimpleName());
+                                System.out.println("datum ушла в метод " + methodTo.getSimpleName());
                                 newData.add(new FollowedDatum(
                                         new MethodArgumentLocation(
                                                 methodTo.getDeclaringType().getPackage().getQualifiedName(),
                                                 methodTo.getDeclaringType().getSimpleName(),
-                                                new Method(edge.getTo().getSimpleName(), edge.getTo().getParameters().size()),
+                                                new Method(methodTo.getSimpleName(), methodTo.getParameters().size()),
                                                 argInd
                                         )
                                 ));
@@ -165,6 +175,7 @@ public class AnalizerAfterSpoon {
         }
         return newData;
     }
+
 
 //    private CtMethod<?> getRequiredMethod(StructureSpoon structureSpoon, String javaPackageName, String javaClassName, Method methodStructure) {
 //        CpgGraph cpgGraph = structureSpoon.getGraph();

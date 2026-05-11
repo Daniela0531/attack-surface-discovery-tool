@@ -1,8 +1,7 @@
 package org.example;
 import org.example.result_structure.ResultGraph;
 import org.example.structure.StructureSpoon;
-import org.example.analizer.AnalizerAfterSpoon;
-import org.example.result_structure.ResultNode;
+import org.example.analizer.AnalizerAfterSpoonForDatum;
 
 import java.nio.file.*;
 
@@ -78,8 +77,8 @@ public class Main {
         structureSpoon.initCpgGraph();
 
         System.out.println("Анализ структуры проекта ...");
-        AnalizerAfterSpoon analizerAfterSpoon = new AnalizerAfterSpoon(inputDatumJson);
-        ResultGraph resultNode = analizerAfterSpoon.analyze(structureSpoon);
+        AnalizerAfterSpoonForDatum analizerAfterSpoon = new AnalizerAfterSpoonForDatum(inputDatumJson);
+        ResultGraph resultNode = analizerAfterSpoon.analyzeDatumAndGetResult(structureSpoon);
 //        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
 //        resultNode.print();
 //        System.out.println("Анализ структуры проекта завершён!");
