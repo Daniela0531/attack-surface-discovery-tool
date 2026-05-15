@@ -1,0 +1,15 @@
+{
+  "name": "attack_surface_search",
+  "version": "1.0.0",
+  "description": "Для тестирования необходимо получить jar-архив: - `javac -d {имя папки, куда компилировать} {относительный путь до файлов java}/*.java` - `jar cf {имя для jar архива}.jar {путь до папки с файлами .class}`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

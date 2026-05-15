@@ -1,9 +1,9 @@
 {
-  "package": "org.keycloak.authentication",
-  "class": "FormAuthenticationFlow",
+  "package": "ru.mipt.bit.platformer.actions.impl_action",
+  "class": "Game",
   "positionInMethod": 0,
   "method": {
-    "name": "processAction",
+    "name": "renderCurrentResultByTick",
     "numberOfArguments": 1
   }
 }

@@ -1,5 +1,6 @@
 {
-  "package": "ru.mipt.bit.platformer",
-  "class": "GameDesktopLauncher",
-  "methodName": "main"
+  "package": "ru.mipt.bit.platformer.game_management",
+  "class": "ExecutingActionsQueue",
+  "methodName": "removeFinishedActions",
+  "methodArguments": []
 }
