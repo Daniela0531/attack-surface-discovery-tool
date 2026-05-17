@@ -37,14 +37,16 @@ public class Game {
     }
 
     public void renderCurrentResultByTick(ExecutingActionsQueue executingActions_1) {
-        float deltaTime = Gdx.graphics.getDeltaTime();
-        commandProcessing();
-        logicExecuter.executeActions(executingActions_1);
-        logicExecuter.executeActions(executingActions_1);
-        logicExecuter.executeActions(executingActions_1);
+//        ExecutingActionsQueue newQueue = executingActions_1;
+//        ExecutingActionsQueue newQueue1 = null;
+//        newQueue1 = newQueue;
+//
+//        commandProcessing();
+//        logicExecuter.executeActions(newQueue);
+//        logicExecuter.executeActions(newQueue1);
 
         level.update(executingActions_1);
-        graphicRender.render((Level) executingActions_1);
+//        graphicRender.render((Level) executingActions_1);
     }
 
     private void commandProcessing() {

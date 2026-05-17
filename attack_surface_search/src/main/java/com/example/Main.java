@@ -1,7 +1,8 @@
 package com.example;
+import com.example.analizer.project_structure.NewAnalyzer;
 import com.example.result_structure.ResultGraph;
 import com.example.structure.StructureSpoon;
-import com.example.analizer.AnalyzerAfterSpoonForDatum;
+//import com.example.analizer.AnalyzerAfterSpoonForDatum;
 
 import java.nio.file.*;
 
@@ -76,11 +77,20 @@ public class Main {
         structureSpoon.initSpoon();
         structureSpoon.initCpgGraph();
 //
+//        System.out.println("Анализ структуры проекта ...");
+//        AnalyzerAfterSpoonForDatum analizerAfterSpoon = new AnalyzerAfterSpoonForDatum(structureSpoon, inputDatumJson);
+//        ResultGraph resultNode = analizerAfterSpoon.analyzeDatumAndGetResult();
+//        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
+//        resultNode.print();
+//        System.out.println("Анализ структуры проекта завершён!");
+
+        String inputJson = "project_structure/input.json";
         System.out.println("Анализ структуры проекта ...");
-        AnalyzerAfterSpoonForDatum analizerAfterSpoon = new AnalyzerAfterSpoonForDatum(inputDatumJson);
-        ResultGraph resultNode = analizerAfterSpoon.analyzeDatumAndGetResult(structureSpoon);
+        NewAnalyzer analizerAfterSpoon = new NewAnalyzer(structureSpoon, inputJson);
+        ResultGraph resultGraph = analizerAfterSpoon.analyzeDatumAndGetResult();
         System.out.println(":::::::::::::::::::::::::::::::::::::::::");
-        resultNode.print();
+        System.out.println("============== результат анализа =============");
+        resultGraph.print();
         System.out.println("Анализ структуры проекта завершён!");
     }
 

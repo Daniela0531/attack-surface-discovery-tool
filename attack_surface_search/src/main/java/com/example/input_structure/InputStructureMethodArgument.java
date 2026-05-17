@@ -1,14 +1,14 @@
-package com.example.structure;
+package com.example.input_structure;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StartMethodArgument {
+public class InputStructureMethodArgument {
     @JsonProperty("type")
     private String type;
     @JsonProperty("name")
     private String name;
 
-    public StartMethodArgument() {
+    public InputStructureMethodArgument() {
         this.name = "";
         this.type = "";
     }

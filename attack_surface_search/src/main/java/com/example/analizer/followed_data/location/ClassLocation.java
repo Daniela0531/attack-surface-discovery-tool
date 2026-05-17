@@ -4,7 +4,7 @@ import com.example.analizer.Method;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.analizer.followed_data.LocationType;
 
-public class EquatingLocation implements FollowedDatumLocation {
+public class ClassLocation implements FollowedDatumLocation {
     @JsonProperty("package")
     private String javaPackage = "";
     @JsonProperty("class")
@@ -13,10 +13,10 @@ public class EquatingLocation implements FollowedDatumLocation {
     private Method method;
     private LocationType type = LocationType.EQUATING;
 
-    public EquatingLocation() {
+    public ClassLocation() {
         this.method = new Method();
     }
-    public EquatingLocation(String javaPackage, String javaClass, Method method) {
+    public ClassLocation(String javaPackage, String javaClass, Method method) {
         this.javaPackage = javaPackage;
         this.javaClass = javaClass;
         this.method = method;
@@ -45,10 +45,10 @@ public class EquatingLocation implements FollowedDatumLocation {
 
     @Override
     public boolean isEquels(FollowedDatumLocation followedDatumLocation) {
-        if (!(followedDatumLocation instanceof EquatingLocation)) {
+        if (!(followedDatumLocation instanceof ClassLocation)) {
             return false;
         }
-        EquatingLocation anotherLocation = (EquatingLocation) followedDatumLocation;
+        ClassLocation anotherLocation = (ClassLocation) followedDatumLocation;
         return javaPackage.equals(anotherLocation.javaPackage) &&
                 javaClass.equals(anotherLocation.javaClass) &&
                 method.getName().equals(anotherLocation.getMethod().getName()) &&

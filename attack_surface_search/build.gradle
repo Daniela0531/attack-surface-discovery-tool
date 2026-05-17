@@ -38,7 +38,8 @@ dependencies {
     // javaparser
     implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.10'
     // spoon
-    implementation 'fr.inria.gforge.spoon:spoon-core:10.4.0'
+//    implementation 'fr.inria.gforge.spoon:spoon-core:10.4.0'
+    implementation 'fr.inria.gforge.spoon:spoon-core:11.2.0'
     // Эта библиотека просто направит логи Spoon в консоль
     implementation 'org.slf4j:slf4j-simple:2.0.9'
 

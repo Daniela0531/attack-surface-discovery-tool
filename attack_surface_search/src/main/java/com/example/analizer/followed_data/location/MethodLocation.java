@@ -3,8 +3,9 @@ package com.example.analizer.followed_data.location;
 import com.example.analizer.Method;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.analizer.followed_data.LocationType;
+import spoon.reflect.declaration.CtMethod;
 
-public class MethodArgumentLocation implements FollowedDatumLocation {
+public class MethodLocation implements FollowedDatumLocation {
     @JsonProperty("package")
     private String javaPackage = "";
     @JsonProperty("class")
@@ -14,12 +15,13 @@ public class MethodArgumentLocation implements FollowedDatumLocation {
     @JsonProperty("method")
     private Method method;
     private LocationType type = LocationType.METHOD;
+    private CtMethod<?> ctMethod;
 
-    public MethodArgumentLocation() {
+    public MethodLocation() {
         this.method = new Method();
         this.positionInMethod = -1;
     }
-    public MethodArgumentLocation(String javaPackage, String javaClass, Method method, int positionInMethod) {
+    public MethodLocation(String javaPackage, String javaClass, Method method, int positionInMethod) {
         this.javaPackage = javaPackage;
         this.javaClass = javaClass;
         this.method = method;
@@ -63,10 +65,10 @@ public class MethodArgumentLocation implements FollowedDatumLocation {
 
     @Override
     public boolean isEquels(FollowedDatumLocation followedDatumLocation) {
-        if (!(followedDatumLocation instanceof MethodArgumentLocation)) {
+        if (!(followedDatumLocation instanceof MethodLocation)) {
             return false;
         }
-        MethodArgumentLocation anotherLocation = (MethodArgumentLocation) followedDatumLocation;
+        MethodLocation anotherLocation = (MethodLocation) followedDatumLocation;
         return javaPackage.equals(anotherLocation.javaPackage) &&
                 javaClass.equals(anotherLocation.javaClass) &&
                 positionInMethod == anotherLocation.getPositionInMethod() &&
@@ -76,5 +78,9 @@ public class MethodArgumentLocation implements FollowedDatumLocation {
 
     public Method getMethod() {
         return method;
+    }
+
+    public CtMethod<?> getCtMethod() {
+        return ctMethod;
     }
 }

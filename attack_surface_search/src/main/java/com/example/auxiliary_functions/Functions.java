@@ -1,13 +1,14 @@
-package com.example.structure.auxiliary_functions;
+package com.example.auxiliary_functions;
 
 import com.example.analizer.Method;
 import com.example.analizer.followed_data.FollowedDatum;
-import com.example.analizer.followed_data.location.MethodArgumentLocation;
+import com.example.analizer.followed_data.MethodArgument;
+import com.example.analizer.followed_data.location.MethodLocation;
 import com.example.structure.graph.Condition;
 import com.example.structure.graph.Edge;
 import com.example.structure.graph.Label;
 import com.example.structure.graph.RelationType;
-import com.example.structure.StartMethod;
+import com.example.input_structure.InputStructureMethod;
 import spoon.reflect.code.CtConstructorCall;
 import spoon.reflect.code.CtExpression;
 import spoon.reflect.code.CtInvocation;
@@ -22,19 +23,20 @@ import spoon.reflect.visitor.filter.TypeFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Functions {
-    public boolean checkIsMethodMatchesStructure(CtMethod<?> ctMethod, StartMethod startMethod) {
-        return ctMethod.getSimpleName().equals(startMethod.getMethodName()) &&
-                ctMethod.getParameters().size() == startMethod.getMethodArguments().size() &&
-                ctMethod.getDeclaringType().getSimpleName().equals(startMethod.getClassName());
+    public boolean checkIsMethodMatchesStructure(CtMethod<?> ctMethod, InputStructureMethod inputStructureMethod) {
+        return ctMethod.getSimpleName().equals(inputStructureMethod.getMethodName()) &&
+                ctMethod.getParameters().size() == inputStructureMethod.getMethodArguments().size() &&
+                ctMethod.getDeclaringType().getSimpleName().equals(inputStructureMethod.getClassName());
     }
 
-    public boolean checkIsConstructorMatchesStructure(CtConstructor<?> ctConstructor, StartMethod startMethod) {
-        return ctConstructor.getDeclaringType().getSimpleName().equals(startMethod.getMethodName()) &&
-                ctConstructor.getParameters().size() == startMethod.getMethodArguments().size() &&
-                ctConstructor.getDeclaringType().getSimpleName().equals(startMethod.getClassName());
+    public boolean checkIsConstructorMatchesStructure(CtConstructor<?> ctConstructor, InputStructureMethod inputStructureMethod) {
+        return ctConstructor.getDeclaringType().getSimpleName().equals(inputStructureMethod.getMethodName()) &&
+                ctConstructor.getParameters().size() == inputStructureMethod.getMethodArguments().size() &&
+                ctConstructor.getDeclaringType().getSimpleName().equals(inputStructureMethod.getClassName());
     }
 
     public List<Edge> getAllMethodCallsEdges(CtExecutable<?> node) {
@@ -156,30 +158,30 @@ public class Functions {
         return calleeConstructors;
     }
 
-    public List<FollowedDatum> isArgOfCalleeMethod(String datumName, CtInvocation<?> ctInvocation) {
-        int argInd = 0;
-        CtExecutableReference<?> executableRef = ctInvocation.getExecutable();
-        List<FollowedDatum> newData = new ArrayList<>();
-        for (CtExpression<?> arg : ctInvocation.getArguments()) {
-            // Если это переменная - получить её имя
-            if (arg instanceof CtVariableRead) {
-                String argName = ((CtVariableRead<?>) arg).getVariable().getSimpleName();
-                System.out.println("нашли invocation с переменной " + argName);
-                if (argName.equals(datumName)) {
-                    newData.add(new FollowedDatum(
-                            new MethodArgumentLocation(
-                                    executableRef.getDeclaringType().getPackage().getQualifiedName(),
-                                    executableRef.getDeclaringType().getSimpleName(),
-                                    new Method(executableRef.getSimpleName(), executableRef.getParameters().size()),
-                                    argInd
-                            )
-                    ));
-                }
-            }
-            ++argInd;
-        }
-        return newData;
-    }
+//    public List<FollowedDatum> isArgOfCalleeMethod(String datumName, CtInvocation<?> ctInvocation) {
+//        int argInd = 0;
+//        CtExecutableReference<?> executableRef = ctInvocation.getExecutable();
+//        List<FollowedDatum> newData = new ArrayList<>();
+//        for (CtExpression<?> arg : ctInvocation.getArguments()) {
+//            // Если это переменная - получить её имя
+//            if (arg instanceof CtVariableRead) {
+//                String argName = ((CtVariableRead<?>) arg).getVariable().getSimpleName();
+//                System.out.println("нашли invocation с переменной " + argName);
+//                if (argName.equals(datumName)) {
+//                    newData.add(new MethodArgument(
+//                            new MethodLocation(
+//                                    executableRef.getDeclaringType().getPackage().getQualifiedName(),
+//                                    executableRef.getDeclaringType().getSimpleName(),
+//                                    new Method(executableRef.getSimpleName(), executableRef.getParameters().size()),
+//                                    argInd
+//                            )
+//                    ));
+//                }
+//            }
+//            ++argInd;
+//        }
+//        return newData;
+//    }
 
     private String getFullMethodSignature(CtMethod<?> method) {
         String params = method.getParameters().stream()
@@ -187,5 +189,14 @@ public class Functions {
                 .collect(Collectors.joining(","));
         return method.getDeclaringType().getQualifiedName() + "." +
                 method.getSimpleName() + "(" + params + ")";
+    }
+
+    public static boolean contains(Set<FollowedDatum> isVisited, FollowedDatum requiredDatum) {
+        for (FollowedDatum datum : isVisited) {
+            if (datum.isEquals(requiredDatum)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

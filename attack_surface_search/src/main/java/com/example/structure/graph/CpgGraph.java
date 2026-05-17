@@ -1,6 +1,8 @@
 package com.example.structure.graph;
 
 import spoon.reflect.code.CtConstructorCall;
+import spoon.reflect.code.CtExpression;
+import spoon.reflect.code.CtInvocation;
 import spoon.reflect.declaration.*;
 
 import java.util.*;
@@ -60,6 +62,16 @@ public class CpgGraph {
 
     public void setStart(CtMethod<?> startMethod) {
         this.start = startMethod;
+    }
+
+    public List<Edge> getEdgesByExpression(CtExpression<?> expression) {
+        List<Edge> edgesByExpression = new ArrayList<>();
+        for (Edge edge : edges) {
+            if (edge.callExpression == expression) {
+                edgesByExpression.add(edge);
+            }
+        }
+        return edgesByExpression;
     }
 }
 

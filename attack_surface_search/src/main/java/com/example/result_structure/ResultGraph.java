@@ -1,6 +1,8 @@
 package com.example.result_structure;
 
-import com.example.analizer.followed_data.FollowedDatum;
+import com.example.analizer.followed_data.*;
+import com.example.analizer.followed_data.operation.AssignmentInMethod;
+import spoon.reflect.declaration.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,17 +24,59 @@ public class ResultGraph {
         Set<FollowedDatum> visited = new HashSet<>();
 //        System.out.print("DFS (рекурсивный): ");
         int i = 0;
-        dfsRecursiveUtil(start, visited, i);
+        dfsRecursivePrint(start, visited, i);
 //        System.out.println();
     }
 
-    private void dfsRecursiveUtil(FollowedDatum vertex, Set<FollowedDatum> visited, int i) {
+    private void dfsRecursivePrint(FollowedDatum vertex, Set<FollowedDatum> visited, int i) {
         visited.add(vertex);
-        vertex.getLocation().print(i);
+        String tabs = "   ".repeat(i);
+        System.out.println(tabs + i + " ::");
+        if (vertex instanceof MethodArgument) {
+            CtExecutable<?> executable = ((MethodArgument)vertex).getLocation();
+            if (executable instanceof CtMethod<?>) {
+                System.out.println(tabs + "class :: " + ((CtMethod<?>)executable).getDeclaringType().getQualifiedName());
+            } else if (executable instanceof CtConstructor<?>) {
+                System.out.println(tabs + "class :: " + ((CtConstructor<?>)executable).getDeclaringType().getQualifiedName());
+            } else {
+                System.out.println(tabs + "Странный родитель метода/конструктора");
+            }
+            System.out.println(tabs + executable.getSignature());
+            System.out.println(tabs + "from :: " + ((MethodArgument)vertex).getParameterImplName());
+            System.out.println(tabs + "to parameter :: " + vertex.getName());
+        } else if (vertex instanceof LocalVariableInMethod) {
+            CtExecutable<?> executable = ((LocalVariableInMethod) vertex).getLocation();
+            if (executable instanceof CtMethod<?>) {
+                System.out.println(tabs + "class :: " + ((CtMethod<?>)executable).getDeclaringType().getQualifiedName());
+            } else if (executable instanceof CtConstructor<?>) {
+                System.out.println(tabs + "class :: " + ((CtConstructor<?>)executable).getDeclaringType().getQualifiedName());
+            } else {
+                System.out.println(tabs + "Странный родитель метода/конструктора");
+            }
+            System.out.println(tabs + executable.getSignature());
+            System.out.println(tabs + "local_variable :: " + vertex.getName());
+        } else if (vertex instanceof AssignmentInMethod) {
+            CtExecutable<?> executable = ((AssignmentInMethod) vertex).getLocation();
+            if (executable instanceof CtMethod<?>) {
+                System.out.println(tabs + "class :: " + ((CtMethod<?>)executable).getDeclaringType().getQualifiedName());
+            } else if (executable instanceof CtConstructor<?>) {
+                System.out.println(tabs + "class :: " + ((CtConstructor<?>)executable).getDeclaringType().getQualifiedName());
+            } else {
+                System.out.println(tabs + "Странный родитель метода/конструктора");
+            }
+            System.out.println(tabs + executable.getSignature());
+            System.out.println(tabs + "assignment :: " + vertex.getName());
+        } else if (vertex instanceof ClassField) {
+            CtClass<?> ctClass = ((ClassField) vertex).getLocation();
+            System.out.println(tabs + "class :: " + ctClass.getSimpleName());
+            System.out.println(tabs + "field :: " + vertex.getName());
+        } else {
+            System.out.println(tabs + "Новый вид Datum!!!!!!!");
+        }
 
         for (FollowedDatum neighbor : getNeighbors(vertex)) {
             if (!visited.contains(neighbor)) {
-                dfsRecursiveUtil(neighbor, visited, i + 1);
+                dfsRecursivePrint(neighbor, visited, i + 1);
             }
         }
     }

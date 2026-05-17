@@ -1,13 +1,20 @@
 package com.example.generators;
 
+import com.example.analizer.followed_data.MethodArgument;
+import com.example.input_structure.InputStructureLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.analizer.followed_data.FollowedDatum;
-import com.example.analizer.followed_data.location.MethodArgumentLocation;
+import com.example.analizer.followed_data.location.MethodLocation;
 import com.example.analizer.project_structure.ProjectStructureGraph;
 import com.example.analizer.project_structure.ProjectStructureNode;
-import com.example.structure.StartMethod;
+import com.example.input_structure.InputStructureMethod;
+import spoon.reflect.CtModel;
+import spoon.reflect.declaration.CtMethod;
+import spoon.reflect.declaration.CtParameter;
+import spoon.reflect.declaration.CtType;
 
 import java.io.File;
+import java.io.IOException;
 
 public class JsonToClassGenerator {
 //    String inputStructureJson = "project_structure/structure.json"; // Путь к вашему JSON-файлу
@@ -29,27 +36,27 @@ public class JsonToClassGenerator {
         return new ProjectStructureGraph(node);
     }
 
-    public static FollowedDatum createDatumFromLocationJson(String inputDatumJson) throws Exception {
+//    public static FollowedDatum createDatumFromLocationJson(String inputDatumJson) throws Exception {
+//        ObjectMapper mapper = new ObjectMapper();
+//        MethodLocation location = new MethodLocation();
+//
+//        try {
+//            File jsonFile = new File(inputDatumJson);
+//
+//            // Читаем JSON и создаем объект
+//            mapper.readerForUpdating(location).readValue(jsonFile);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        FollowedDatum newDatum = new MethodArgument();
+//        newDatum.setLocation(location);
+//        return newDatum;
+//    }
+
+    public static InputStructureMethod createMethodStructureFromJson(String inputDatumJson) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        MethodArgumentLocation location = new MethodArgumentLocation();
-
-        try {
-            File jsonFile = new File(inputDatumJson);
-
-            // Читаем JSON и создаем объект
-            mapper.readerForUpdating(location).readValue(jsonFile);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FollowedDatum newDatum = new FollowedDatum();
-        newDatum.setLocation(location);
-        return newDatum;
-    }
-
-    public static StartMethod createMethodStructureFromJson(String inputDatumJson) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        StartMethod method = new StartMethod();
+        InputStructureMethod method = new InputStructureMethod();
 
         try {
             File jsonFile = new File(inputDatumJson);
@@ -62,4 +69,81 @@ public class JsonToClassGenerator {
         }
         return method;
     }
+
+    public static InputStructureLocation createInputStructureFromJson(String inputDatumJson) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        InputStructureLocation location = new InputStructureLocation();
+
+        try {
+            File jsonFile = new File(inputDatumJson);
+
+            // Читаем JSON и создаем объект
+            mapper.readerForUpdating(location).readValue(jsonFile);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return location;
+    }
+
+//    public static CtParameter<?> createInputStructureFromJson(String inputMethodJson, CtModel ctModel) throws Exception {
+//        ObjectMapper mapper = new ObjectMapper();
+//        InputStructureLocation location = new InputStructureLocation();
+//
+//        try {
+//            File jsonFile = new File(inputDatumJson);
+//
+//            // Читаем JSON и создаем объект
+//            mapper.readerForUpdating(location).readValue(jsonFile);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return location;
+//    }
+
+    public static CtParameter<?> createInputStructureFromJson(String inputMethodJson, CtModel ctModel) {
+        try {
+            File jsonFile = new File(inputMethodJson);
+            // 1. Читаем JSON файл
+            ObjectMapper objectMapper = new ObjectMapper();
+            var jsonNode = objectMapper.readTree(jsonFile);
+
+            String signature = jsonNode.get("signature").asText();
+            int positionInMethod = jsonNode.get("positionInMethod").asInt();
+
+            // 2. Поиск метода по сигнатуре во всей модели
+            CtMethod<?> targetMethod = null;
+            for (CtType<?> type : ctModel.getAllTypes()) {
+                for (CtMethod<?> method : type.getMethods()) {
+                    String fullSignature = method.getDeclaringType().getQualifiedName() + "#" + method.getSignature();
+                    if (fullSignature.equals(signature)) {
+                        targetMethod = method;
+                        break;
+                    }
+                }
+                if (targetMethod != null) break;
+            }
+
+            // 3. Проверка, что метод найден
+            if (targetMethod == null) {
+                throw new RuntimeException("Метод с сигнатурой '" + signature + "' не найден в модели");
+            }
+
+            // 4. Получение параметра по позиции
+            var parameters = targetMethod.getParameters();
+            if (positionInMethod < 0 || positionInMethod >= parameters.size()) {
+                throw new RuntimeException(
+                        String.format("Неверная позиция параметра: %d. Метод '%s' имеет %d параметров",
+                                positionInMethod, signature, parameters.size())
+                );
+            }
+
+            return parameters.get(positionInMethod);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при чтении JSON файла с сигнатурой метода: ", e);
+        }
+    }
 }
+

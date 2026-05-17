@@ -1,11 +1,13 @@
-package com.example.structure;
+package com.example.input_structure;
 
+import com.example.analizer.Method;
+import com.example.analizer.followed_data.location.MethodLocation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartMethod {
+public class InputStructureMethod {
     @JsonProperty("package")
     private String packageName = "";
     @JsonProperty("class")
@@ -13,17 +15,17 @@ public class StartMethod {
     @JsonProperty("methodName")
     private String methodName;
     @JsonProperty("methodArguments")
-    private List<StartMethodArgument> methodArguments;
+    private List<InputStructureMethodArgument> methodArguments;
 
 //    private List<StartMethodArgument> methodArguments;
-    public StartMethod() {
+    public InputStructureMethod() {
         this.packageName = "";
         this.className = "";
         this.methodName = "";
         this.methodArguments = new ArrayList<>();
     }
 
-    public StartMethod(String packageName, String className, String methodName, List<StartMethodArgument> methodArguments) {
+    public InputStructureMethod(String packageName, String className, String methodName, List<InputStructureMethodArgument> methodArguments) {
         this.packageName = packageName;
         this.className = className;
         this.methodName = methodName;
@@ -39,7 +41,7 @@ public class StartMethod {
     public String getMethodName() {
         return methodName;
     }
-    public List<StartMethodArgument> getMethodArguments() {
+    public List<InputStructureMethodArgument> getMethodArguments() {
         return methodArguments;
     }
 
@@ -51,11 +53,15 @@ public class StartMethod {
                 "\n methodName = " + methodName +
                 "\n methodArguments : "
         );
-        for (StartMethodArgument arg : methodArguments) {
+        for (InputStructureMethodArgument arg : methodArguments) {
             System.out.println(
                     "\n     type : " + arg.getType() +
                     "\n     name : " + arg.getName() + "\n"
             );
         }
+    }
+
+    public MethodLocation getLocation() {
+        return new MethodLocation(packageName, className, new Method(methodName, methodArguments.size()), 0);
     }
 }

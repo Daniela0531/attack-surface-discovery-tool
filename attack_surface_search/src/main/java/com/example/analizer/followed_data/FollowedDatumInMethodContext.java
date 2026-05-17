@@ -1,13 +1,11 @@
 package com.example.analizer.followed_data;
 
 import com.example.analizer.followed_data.location.FollowedDatumLocation;
-import com.example.analizer.followed_data.operation.OperationType;
-import spoon.reflect.code.CtExpression;
 import spoon.reflect.declaration.CtExecutable;
 
-public interface FollowedDatum {
-//     FollowedDatumLocation getLocation();
-//     void setLocation(FollowedDatumLocation location);
+public interface FollowedDatumInMethodContext extends FollowedDatum {
+     CtExecutable<?> getLocation();
+     void setLocation(CtExecutable<?> location);
 //     LocationType getLocationType();
      boolean isEquals(FollowedDatum datum);
 

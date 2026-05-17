@@ -1,14 +1,19 @@
 package com.example.structure;
 
-import com.example.structure.auxiliary_functions.Functions;
+import com.example.auxiliary_functions.Functions;
+import com.example.input_structure.InputStructureMethod;
 import com.example.structure.graph.CpgGraph;
 import com.example.structure.graph.Edge;
 import com.example.structure.graph.Label;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import spoon.Launcher;
 import spoon.reflect.CtModel;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
@@ -101,7 +106,7 @@ public class StructureSpoon {
                     for (CtMethod<?> methodImpl : clazz.getAllMethods()) {
                         boolean isCorrectMethod = true;
                         if (interfaceMethod.getSimpleName().equals("setProgress")) {
-                            System.out.println("may impl setProgress: " + methodImpl.getSimpleName());
+//                            System.out.println("may impl setProgress: " + methodImpl.getSimpleName());
                         }
                         if (// Проверяем имя
                             methodImpl.getSimpleName().equals(interfaceMethod.getSimpleName()) &&
@@ -126,9 +131,9 @@ public class StructureSpoon {
 //                System.out.println("для интерфемного метода " + interfaceMethod);
 //                System.out.println("найдены реализации " + implementations);
                 implementationMap.get(interfaceMethod).addAll(implementations);
-                if (interfaceMethod.getSimpleName().equals("setProgress")) {
-                    System.out.println(implementationMap.get(interfaceMethod));
-                }
+//                if (interfaceMethod.getSimpleName().equals("setProgress")) {
+//                    System.out.println(implementationMap.get(interfaceMethod));
+//                }
             }
         }
 //        System.out.println(implementationMap);
@@ -168,30 +173,30 @@ public class StructureSpoon {
 //        graph.printStats();
     }
 
-    public CtExecutable<?> getMethodByStructure(StartMethod startMethod) {
-        List<CtExecutable<?>> nodes = graph.getNodes();
-        Functions functions = new Functions();
-        for (CtExecutable<?> node : nodes) {
-            if (
-                    node instanceof CtMethod<?> &&
-                    functions.checkIsMethodMatchesStructure((CtMethod<?>) node, startMethod)
-            ) {
-//                System.out.println("Найден метод: " + node.getSignature());
-                return node;
-            } else if (
-                    node instanceof CtConstructor<?> &&
-                    functions.checkIsConstructorMatchesStructure((CtConstructor<?>) node, startMethod)
-            ) {
-//                    System.out.println("Найден конструктор: " + node.getSignature());
-                    return node;
-            }
-//            else {
-//                System.out.println("Не тот метод: !!!!!!!!!!!!!");
+//    public CtExecutable<?> getExecutableByStructure(InputStructureMethod inputStructureMethod) {
+//        List<CtExecutable<?>> nodes = graph.getNodes();
+//        Functions functions = new Functions();
+//        for (CtExecutable<?> node : nodes) {
+//            if (
+//                    node instanceof CtMethod<?> &&
+//                    functions.checkIsMethodMatchesStructure((CtMethod<?>) node, inputStructureMethod)
+//            ) {
+////                System.out.println("Найден метод: " + node.getSignature());
+//                return node;
+//            } else if (
+//                    node instanceof CtConstructor<?> &&
+//                    functions.checkIsConstructorMatchesStructure((CtConstructor<?>) node, inputStructureMethod)
+//            ) {
+////                    System.out.println("Найден конструктор: " + node.getSignature());
+//                    return node;
 //            }
-        }
-//        System.out.println("Не найден метод: !!!!!!!!!!!!!");
-        return null;
-    }
+////            else {
+////                System.out.println("Не тот метод: !!!!!!!!!!!!!");
+////            }
+//        }
+////        System.out.println("Не найден метод: !!!!!!!!!!!!!");
+//        return null;
+//    }
 
 
     // ==================== ПОСТРОЕНИЕ ГРАФА ====================
@@ -224,6 +229,7 @@ public class StructureSpoon {
 
 
     private void addAllNodesToCpgGraph() {
+        List<Map<String, String>> signaturesList = new ArrayList<>();
         for (CtType<?> type : allTypesMap.values()) {
             // Методы интерфейсов - пропускаем
             if (type instanceof CtInterface) {
@@ -232,38 +238,74 @@ public class StructureSpoon {
             // Методы всех классов
             for (CtMethod<?> method : type.getMethods()) {
                 graph.addNode(method);
+                // Сохраняем сигнатуру метода
+                Map<String, String> methodInfo = new LinkedHashMap<>();
+                methodInfo.put("signature", method.getDeclaringType().getQualifiedName() + "#" + method.getSignature());
+                signaturesList.add(methodInfo);
             }
 
             // Конструкторы классов
             if (type instanceof CtClass<?>) {
                 for (CtConstructor<?> constructor : ((CtClass<?>) type).getConstructors()) {
                     graph.addNode(constructor);
+                    Map<String, String> methodInfo = new LinkedHashMap<>();
+                    methodInfo.put("signature", constructor.getDeclaringType().getQualifiedName() + "#" + constructor.getSignature());
+                    signaturesList.add(methodInfo);
                 }
-//                // ====== ПОЛЯ КЛАССА С ТИПОМ-ИНТЕРФЕЙСОМ ======
-//                CtClass<?> ctClass = (CtClass<?>) type;
-//                for (CtField<?> field : ctClass.getFields()) {
-//                    CtTypeReference<?> fieldType = field.getType();
-//
-//                    // Проверяем, является ли тип поля интерфейсом
-//                    if (isInterface(fieldType)) {
-//                        System.out.println("Найдено поле с типом-интерфейсом:");
-//                        System.out.println("  Класс: " + ctClass.getQualifiedName());
-//                        System.out.println("  Поле: " + field.getSimpleName());
-//                        System.out.println("  Тип: " + fieldType.getQualifiedName());
-//                        System.out.println("  Интерфейс: ДА");
-//
-//                        // Добавляем узел поля в граф
-////                        graph.addNode(field);
-//                    }
-//                }
             }
             // Конструкторы енамов
             if (type instanceof CtEnum<?>) {
                 for (CtConstructor<?> constructor : ((CtEnum<?>)type).getConstructors()) {
                     graph.addNode(constructor);
+                    Map<String, String> methodInfo = new LinkedHashMap<>();
+                    methodInfo.put("signature", constructor.getDeclaringType().getQualifiedName() + "#" + constructor.getSignature());
+                    signaturesList.add(methodInfo);
                 }
             }
+            // TODO обработка вызовов методов сторонних библиотек
         }
+        writeSignaturesToJsonFile(signaturesList);
+    }
+
+    // Запись сигнатур в JSON файл
+    private void writeSignaturesToJsonFile(List<Map<String, String>> signaturesList) {
+// Извлекаем сигнатуры
+        List<String> signatures = new ArrayList<>();
+        for (Map<String, String> item : signaturesList) {
+            signatures.add(item.get("signature"));
+        }
+
+        // Ручное построение JSON с переносами строк
+        StringBuilder json = new StringBuilder();
+        json.append("[\n");
+
+        for (int i = 0; i < signatures.size(); i++) {
+            json.append("  \"").append(escapeJson(signatures.get(i))).append("\"");
+            if (i < signatures.size() - 1) {
+                json.append(",");
+            }
+            json.append("\n");
+        }
+
+        json.append("]");
+
+        // Записываем в файл
+        try (FileWriter writer = new FileWriter("methods_signatures.json")) {
+            writer.write(json.toString());
+
+        } catch (IOException e) {
+            System.err.println("❌ Ошибка при записи JSON файла: " + e.getMessage());
+        }
+    }
+
+    // Вспомогательный метод для экранирования спецсимволов
+    private String escapeJson(String s) {
+        if (s == null) return "";
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
     }
 
 //    // Вспомогательный метод для проверки, является ли тип интерфейсом
@@ -274,66 +316,66 @@ public class StructureSpoon {
 //        return typeDeclaration instanceof CtInterface;
 //    }
 
-    private void analyseFlowFromStartingPoint(CtExecutable<?> startMethod) {
-//        System.out.println("\n=================\nищу реализации интерфейсов в " + startMethod.getSimpleName());
-        // ищу всех соседей стартового метода: все методы, куда были переходы из стартового
-        List<Edge> neighbors = new ArrayList<>();
-        for (Edge edge : graph.getEdges()) {
-            if (edge.getFrom() == startMethod) {
-                neighbors.add(edge);
-            }
-        }
-
-        // для каждого соседа узнаю: был ли это вызов метода интерфейса или нет?
-        for (Edge edge : neighbors) {
-            // Получаем цель вызова (то, что стоит перед точкой)
-            CtExpression<?> expression = edge.getCallExpression();
-            if (expression instanceof CtConstructorCall<?>) {
-
-            } else if (expression instanceof CtInvocation<?>) {
-                CtInvocation<?> invocation = (CtInvocation<?>) expression;
-                CtExpression<?> target = invocation.getTarget();
-
-                if (target != null) {
-                    // Это может быть переменная
-                    if (target instanceof CtVariableRead) {
-                        CtVariableRead<?> varRead = (CtVariableRead<?>) target;
-                        CtVariable<?> variable = varRead.getVariable().getDeclaration();
-                        String varName = variable.getSimpleName();
-                        String varType = variable.getType().getQualifiedName();
-
-//                        System.out.println("Метод вызван на переменной: " + varName);
-//                        System.out.println("  Тип переменной: " + varType);
-
-                        // Если тип — интерфейс, то мы нашли то, что нужно!
-//                        if (variable.getType().getTypeDeclaration() instanceof CtInterface) {
-//                            System.out.println("  Тип является ИНТЕРФЕЙСОМ!");
-//                        }
-                    }
-                    // Или поле класса
-                    else if (target instanceof CtFieldRead) {
-                        CtFieldRead<?> fieldRead = (CtFieldRead<?>) target;
-//                        System.out.println("Метод вызван на поле: " +
-//                                fieldRead.getVariable().getSimpleName());
-                    }
-                    // Или результат другого вызова
-                    else if (target instanceof CtInvocation) {
-                        CtInvocation<?> nestedInv = (CtInvocation<?>) target;
-//                        System.out.println("Метод вызван на результате вызова: " +
-//                                nestedInv.getExecutable().getSimpleName() + "()");
-                    }
-//                    // Или this
-//                    else if (target instanceof CtThisAccess) {
-//                        System.out.println("Метод вызван на this");
+//    private void analyseFlowFromStartingPoint(CtExecutable<?> startMethod) {
+////        System.out.println("\n=================\nищу реализации интерфейсов в " + startMethod.getSimpleName());
+//        // ищу всех соседей стартового метода: все методы, куда были переходы из стартового
+//        List<Edge> neighbors = new ArrayList<>();
+//        for (Edge edge : graph.getEdges()) {
+//            if (edge.getFrom() == startMethod) {
+//                neighbors.add(edge);
+//            }
+//        }
+//
+//        // для каждого соседа узнаю: был ли это вызов метода интерфейса или нет?
+//        for (Edge edge : neighbors) {
+//            // Получаем цель вызова (то, что стоит перед точкой)
+//            CtExpression<?> expression = edge.getCallExpression();
+//            if (expression instanceof CtConstructorCall<?>) {
+//
+//            } else if (expression instanceof CtInvocation<?>) {
+//                CtInvocation<?> invocation = (CtInvocation<?>) expression;
+//                CtExpression<?> target = invocation.getTarget();
+//
+//                if (target != null) {
+//                    // Это может быть переменная
+//                    if (target instanceof CtVariableRead) {
+//                        CtVariableRead<?> varRead = (CtVariableRead<?>) target;
+//                        CtVariable<?> variable = varRead.getVariable().getDeclaration();
+//                        String varName = variable.getSimpleName();
+//                        String varType = variable.getType().getQualifiedName();
+//
+////                        System.out.println("Метод вызван на переменной: " + varName);
+////                        System.out.println("  Тип переменной: " + varType);
+//
+//                        // Если тип — интерфейс, то мы нашли то, что нужно!
+////                        if (variable.getType().getTypeDeclaration() instanceof CtInterface) {
+////                            System.out.println("  Тип является ИНТЕРФЕЙСОМ!");
+////                        }
 //                    }
-                }
-            }
-
-            if (edge.getLabel() == Label.KNOWN) {
-//                System.out.println("\n==================\nперешла в " + edge.getTo().getSignature());
-                analyseFlowFromStartingPoint(edge.getTo());
-            }
-        }
+//                    // Или поле класса
+//                    else if (target instanceof CtFieldRead) {
+//                        CtFieldRead<?> fieldRead = (CtFieldRead<?>) target;
+////                        System.out.println("Метод вызван на поле: " +
+////                                fieldRead.getVariable().getSimpleName());
+//                    }
+//                    // Или результат другого вызова
+//                    else if (target instanceof CtInvocation) {
+//                        CtInvocation<?> nestedInv = (CtInvocation<?>) target;
+////                        System.out.println("Метод вызван на результате вызова: " +
+////                                nestedInv.getExecutable().getSimpleName() + "()");
+//                    }
+////                    // Или this
+////                    else if (target instanceof CtThisAccess) {
+////                        System.out.println("Метод вызван на this");
+////                    }
+//                }
+//            }
+//
+//            if (edge.getLabel() == Label.KNOWN) {
+////                System.out.println("\n==================\nперешла в " + edge.getTo().getSignature());
+//                analyseFlowFromStartingPoint(edge.getTo());
+//            }
+//        }
 
 //        for (Edge edge : neighbors) {
 //            if (edge.getTo() instanceof CtMethod<?>)
@@ -362,7 +404,7 @@ public class StructureSpoon {
 //                }
 //            }
 //        }
-    }
+//    }
 
     public Map<CtMethod<?>, List<CtMethod<?>>> getImplementationMap() {
         return implementationMap;

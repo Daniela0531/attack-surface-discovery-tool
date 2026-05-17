@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.analizer.AnalyzerAfterSpoonForDatum;
+//import com.example.analizer.AnalyzerAfterSpoonForDatum;
 import com.example.result_structure.ResultGraph;
 import com.example.structure.StructureSpoon;
 
