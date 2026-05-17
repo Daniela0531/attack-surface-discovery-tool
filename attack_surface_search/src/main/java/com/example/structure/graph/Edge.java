@@ -2,6 +2,7 @@ package com.example.structure.graph;
 
 import spoon.reflect.code.CtExpression;
 import spoon.reflect.declaration.CtExecutable;
+import spoon.reflect.declaration.CtMethod;
 
 public class Edge {
     CtExecutable<?> from;
@@ -39,6 +40,10 @@ public class Edge {
     }
     public CtExecutable<?> getTo() {
         return to;
+    }
+
+    public void setTo(CtExecutable<?> method) {
+        to = method;
     }
 }
 

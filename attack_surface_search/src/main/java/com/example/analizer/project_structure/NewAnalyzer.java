@@ -182,7 +182,7 @@ public class NewAnalyzer {
         List<CtStatement> foundOperations = new ArrayList<>();
 
         // 2. Получаем все инструкции тела метода
-        List<CtStatement> allStatements = parentMethod.getBody().getStatements();
+        List<CtStatement> allStatements = parentMethod.getBody().getElements(new TypeFilter<>(CtStatement.class));
         boolean statementFound = false;
         if (requiredStatement == null) {
             statementFound = true;
@@ -206,35 +206,122 @@ public class NewAnalyzer {
         return foundOperations;
     }
 
+    // TODO реализовать обработку блоков
     // возвращает список операций начиная с заданного statement, в которых участвует datum
-//    private List<CtStatement> findStatementAfterRequiredConsideringBlocksInMethod(CtExecutable<?> parentMethod, CtStatement requiredStatement) {
-//        List<CtStatement> foundStatements = new ArrayList<>();
-//
-//        // 2. Получаем все инструкции тела метода
+    private List<CtStatement> findStatementAfterRequiredConsideringBlocksInMethod(CtExecutable<?> parentMethod, CtStatement requiredStatement) {
+        List<CtStatement> foundStatements = new ArrayList<>();
+
+        // 2. Получаем все инструкции тела метода
 //        List<CtStatement> allStatements = parentMethod.getBody().getElements(new TypeFilter<>(CtStatement.class));
-//        boolean statementFound = (requiredStatement == null);
-//        int curDepth = 0;
-//
-//        // 3. Проходим по всем инструкциям
-//        for (CtStatement statement : allStatements) {
-//            if (Functions.isStructuralBlock(statement)) {
-//                ++curDepth;
-//            }
-//            // Начинаем собирать после того, как нашли наш invocation
-//            if (statementFound) {
-//                // Проверяем, используется ли datumName в этой инструкции
-//                if (usesVariable(statement, datumName)) {
-//                    foundStatements.add(statement);
-//                }
-//            }
-//            // Проверяем, является ли текущая инструкция нашим invocation'ом
-//            if (statement == requiredStatement) {
-//                statementFound = true;
-//            }
-//        }
-//
-//        return foundStatements;
-//    }
+        List<CtStatement> allStatements = parentMethod.getBody().getStatements();
+        // если передан null -> нам нужно всё тело метода
+        if (requiredStatement == null) {
+            return allStatements;
+        }
+        boolean statementFound = false;
+        int curDepth = 0;
+        int targetDepth = -1;
+
+        // 3. Проходим по всем инструкциям
+        for (CtStatement statement : allStatements) {
+            if (Functions.isStructuralBlock(statement)) {
+                ++curDepth;
+            }
+            // если вышли за пределы целевого блока
+            if (curDepth < targetDepth)
+                return foundStatements;
+            // Начинаем собирать после того, как нашли наш invocation
+            if (statementFound) {
+                foundStatements.add(statement);
+            }
+            // Проверяем, является ли текущая инструкция нашим invocation'ом
+            if (statement == requiredStatement) {
+                statementFound = true;
+                targetDepth = curDepth;
+            }
+        }
+
+        return foundStatements;
+    }
+
+    // parentBlockStatement {
+    //   statement              cur = 0 target = 0
+    //   if () {                cur = 0 target = 0
+    //     statement            cur = 1 target = 1
+    //     block {              cur = 1 target = 1
+    //       requiredStatement  cur = 2 target = 2
+    //       {
+    //         statement        cur = 3 target = 3
+    //       }
+    //       statement          cur = 2 target = 2
+    //     }
+    //     statement            cur = 1 target = 2
+    //   }
+    //   statement              cur = 0 target = 2
+    // }
+    // TODO для обработки блоков
+    private int findChildStatementsAfterRequiredConsideringBlocks(
+            CtStatement parentBlockStatement,
+            CtStatement requiredStatement,
+            List<CtStatement> isVisited,
+            int curDepth,
+            List<CtStatement> foundStatements) {
+        List<CtStatement> allStatement = parentBlockStatement.getElements(new TypeFilter<>(CtStatement.class));
+        if (requiredStatement == null) {
+            foundStatements.addAll(allStatement);
+            return curDepth;
+        }
+//        List<CtStatement> foundStatements = new ArrayList<>();
+        boolean statementFound = false;
+        int newTargetDepth = curDepth;
+
+        // 3. Проходим по всем инструкциям
+        for (CtStatement statement : allStatement) {
+            if (isVisited.contains(statement)) {
+                continue;
+            }
+            isVisited.add(statement);
+            if (Functions.isStructuralBlock(statement)) {
+                ++curDepth;
+                if (statementFound) {
+                    int targetDepth = findChildStatementsAfterRequiredConsideringBlocks(
+                            statement,
+                            null,
+                            isVisited,
+                            curDepth,
+                            foundStatements
+                    );
+                    if (curDepth < targetDepth)
+                        return targetDepth;
+                } else {
+                    int targetDepth = findChildStatementsAfterRequiredConsideringBlocks(
+                            statement,
+                            requiredStatement,
+                            isVisited,
+                            curDepth,
+                            foundStatements
+                    );
+                    if (curDepth < targetDepth)
+                        return targetDepth;
+                }
+                --curDepth;
+            }
+//            // если вышли за пределы целевого блока
+//            if (curDepth < targetDepth)
+//                return targetDepth;
+            // Начинаем собирать после того, как нашли наш invocation
+            if (statementFound) {
+                foundStatements.add(statement);
+            }
+            // Проверяем, является ли текущая инструкция нашим invocation'ом
+            if (statement == requiredStatement) {
+                statementFound = true;
+                newTargetDepth = curDepth;
+            }
+        }
+
+        return newTargetDepth;
+    }
 
     // Вспомогательный метод для проверки использования переменной в инструкции
     private boolean usesVariable(CtStatement statement, String varName) {

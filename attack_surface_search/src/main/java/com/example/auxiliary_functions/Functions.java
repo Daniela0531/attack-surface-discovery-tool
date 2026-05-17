@@ -14,10 +14,7 @@ import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.visitor.filter.TypeFilter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Functions {
@@ -209,5 +206,76 @@ public class Functions {
                 element instanceof CtTry ||
                 element instanceof CtSwitch ||
                 element instanceof CtSynchronized;
+    }
+
+    public List<CtStatement> getInnerStatementsFromBlock(CtElement blockElement) {
+        if (!isStructuralBlock(blockElement)) {
+            return null;
+        }
+        if (blockElement instanceof CtBlock) {
+            return ((CtBlock<?>) blockElement).getStatements();
+        }
+
+        if (blockElement instanceof CtIf) {
+            CtIf ifStmt = (CtIf) blockElement;
+            List<CtStatement> result = new ArrayList<>();
+
+            // Then-ветка
+            CtStatement thenPart = ifStmt.getThenStatement();
+            result.addAll(getStatementsFromPart(thenPart));
+
+            // Else-ветка
+            CtStatement elsePart = ifStmt.getElseStatement();
+            if (elsePart != null) {
+                result.addAll(getStatementsFromPart(elsePart));
+            }
+
+            return result;
+        }
+
+        if (blockElement instanceof CtLoop) {
+            CtLoop loop = (CtLoop) blockElement;
+            return getStatementsFromPart(loop.getBody());
+        }
+
+        if (blockElement instanceof CtTry) {
+            CtTry tryStmt = (CtTry) blockElement;
+            List<CtStatement> result = new ArrayList<>();
+
+            // Try-блок
+            result.addAll(tryStmt.getBody().getStatements());
+
+            // Catch-блоки
+            for (CtCatch catcher : tryStmt.getCatchers()) {
+                result.addAll(catcher.getBody().getStatements());
+            }
+
+            // Finally-блок
+            CtBlock<?> finallyBlock = tryStmt.getFinalizer();
+            if (finallyBlock != null) {
+                result.addAll(finallyBlock.getStatements());
+            }
+
+            return result;
+        }
+
+        if (blockElement instanceof CtSynchronized) {
+            return ((CtSynchronized) blockElement).getBlock().getStatements();
+        }
+
+        if (blockElement instanceof CtCase) {
+            return ((CtCase<?>) blockElement).getStatements();
+        }
+
+        return new ArrayList<>();
+    }
+
+    private List<CtStatement> getStatementsFromPart(CtStatement part) {
+        if (part instanceof CtBlock) {
+            return ((CtBlock<?>) part).getStatements();
+        } else if (part != null) {
+            return Arrays.asList(part);
+        }
+        return new ArrayList<>();
     }
 }

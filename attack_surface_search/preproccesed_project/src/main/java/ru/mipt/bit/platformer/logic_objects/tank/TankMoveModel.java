@@ -41,6 +41,11 @@ public class TankMoveModel implements MoveModel, LivableModel, ShootableModel {
     public boolean isMoving() {
         return isMoving;
     }
+
+    @Override
+    public Graphics getGraphicsInterface() {
+        return new Graphics();
+    }
     @Override
     public GridPoint2 getDestination() {
         return new GridPoint2(coordinates.x + direction.getVector().x, coordinates.y + direction.getVector().y);

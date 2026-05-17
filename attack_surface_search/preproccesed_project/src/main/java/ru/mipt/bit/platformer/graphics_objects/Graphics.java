@@ -13,6 +13,7 @@ public class Graphics implements GraphicsInterface {
     private TextureRegion textureRegion;
     private Rectangle rectangle;
 
+    public Graphics() {}
     public Graphics(Texture texture) {
         this.texture = texture;
         this.textureRegion = new TextureRegion(texture);

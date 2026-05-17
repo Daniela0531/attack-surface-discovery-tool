@@ -7,4 +7,5 @@ public interface Model {
     void mainUpdateProgress(float deltaTime);
 
     float getRotation();
+    GraphicsInterface getGraphicsInterface();
 }

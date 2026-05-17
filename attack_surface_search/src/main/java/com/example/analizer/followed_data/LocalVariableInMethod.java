@@ -54,6 +54,11 @@ public class LocalVariableInMethod implements FollowedDatumInMethodContext {
         return variableAccess.getSimpleName();
     }
 
+    @Override
+    public FollowedDatumInMethodContext get() {
+        return null;
+    }
+
     public CtLocalVariable<?> getVariableAccess() {
         return variableAccess;
     }

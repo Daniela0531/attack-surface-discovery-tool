@@ -21,6 +21,7 @@ public class MethodArgument implements FollowedDatumInMethodContext {
 //        this.location = location;
 //    }
 
+
     public MethodArgument(CtParameter<?> parameter) {
 //        this.location = location;
         this.parameter = parameter;
@@ -89,6 +90,11 @@ public class MethodArgument implements FollowedDatumInMethodContext {
     @Override
     public String getName() {
         return parameter.getSimpleName();
+    }
+
+    @Override
+    public MethodArgument get() {
+        return null;
     }
 
     public CtParameter<?> getParameter() {

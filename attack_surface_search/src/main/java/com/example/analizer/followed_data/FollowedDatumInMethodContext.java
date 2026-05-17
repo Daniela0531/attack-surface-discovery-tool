@@ -10,5 +10,6 @@ public interface FollowedDatumInMethodContext extends FollowedDatum {
      boolean isEquals(FollowedDatum datum);
 
     String getName();
+    FollowedDatumInMethodContext get();
 }
 

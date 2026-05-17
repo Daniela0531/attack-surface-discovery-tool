@@ -178,8 +178,30 @@ public class Level {
         for (Map.Entry<BulletMoveModel, GraphicsInterface> entry : bullets.entrySet()) {
             entry.getKey().mainUpdateProgress(deltaTime);
         }
-        playerTank.setProgress(deltaTime);
+//        playerTank = new TankMoveModel(
+//                map.getPlayer().getCoordinates(),
+//                0f,
+//                logicProperties.getTankMaxHealth(),
+//                logicProperties.getTankSpeed());
+//        playerTank.setProgress(deltaTime);
+        func().getGraphicsInterface().draw((Batch) deltaTime);
     }
+
+    public TankMoveModel func() {
+        return new TankMoveModel(
+                map.getPlayer().getCoordinates(),
+                0f,
+                logicProperties.getTankMaxHealth(),
+                logicProperties.getTankSpeed());
+    }
+
+//    public MoveModel func() {
+//        return new TankMoveModel(
+//                map.getPlayer().getCoordinates(),
+//                0f,
+//                logicProperties.getTankMaxHealth(),
+//                logicProperties.getTankSpeed());
+//    }
 
     public ArrayList<GraphicsInterface> allGraphicsEntities() {
         ArrayList<GraphicsInterface> allGraphicsEntities = new ArrayList<>();

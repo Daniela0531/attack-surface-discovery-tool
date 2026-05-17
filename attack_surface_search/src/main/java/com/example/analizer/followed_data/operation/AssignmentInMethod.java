@@ -67,6 +67,11 @@ public class AssignmentInMethod implements FollowedDatumInMethodContext {
         return variableAccess.getVariable().getSimpleName();
     }
 
+    @Override
+    public FollowedDatumInMethodContext get() {
+        return null;
+    }
+
     public CtVariableWrite<?> getVariableAccess() {
         return variableAccess;
     }
