@@ -9,14 +9,8 @@ import com.example.structure.graph.Edge;
 import com.example.structure.graph.Label;
 import com.example.structure.graph.RelationType;
 import com.example.input_structure.InputStructureMethod;
-import spoon.reflect.code.CtConstructorCall;
-import spoon.reflect.code.CtExpression;
-import spoon.reflect.code.CtInvocation;
-import spoon.reflect.code.CtVariableRead;
-import spoon.reflect.declaration.CtConstructor;
-import spoon.reflect.declaration.CtExecutable;
-import spoon.reflect.declaration.CtInterface;
-import spoon.reflect.declaration.CtMethod;
+import spoon.reflect.code.*;
+import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.visitor.filter.TypeFilter;
 
@@ -198,5 +192,22 @@ public class Functions {
             }
         }
         return false;
+    }
+
+    public static String getFullSignatureForMethod(CtMethod<?> method) {
+        return method.getDeclaringType().getQualifiedName() + "#" + method.getSignature();
+    }
+
+    public static String getFullSignatureForConstructor(CtConstructor<?> method) {
+        return method.getDeclaringType().getQualifiedName() + "#" + method.getSignature();
+    }
+
+    public static boolean isStructuralBlock(CtElement element) {
+        return element instanceof CtBlock ||
+                element instanceof CtIf ||
+                element instanceof CtLoop ||
+                element instanceof CtTry ||
+                element instanceof CtSwitch ||
+                element instanceof CtSynchronized;
     }
 }

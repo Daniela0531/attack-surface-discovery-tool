@@ -105,7 +105,7 @@ public class NewAnalyzer {
     private void analyseAllOperations(CtExecutable<?> parentMethod, CtStatement ctStatement, FollowedDatum followedDatum, List<FollowedDatum> newData) {
         // получить список всех операций
 //        System.out.println("analyseAllOperations :: " + followedDatum.getName());
-        List<CtStatement> statements = findOperationsAfterStatement(parentMethod, ctStatement, followedDatum.getName());
+        List<CtStatement> statements = findStatementOperationsOnDatumInMethod(parentMethod, ctStatement, followedDatum.getName());
 //        List<FollowedDatum> newData = new ArrayList<>();
         String datumName = followedDatum.getName();
         for (CtStatement statement : statements) {
@@ -178,7 +178,7 @@ public class NewAnalyzer {
 //    }
 
     // возвращает список операций начиная с заданного statement, в которых участвует datum
-    public List<CtStatement> findOperationsAfterStatement(CtExecutable<?> parentMethod, CtStatement requiredStatement, String datumName) {
+    private List<CtStatement> findStatementOperationsOnDatumInMethod(CtExecutable<?> parentMethod, CtStatement requiredStatement, String datumName) {
         List<CtStatement> foundOperations = new ArrayList<>();
 
         // 2. Получаем все инструкции тела метода
@@ -205,6 +205,36 @@ public class NewAnalyzer {
 
         return foundOperations;
     }
+
+    // возвращает список операций начиная с заданного statement, в которых участвует datum
+//    private List<CtStatement> findStatementAfterRequiredConsideringBlocksInMethod(CtExecutable<?> parentMethod, CtStatement requiredStatement) {
+//        List<CtStatement> foundStatements = new ArrayList<>();
+//
+//        // 2. Получаем все инструкции тела метода
+//        List<CtStatement> allStatements = parentMethod.getBody().getElements(new TypeFilter<>(CtStatement.class));
+//        boolean statementFound = (requiredStatement == null);
+//        int curDepth = 0;
+//
+//        // 3. Проходим по всем инструкциям
+//        for (CtStatement statement : allStatements) {
+//            if (Functions.isStructuralBlock(statement)) {
+//                ++curDepth;
+//            }
+//            // Начинаем собирать после того, как нашли наш invocation
+//            if (statementFound) {
+//                // Проверяем, используется ли datumName в этой инструкции
+//                if (usesVariable(statement, datumName)) {
+//                    foundStatements.add(statement);
+//                }
+//            }
+//            // Проверяем, является ли текущая инструкция нашим invocation'ом
+//            if (statement == requiredStatement) {
+//                statementFound = true;
+//            }
+//        }
+//
+//        return foundStatements;
+//    }
 
     // Вспомогательный метод для проверки использования переменной в инструкции
     private boolean usesVariable(CtStatement statement, String varName) {

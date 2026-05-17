@@ -171,3 +171,32 @@ CtExpression
 Решить проблему с повторным вызовом одних и тех же методов в одном методе
 
 добавить обработку методов сторонних либ
+
+1. У интерфейса может быть реализация метода?
+
+Да, может. Начиная с Java 8, у интерфейсов появились два типа методов с реализацией: static и default.
+
+static методы: Это служебные методы, принадлежащие самому интерфейсу. Класс, который реализует интерфейс, не наследует и не может переопределить такой метод. Вызов возможен только через имя интерфейса: MyInterface.staticMethod().
+default методы: Это методы экземпляра, которые имеют реализацию "по умолчанию". Класс, реализующий интерфейс, может их:
+
+Унаследовать (если не переопределяет явно).
+Переопределить (если нужна своя логика).
+Вызвать у конкретного объекта: myObject.defaultMethod().
+
+
+CtVariableRead не ограничивается только локальными переменными. Он представляет чтение любой переменной в Java:
+
+Тип переменной	Пример	CtVariableRead?
+Локальная переменная	int x = y;	✅ Да (y)
+Параметр метода	void method(int param) { int x = param; }	✅ Да (param)
+Поле класса	int x = this.field;	✅ Да (this.field)
+Статическое поле	int x = MyClass.STATIC_FIELD;	✅ Да
+Элемент массива	int x = arr[0];	❌ Нет (CtArrayRead)
+
+Ситуация	Тип в Spoon
+int x = localVar;	CtVariableRead (не CtFieldRead)
+int x = param;	CtVariableRead (не CtFieldRead)
+int x = field;	CtFieldRead
+int x = this.field;	CtFieldRead
+int x = obj.field;	CtFieldRead
+int x = Class.STATIC_FIELD;	CtFieldRead

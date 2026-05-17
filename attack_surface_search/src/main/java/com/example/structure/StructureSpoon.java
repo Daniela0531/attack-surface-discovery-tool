@@ -30,8 +30,6 @@ public class StructureSpoon {
 
     // Глобальный счетчик для генерации уникальных ID узлов в DOT-файле
     private Map<String, CtType<?>> allTypesMap = new HashMap<>();
-//    private static int nodeCounter = 0;
-//    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public StructureSpoon(Path source) {
         this.source = source;
         this.model = null;
@@ -66,13 +64,10 @@ public class StructureSpoon {
     private void buildInterfaceToClassesMap() {
         for (CtType<?> type : model.getAllTypes()) {
             if (type instanceof CtInterface) {
-//                System.out.println("нашёл интерфейс, ищу методы");
-//                String interfaceName = type.getQualifiedName();
                 List<CtClass<?>> implementations = new ArrayList<>();
 
                 // Ищем все классы, реализующие этот интерфейс
                 for (CtType<?> candidate : model.getAllTypes()) {
-//                    System.out.println("смотрю кондидатов методы");
                     if (candidate instanceof CtClass<?> &&
                             !candidate.isAbstract() &&
                             candidate.isSubtypeOf(type.getReference())) {
@@ -92,11 +87,8 @@ public class StructureSpoon {
             CtInterface<?> ctInterface = entry.getKey();
             List<CtClass<?>> implementingClasses = entry.getValue();
 
-
-
             // Для каждого метода интерфейса
             for (CtMethod<?> interfaceMethod : ctInterface.getMethods()) {
-//                String methodSignature = getFullMethodSignature(interfaceMethod);
                 List<CtMethod<?>> implementations = new ArrayList<>();
                 implementationMap.put(interfaceMethod, new ArrayList<>());
 
@@ -104,52 +96,31 @@ public class StructureSpoon {
                 for (CtClass<?> clazz : implementingClasses) {
                     // для каждого метода внутри имплементирующего класса
                     for (CtMethod<?> methodImpl : clazz.getAllMethods()) {
-                        boolean isCorrectMethod = true;
-                        if (interfaceMethod.getSimpleName().equals("setProgress")) {
-//                            System.out.println("may impl setProgress: " + methodImpl.getSimpleName());
-                        }
+//                        boolean isCorrectMethod = true;
                         if (// Проверяем имя
                             methodImpl.getSimpleName().equals(interfaceMethod.getSimpleName()) &&
                             // Проверяем количество параметров
                             methodImpl.getParameters().size() == interfaceMethod.getParameters().size()
                         ) {
-//                            for (int i = 0; i < methodImpl.getParameters().size(); ++i) {
-//                                if (methodImpl.getParameters().get(i).getType() != interfaceMethod.getParameters().get(i).getType()) {
-//                                    isCorrectMethod = false;
-//                                    break;
-//                                }
-//                            }
-//                            if (isCorrectMethod)
                                 implementations.add(methodImpl);
-//                            if (interfaceMethod.getSimpleName().equals("setProgress")) {
-//                                System.out.println("real impl setProgress: " + methodImpl.getSimpleName());
-//                                System.out.println(implementations);
-//                            }
                         }
                     }
                 }
-//                System.out.println("для интерфемного метода " + interfaceMethod);
-//                System.out.println("найдены реализации " + implementations);
                 implementationMap.get(interfaceMethod).addAll(implementations);
-//                if (interfaceMethod.getSimpleName().equals("setProgress")) {
-//                    System.out.println(implementationMap.get(interfaceMethod));
-//                }
             }
         }
-//        System.out.println(implementationMap);
     }
 
 
 
-    public void initCpgGraph() throws Exception {
-
-        // 2. Заполняем карту всех типов
+    public void initCpgGraph() {
+        // 1. Заполняем карту всех типов
         allTypesMap.clear();
         for (CtType<?> type : model.getAllTypes()) {
             allTypesMap.put(type.getQualifiedName(), type);
         }
 
-        // ищем связки интерфес - его реализации
+        // 2. для всех интерфейсов ищем связки интерфес - его реализации
         interfaceToClasses.clear();
         buildInterfaceToClassesMap();
         buildImplementationMap();
@@ -157,46 +128,7 @@ public class StructureSpoon {
         // 3. Строим CPG граф в памяти
         this.graph = buildCpgFromSource();
 
-//        StartMethod startMethod = JsonToClassGenerator.createMethodStructureFromJson("project_structure/method.json");
-//        startMethod.print();
-
-//        CtExecutable<?> startCtMethod = getMethodByStructure(startMethod);
-//        if (startCtMethod instanceof CtMethod<?>) {
-////            System.out.println("\n===========================\nстартовый метод");
-////            System.out.println("сигнатура = " + startCtMethod.getSignature() + "\n===========================\n");
-//            graph.setStart((CtMethod<?>) startCtMethod);
-//            analyseFlowFromStartingPoint(startCtMethod);
-//        } else {
-//            System.out.println("Не найден метод после getMethodByStructure: !!!!!!!!!!!!!");
-//        }
-
-//        graph.printStats();
     }
-
-//    public CtExecutable<?> getExecutableByStructure(InputStructureMethod inputStructureMethod) {
-//        List<CtExecutable<?>> nodes = graph.getNodes();
-//        Functions functions = new Functions();
-//        for (CtExecutable<?> node : nodes) {
-//            if (
-//                    node instanceof CtMethod<?> &&
-//                    functions.checkIsMethodMatchesStructure((CtMethod<?>) node, inputStructureMethod)
-//            ) {
-////                System.out.println("Найден метод: " + node.getSignature());
-//                return node;
-//            } else if (
-//                    node instanceof CtConstructor<?> &&
-//                    functions.checkIsConstructorMatchesStructure((CtConstructor<?>) node, inputStructureMethod)
-//            ) {
-////                    System.out.println("Найден конструктор: " + node.getSignature());
-//                    return node;
-//            }
-////            else {
-////                System.out.println("Не тот метод: !!!!!!!!!!!!!");
-////            }
-//        }
-////        System.out.println("Не найден метод: !!!!!!!!!!!!!");
-//        return null;
-//    }
 
 
     // ==================== ПОСТРОЕНИЕ ГРАФА ====================
@@ -207,6 +139,7 @@ public class StructureSpoon {
         // ПЕРВЫЙ ПРОХОД: Создаем узлы для всех типов и их методов
         addAllNodesToCpgGraph();
 
+        // ВТОРОЙ ПРОХОД: Создаем узлы для всех типов и их методов
         for (CtExecutable<?> node : graph.getNodes()) {
             // добавляем все вызовы конструкторов из ноды
             // ищем CtConstructorCall
@@ -215,16 +148,101 @@ public class StructureSpoon {
             }
             // Ищем все вызовы методов из ноды
             for (Edge edge : functions.getAllMethodCallsEdges(node)) {
+                if (isMethodOfInterface(edge.getTo())) {
+                    CtMethod<?> interfaceMethod = (CtMethod<?>) edge.getTo();
+                    if (tryToResolveInterfaceMethod(edge)) {
+                        System.out.println("разрешили метод интерфейса!!" +
+                                "\nвместо :: " + Functions.getFullSignatureForMethod(interfaceMethod) +
+                                "\nбудет :: " + Functions.getFullSignatureForMethod((CtMethod<?>) edge.getTo())
+                        );
+                    }
+                    continue;
+                }
                 graph.addEdge(edge);
             }
-
-//            // Ищем все вызовы методов интерфейсов из ноды
-//            for (Edge edge : functions.getAllInterfaceMethodCallsEdges(node, implementationMap)) {
-//                graph.addEdge(edge);
-//            }
         }
 
         return graph;
+    }
+
+    public boolean isMethodOfInterface(CtExecutable<?> executable) {
+        if (executable instanceof CtMethod<?>) {
+            // 1. Получаем класс или интерфейс, содержащий executable
+            CtType<?> declaringType = ((CtMethod<?>)executable).getDeclaringType();
+
+            // 2. Проверяем, является ли этот тип интерфейсом
+            return declaringType instanceof CtInterface;
+        }
+        return false;
+    }
+
+    private boolean tryToResolveInterfaceMethod(Edge edge) {
+        // 1. Получаем все инструкции тела метода
+        List<CtStatement> allStatements = new ArrayList<>();
+        if (edge.getFrom() instanceof CtMethod<?>) {
+            allStatements.addAll(((CtMethod<?>) edge.getFrom()).getBody().getStatements());
+        } else {
+            System.out.println("Странный метод интерфейса! не является методом!!!");
+            return false;
+        }
+        CtInvocation<?> invocation = (CtInvocation<?>) edge.getCallExpression();
+        // Получаем целевой объект (то, слева от точки)
+        CtExpression<?> target = invocation.getTarget();
+
+        System.out.println("Целевой объект вызова: " + target);
+
+        // Анализируем, кто вызывал
+        if (target == null) {
+            // варианты:
+            // - вызов конструктора - у интерфейса нет конструкторов
+            // - метода этого же класса без явного вызова this - я вызываю метод интерфейса, но я класс -> значит что это не может быть вызов моего метода
+            // + Вызов статического метода через явный импорт - если я интерфейс -> там есть явная реализация static method -> её и берём, всё супер
+            // + вызов статического метода через вызов класса - если я интерфейс -> там есть явная реализация static method -> её и берём, всё супер
+            System.out.println("  → Вызов статического метода, нужно взять его реализацию");
+            // TODO добавить методы интерфейсов с реализацией в nodes графа
+            return true;
+        }
+        else if (target instanceof CtThisAccess) {
+            // варианты:
+            // - явный вызов метода от this  - я вызываю метод интерфейса, но я класс -> значит что это не может быть вызов моего метода
+            System.out.println("  → Вызов через this (текущий объект) - такого не может быть!!!");
+        }
+        else if (target instanceof CtSuperAccess) {
+            // варианты:
+            // - вызов метода родительского класса - работает только для классов, а я метод интерфейса - не может быть
+            System.out.println("  → Вызов через super (родительский класс) - такого не может быть!!!");
+        }
+        else if (target instanceof CtFieldRead) {
+            // варианты:
+            // + Поле класса - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
+            // + Статическое поле - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
+            CtFieldRead<?> fieldRead = (CtFieldRead<?>) target;
+            System.out.println("  → Вызов через поле: " + fieldRead.getVariable().getSimpleName());
+            // рекурсия с последующей обработкой после выхода
+        }
+        else if (target instanceof CtVariableRead) {
+            // варианты:
+            // + Локальная переменная - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
+            // + Параметр метода - не смогу определить реализацию
+            // + Элемент массива - не смогу определить реализацию
+            // учтено ранее : + Поле класса - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
+            // учтено ранее : + Статическое поле - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
+            CtVariableRead<?> varRead = (CtVariableRead<?>) target;
+            System.out.println("  → Вызов через переменную: " + varRead.getVariable().getSimpleName());
+            // рекурсия с последующей обработкой после выхода
+        }
+        else if (target instanceof CtInvocation) {
+            // варианты:
+            // + вызов метода (класса/интерфейса) TODO чо делать?
+            System.out.println("  → Вызов через результат другого вызова (цепочка): " + target);
+            // рекурсия с последующей обработкой после выхода
+        }
+        else {
+            // варианты:
+            // литералы ("string".method()) и прочая дичь TODO - чо делать??
+            System.out.println("  → Другой тип: " + target.getClass().getSimpleName());
+        }
+        return false;
     }
 
 
@@ -308,105 +326,8 @@ public class StructureSpoon {
                 .replace("\t", "\\t");
     }
 
-//    // Вспомогательный метод для проверки, является ли тип интерфейсом
-//    private static boolean isInterface(CtTypeReference<?> typeRef) {
-//        if (typeRef == null) return false;
-//
-//        CtType<?> typeDeclaration = typeRef.getTypeDeclaration();
-//        return typeDeclaration instanceof CtInterface;
-//    }
-
-//    private void analyseFlowFromStartingPoint(CtExecutable<?> startMethod) {
-////        System.out.println("\n=================\nищу реализации интерфейсов в " + startMethod.getSimpleName());
-//        // ищу всех соседей стартового метода: все методы, куда были переходы из стартового
-//        List<Edge> neighbors = new ArrayList<>();
-//        for (Edge edge : graph.getEdges()) {
-//            if (edge.getFrom() == startMethod) {
-//                neighbors.add(edge);
-//            }
-//        }
-//
-//        // для каждого соседа узнаю: был ли это вызов метода интерфейса или нет?
-//        for (Edge edge : neighbors) {
-//            // Получаем цель вызова (то, что стоит перед точкой)
-//            CtExpression<?> expression = edge.getCallExpression();
-//            if (expression instanceof CtConstructorCall<?>) {
-//
-//            } else if (expression instanceof CtInvocation<?>) {
-//                CtInvocation<?> invocation = (CtInvocation<?>) expression;
-//                CtExpression<?> target = invocation.getTarget();
-//
-//                if (target != null) {
-//                    // Это может быть переменная
-//                    if (target instanceof CtVariableRead) {
-//                        CtVariableRead<?> varRead = (CtVariableRead<?>) target;
-//                        CtVariable<?> variable = varRead.getVariable().getDeclaration();
-//                        String varName = variable.getSimpleName();
-//                        String varType = variable.getType().getQualifiedName();
-//
-////                        System.out.println("Метод вызван на переменной: " + varName);
-////                        System.out.println("  Тип переменной: " + varType);
-//
-//                        // Если тип — интерфейс, то мы нашли то, что нужно!
-////                        if (variable.getType().getTypeDeclaration() instanceof CtInterface) {
-////                            System.out.println("  Тип является ИНТЕРФЕЙСОМ!");
-////                        }
-//                    }
-//                    // Или поле класса
-//                    else if (target instanceof CtFieldRead) {
-//                        CtFieldRead<?> fieldRead = (CtFieldRead<?>) target;
-////                        System.out.println("Метод вызван на поле: " +
-////                                fieldRead.getVariable().getSimpleName());
-//                    }
-//                    // Или результат другого вызова
-//                    else if (target instanceof CtInvocation) {
-//                        CtInvocation<?> nestedInv = (CtInvocation<?>) target;
-////                        System.out.println("Метод вызван на результате вызова: " +
-////                                nestedInv.getExecutable().getSimpleName() + "()");
-//                    }
-////                    // Или this
-////                    else if (target instanceof CtThisAccess) {
-////                        System.out.println("Метод вызван на this");
-////                    }
-//                }
-//            }
-//
-//            if (edge.getLabel() == Label.KNOWN) {
-////                System.out.println("\n==================\nперешла в " + edge.getTo().getSignature());
-//                analyseFlowFromStartingPoint(edge.getTo());
-//            }
-//        }
-
-//        for (Edge edge : neighbors) {
-//            if (edge.getTo() instanceof CtMethod<?>)
-//                analyseFlowFromStartingPoint((CtMethod<?>) edge.getTo());
-//        }
-
-//        Queue<CtExecutable<?>> methodQueue = new ArrayDeque<>();
-//        methodQueue.add(startMethod);
-//
-//        while (!methodQueue.isEmpty()) {
-//            // извлекает и удаляет первый в очереди
-//            CtExecutable<?> curMethod = methodQueue.poll();
-//            // TODO сделать поведение не как список, а как дерево
-//
-//            for (Edge e : graph.getEdges()) {
-//                if (e.getFrom() == curMethod) {
-//                    // TODO найти какие аргументы туда попали
-////                    for(CtParameter param : e.to.getParameters())
-////                    if (e.to.getDeclaringType() instanceof CtInterface<?>) {
-////                        // TODO найти имплементацию метода
-////                        // TODO варианты: интерфейс, метод аннотации, сторонняя либа
-////                    }
-//                    if (e.getLabel() == Label.KNOWN) {
-//                        methodQueue.add(e.getTo());
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public Map<CtMethod<?>, List<CtMethod<?>>> getImplementationMap() {
         return implementationMap;
     }
 }
+
