@@ -3,10 +3,10 @@ package com.example.generators;
 import com.example.analizer.followed_data.MethodArgument;
 import com.example.input_structure.InputStructureLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.analizer.followed_data.FollowedDatum;
-import com.example.analizer.followed_data.location.MethodLocation;
-import com.example.analizer.project_structure.ProjectStructureGraph;
-import com.example.analizer.project_structure.ProjectStructureNode;
+//import com.example.analizer.followed_data.FollowedDatum;
+//import com.example.analizer.followed_data.location.MethodLocation;
+//import com.example.analizer.project_structure.ProjectStructureGraph;
+//import com.example.analizer.project_structure.ProjectStructureNode;
 import com.example.input_structure.InputStructureMethod;
 import spoon.reflect.CtModel;
 import spoon.reflect.declaration.CtMethod;
@@ -20,21 +20,21 @@ public class JsonToClassGenerator {
 //    String inputStructureJson = "project_structure/structure.json"; // Путь к вашему JSON-файлу
 
 //    String inputDatumJson = "project_structure/data.json";
-    public static ProjectStructureGraph createStructureGraphFromJson(String inputStructureJson) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ProjectStructureNode node = new ProjectStructureNode();
-
-        try {
-            File jsonFile = new File(inputStructureJson);
-
-            // Читаем JSON и создаем объект
-            mapper.readerForUpdating(node).readValue(jsonFile);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ProjectStructureGraph(node);
-    }
+//    public static ProjectStructureGraph createStructureGraphFromJson(String inputStructureJson) throws Exception {
+//        ObjectMapper mapper = new ObjectMapper();
+//        ProjectStructureNode node = new ProjectStructureNode();
+//
+//        try {
+//            File jsonFile = new File(inputStructureJson);
+//
+//            // Читаем JSON и создаем объект
+//            mapper.readerForUpdating(node).readValue(jsonFile);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return new ProjectStructureGraph(node);
+//    }
 
 //    public static FollowedDatum createDatumFromLocationJson(String inputDatumJson) throws Exception {
 //        ObjectMapper mapper = new ObjectMapper();

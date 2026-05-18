@@ -1,7 +1,12 @@
 package com.example;
-import com.example.analizer.project_structure.NewAnalyzer;
+import com.example.all_traces.AnalyzeAllInputStructures;
+import com.example.analizer.NewAnalyzer;
+import com.example.analizer.followed_data.FollowedDatum;
+import com.example.analizer.followed_data.MethodArgument;
+import com.example.generators.JsonToClassGenerator;
 import com.example.result_structure.ResultGraph;
 import com.example.structure.StructureSpoon;
+import spoon.reflect.declaration.CtParameter;
 //import com.example.analizer.AnalyzerAfterSpoonForDatum;
 
 import java.nio.file.*;
@@ -84,14 +89,23 @@ public class Main {
 //        resultNode.print();
 //        System.out.println("Анализ структуры проекта завершён!");
 
-        String inputJson = "project_structure/input.json";
-        System.out.println("Анализ структуры проекта ...");
-        NewAnalyzer analizerAfterSpoon = new NewAnalyzer(structureSpoon, inputJson);
-        ResultGraph resultGraph = analizerAfterSpoon.analyzeDatumAndGetResult();
-        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
-        System.out.println("============== результат анализа =============");
-        resultGraph.print();
+//        String inputJson = "project_structure/input.json";
+//        System.out.println("Анализ структуры проекта ...");
+//        CtParameter<?> parameter = JsonToClassGenerator.createInputStructureFromJson(inputDatumJson, structureSpoon.getModel());
+//        FollowedDatum startFollowedDatum = new MethodArgument(parameter);
+//        NewAnalyzer analizerAfterSpoon = new NewAnalyzer(structureSpoon);
+//        ResultGraph resultGraph = analizerAfterSpoon.analyzeDatumAndGetResult(startFollowedDatum);
+//        System.out.println(":::::::::::::::::::::::::::::::::::::::::");
+//        System.out.println("============== результат анализа =============");
+//        resultGraph.print();
+//        System.out.println("Анализ структуры проекта завершён!");
+        System.out.println("============== анализ всех трасс =============");
+        AnalyzeAllInputStructures analyzeAllInputStructures = new AnalyzeAllInputStructures();
+        analyzeAllInputStructures.buildAllTraces(structureSpoon);
         System.out.println("Анализ структуры проекта завершён!");
+        System.out.println("============== результат анализа =============");
+        analyzeAllInputStructures.print();
+        System.out.println("============== конец результата =============");
     }
 
 //    private static FollowedDatum getInputPoints() {

@@ -1,4 +1,4 @@
-package com.example.analizer.project_structure;
+package com.example.analizer;
 
 //import com.example.analizer.followed_data.ExpressionInMethod;
 import com.example.analizer.followed_data.*;
@@ -17,15 +17,14 @@ import java.util.*;
 
 public class NewAnalyzer {
     //    private CtModel model;
-    private final FollowedDatum startFollowedDatum;
+    private FollowedDatum startFollowedDatum;
     private StructureSpoon structureSpoon;
-    public NewAnalyzer(StructureSpoon structureSpoon, String inputDatumJson) {
+    public NewAnalyzer(StructureSpoon structureSpoon) {
         this.structureSpoon = structureSpoon;
-        CtParameter<?> parameter = JsonToClassGenerator.createInputStructureFromJson(inputDatumJson, structureSpoon.getModel());
-        this.startFollowedDatum = new MethodArgument(parameter);
     }
 
-    public ResultGraph analyzeDatumAndGetResult() {
+    public ResultGraph analyzeDatumAndGetResult(FollowedDatum followedDatum) {
+        this.startFollowedDatum = followedDatum;
         ResultGraph resultGraph = new ResultGraph(
                 startFollowedDatum
         );
@@ -364,6 +363,9 @@ public class NewAnalyzer {
 
         int argInd = 0;
         CtMethod<?> methodTo = (CtMethod<?>) edge.getTo();
+        if (methodTo == null) {
+            return newData;
+        }
         CtInvocation<?> ctInvocation = (CtInvocation<?>) edge.getCallExpression();
         for (CtExpression<?> arg : ctInvocation.getArguments()) {
             // Если это переменная - получить её имя
@@ -405,6 +407,9 @@ public class NewAnalyzer {
 
         int argInd = 0;
         CtConstructor<?> constructorTo = (CtConstructor<?>) edge.getTo();
+        if (constructorTo == null) {
+            return newData;
+        }
         CtConstructorCall<?> ctConstructorCall = (CtConstructorCall<?>) edge.getCallExpression();
         for (CtExpression<?> arg : ctConstructorCall.getArguments()) {
             // Если это переменная - получить её имя

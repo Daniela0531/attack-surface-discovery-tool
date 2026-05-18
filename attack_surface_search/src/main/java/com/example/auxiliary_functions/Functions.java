@@ -9,6 +9,7 @@ import com.example.structure.graph.Edge;
 import com.example.structure.graph.Label;
 import com.example.structure.graph.RelationType;
 import com.example.input_structure.InputStructureMethod;
+import spoon.reflect.CtModel;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtExecutableReference;
@@ -174,13 +175,13 @@ public class Functions {
 //        return newData;
 //    }
 
-    private String getFullMethodSignature(CtMethod<?> method) {
-        String params = method.getParameters().stream()
-                .map(p -> p.getType().getQualifiedName())
-                .collect(Collectors.joining(","));
-        return method.getDeclaringType().getQualifiedName() + "." +
-                method.getSimpleName() + "(" + params + ")";
-    }
+//    private String getFullMethodSignature(CtMethod<?> method) {
+//        String params = method.getParameters().stream()
+//                .map(p -> p.getType().getQualifiedName())
+//                .collect(Collectors.joining(","));
+//        return method.getDeclaringType().getQualifiedName() + "." +
+//                method.getSimpleName() + "(" + params + ")";
+//    }
 
     public static boolean contains(Set<FollowedDatum> isVisited, FollowedDatum requiredDatum) {
         for (FollowedDatum datum : isVisited) {
@@ -278,4 +279,35 @@ public class Functions {
         }
         return new ArrayList<>();
     }
+
+//    public MethodArgument getMethodArgumentFromDescription(CtModel ctModel, String fullSignature, int positionInMethod) {
+//        // 2. Поиск метода по сигнатуре во всей модели
+//        CtMethod<?> targetMethod = null;
+//        for (CtClass<?> clazz : ctModel.getElements(new TypeFilter<>(CtClass.class))) {
+//            for (CtMethod<?> method : clazz.getMethods()) {
+//                String curFullSignature = getFullSignatureForMethod(method);
+//                if (fullSignature.equals(curFullSignature)) {
+//                    targetMethod = method;
+//                    break;
+//                }
+//            }
+//            if (targetMethod != null) break;
+//        }
+//
+//        // 3. Проверка, что метод найден
+//        if (targetMethod == null) {
+//            throw new RuntimeException("Метод с сигнатурой '" + fullSignature + "' не найден в модели");
+//        }
+//
+//        // 4. Получение параметра по позиции
+//        var parameters = targetMethod.getParameters();
+//        if (positionInMethod < 0 || positionInMethod >= parameters.size()) {
+//            throw new RuntimeException(
+//                    String.format("Неверная позиция параметра: %d. Метод '%s' имеет %d параметров",
+//                            positionInMethod, fullSignature, parameters.size())
+//            );
+//        }
+//        return new MethodArgument(parameters.get(positionInMethod));
+//    }
+
 }

@@ -185,6 +185,7 @@ public class Level {
 //                logicProperties.getTankSpeed());
 //        playerTank.setProgress(deltaTime);
         func().getGraphicsInterface().draw((Batch) deltaTime);
+        System.out.println(deltaTime);
     }
 
     public TankMoveModel func() {
