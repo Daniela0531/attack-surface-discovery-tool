@@ -1,20 +1,15 @@
 package com.example;
 import com.example.all_traces.AnalyzeAllInputStructures;
-import com.example.analizer.NewAnalyzer;
-import com.example.analizer.followed_data.FollowedDatum;
-import com.example.analizer.followed_data.MethodArgument;
-import com.example.generators.JsonToClassGenerator;
-import com.example.result_structure.ResultGraph;
+import com.example.generators.ClassToJsonWriter;
 import com.example.structure.StructureSpoon;
-import spoon.reflect.declaration.CtParameter;
-//import com.example.analizer.AnalyzerAfterSpoonForDatum;
 
 import java.nio.file.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    private static Path dirForProjectCopy = Paths.get("preproccesed_project");
+    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloack/keycloak/adapters");
+//    services
     public static void main(String[] args) throws Exception {
 //        String pathToProject = "/Users/daniela/Desktop/maga_diplom/test/";
 
@@ -53,7 +48,10 @@ public class Main {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
+
         System.out.println("Построение структуры проекта ...");
+        long start = 0;
+        long end = 0;
         StructureSpoon structureSpoon = new StructureSpoon(dirForProjectCopy);
 
         String inputDatumJson = "project_structure/data.json";
@@ -79,6 +77,9 @@ public class Main {
 //        Path sourceDir = Paths.get("preproccesed_project");
 //        String jsonOutputPath = "cpg_graph.json";
 //
+
+        start = System.nanoTime();
+
         structureSpoon.initSpoon();
         structureSpoon.initCpgGraph();
 //
@@ -99,13 +100,27 @@ public class Main {
 //        System.out.println("============== результат анализа =============");
 //        resultGraph.print();
 //        System.out.println("Анализ структуры проекта завершён!");
+        end = System.nanoTime();
+        System.out.println("Структура проекта построена за :: ");
+        System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
         System.out.println("============== анализ всех трасс =============");
+        start = System.nanoTime();
         AnalyzeAllInputStructures analyzeAllInputStructures = new AnalyzeAllInputStructures();
         analyzeAllInputStructures.buildAllTraces(structureSpoon);
-        System.out.println("Анализ структуры проекта завершён!");
-        System.out.println("============== результат анализа =============");
-        analyzeAllInputStructures.print();
-        System.out.println("============== конец результата =============");
+        end = System.nanoTime();
+        System.out.println("Анализ структуры проекта завершён за :: ");
+        System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
+//        System.out.println("============== результат анализа =============");
+//        start = System.nanoTime();
+//        analyzeAllInputStructures.print();
+//        System.out.println("============== конец результата =============");
+//        end = System.nanoTime();
+//        System.out.println("Вывод результата за :: ");
+//        System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
+        Path resultJson = Paths.get("/Users/daniela/Desktop/maga_diplom/repo/attack_surface_search/src/main/front/src/result.json");
+        Files.write(Paths.get(resultJson.toUri()), "".getBytes());
+        ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
+        classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());
     }
 
 //    private static FollowedDatum getInputPoints() {

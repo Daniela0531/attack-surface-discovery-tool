@@ -145,9 +145,9 @@ public class NewAnalyzer {
                 // TODO анализ вне метода
                 // analyseAllOperations(parentMethod, statement, newDatum, newData);
             }
-            else if (statement instanceof CtAssignment<?, ?>) {
+            else if (statement!=null && statement instanceof CtAssignment<?, ?>) {
                 // создать новую datum
-                System.out.println("CtAssignment " + statement.prettyprint());
+//                System.out.println("CtAssignment " + statement.prettyprint());
                 CtExpression<?> assignment = ((CtAssignment<?, ?>) statement).getAssignment();
                 CtExpression<?> assigned = ((CtAssignment<?, ?>) statement).getAssigned();
                 if (
@@ -181,24 +181,26 @@ public class NewAnalyzer {
         List<CtStatement> foundOperations = new ArrayList<>();
 
         // 2. Получаем все инструкции тела метода
-        List<CtStatement> allStatements = parentMethod.getBody().getElements(new TypeFilter<>(CtStatement.class));
-        boolean statementFound = false;
-        if (requiredStatement == null) {
-            statementFound = true;
-        }
-
-        // 3. Проходим по всем инструкциям
-        for (CtStatement statement : allStatements) {
-            // Начинаем собирать после того, как нашли наш invocation
-            if (statementFound) {
-                // Проверяем, используется ли datumName в этой инструкции
-                if (usesVariable(statement, datumName)) {
-                    foundOperations.add(statement);
-                }
-            }
-            // Проверяем, является ли текущая инструкция нашим invocation'ом
-            if (statement == requiredStatement) {
+        if (parentMethod.getBody() != null) {
+            List<CtStatement> allStatements = parentMethod.getBody().getElements(new TypeFilter<>(CtStatement.class));
+            boolean statementFound = false;
+            if (requiredStatement == null) {
                 statementFound = true;
+            }
+
+            // 3. Проходим по всем инструкциям
+            for (CtStatement statement : allStatements) {
+                // Начинаем собирать после того, как нашли наш invocation
+                if (statementFound) {
+                    // Проверяем, используется ли datumName в этой инструкции
+                    if (usesVariable(statement, datumName)) {
+                        foundOperations.add(statement);
+                    }
+                }
+                // Проверяем, является ли текущая инструкция нашим invocation'ом
+                if (statement == requiredStatement) {
+                    statementFound = true;
+                }
             }
         }
 
@@ -361,12 +363,16 @@ public class NewAnalyzer {
             return newData;
         }
 
-        int argInd = 0;
         CtMethod<?> methodTo = (CtMethod<?>) edge.getTo();
         if (methodTo == null) {
             return newData;
         }
         CtInvocation<?> ctInvocation = (CtInvocation<?>) edge.getCallExpression();
+
+        int argInd = 0;
+        if (ctInvocation.getArguments().size() != methodTo.getParameters().size()) {
+            return newData;
+        }
         for (CtExpression<?> arg : ctInvocation.getArguments()) {
             // Если это переменная - получить её имя
             if (arg instanceof CtVariableRead) {
@@ -376,13 +382,15 @@ public class NewAnalyzer {
 //                        System.out.println("datum ушла в метод интерфейса " + methodTo.getSimpleName());
 //                        System.out.println(structureSpoon.getImplementationMap().get(methodTo));
 
-                        for (CtMethod<?> methodImpl : structureSpoon.getImplementationMap().get(methodTo)) {
-                            newData.add(new MethodArgument(
-                                    methodImpl.getParameters().get(argInd),
-                                    datumName,
-                                    edge.getFrom()
-                            ));
-//                            newData.get(newData.size() - 1).getLocation().print(0);
+                        if (structureSpoon.getImplementationMap() != null && structureSpoon.getImplementationMap().containsKey(methodTo)) {
+                            for (CtMethod<?> methodImpl : structureSpoon.getImplementationMap().get(methodTo)) {
+                                newData.add(new MethodArgument(
+                                        methodImpl.getParameters().get(argInd),
+                                        datumName,
+                                        edge.getFrom()
+                                ));
+    //                            newData.get(newData.size() - 1).getLocation().print(0);
+                            }
                         }
                     } else {
                         newData.add(new MethodArgument(
@@ -411,6 +419,9 @@ public class NewAnalyzer {
             return newData;
         }
         CtConstructorCall<?> ctConstructorCall = (CtConstructorCall<?>) edge.getCallExpression();
+        if (ctConstructorCall.getArguments().size() != constructorTo.getParameters().size()) {
+            return newData;
+        }
         for (CtExpression<?> arg : ctConstructorCall.getArguments()) {
             // Если это переменная - получить её имя
             if (arg instanceof CtVariableRead) {

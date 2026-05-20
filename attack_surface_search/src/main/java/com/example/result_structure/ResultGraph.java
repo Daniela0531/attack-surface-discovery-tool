@@ -34,42 +34,50 @@ public class ResultGraph {
         System.out.println(tabs + i + " ::");
         if (vertex instanceof MethodArgument) {
             CtExecutable<?> executable = ((MethodArgument)vertex).getLocation();
-            if (executable instanceof CtMethod<?>) {
-                System.out.println(tabs + "class :: " + ((CtMethod<?>)executable).getDeclaringType().getQualifiedName());
-            } else if (executable instanceof CtConstructor<?>) {
-                System.out.println(tabs + "class :: " + ((CtConstructor<?>)executable).getDeclaringType().getQualifiedName());
-            } else {
-                System.out.println(tabs + "Странный родитель метода/конструктора");
+            if (executable != null) {
+                if (executable instanceof CtMethod<?>) {
+                    System.out.println(tabs + "class :: " + ((CtMethod<?>) executable).getDeclaringType().getQualifiedName());
+                } else if (executable instanceof CtConstructor<?>) {
+                    System.out.println(tabs + "class :: " + ((CtConstructor<?>) executable).getDeclaringType().getQualifiedName());
+                } else {
+                    System.out.println(tabs + "Странный родитель метода/конструктора");
+                }
+                System.out.println(tabs + executable.getSignature());
+                System.out.println(tabs + "from :: " + ((MethodArgument) vertex).getParameterImplName());
+                System.out.println(tabs + "to parameter :: " + vertex.getName());
             }
-            System.out.println(tabs + executable.getSignature());
-            System.out.println(tabs + "from :: " + ((MethodArgument)vertex).getParameterImplName());
-            System.out.println(tabs + "to parameter :: " + vertex.getName());
         } else if (vertex instanceof LocalVariableInMethod) {
             CtExecutable<?> executable = ((LocalVariableInMethod) vertex).getLocation();
-            if (executable instanceof CtMethod<?>) {
-                System.out.println(tabs + "class :: " + ((CtMethod<?>)executable).getDeclaringType().getQualifiedName());
-            } else if (executable instanceof CtConstructor<?>) {
-                System.out.println(tabs + "class :: " + ((CtConstructor<?>)executable).getDeclaringType().getQualifiedName());
-            } else {
-                System.out.println(tabs + "Странный родитель метода/конструктора");
+            if (executable != null) {
+                if (executable instanceof CtMethod<?>) {
+                    System.out.println(tabs + "class :: " + ((CtMethod<?>) executable).getDeclaringType().getQualifiedName());
+                } else if (executable instanceof CtConstructor<?>) {
+                    System.out.println(tabs + "class :: " + ((CtConstructor<?>) executable).getDeclaringType().getQualifiedName());
+                } else {
+                    System.out.println(tabs + "Странный родитель метода/конструктора");
+                }
+                System.out.println(tabs + executable.getSignature());
+                System.out.println(tabs + "local_variable :: " + vertex.getName());
             }
-            System.out.println(tabs + executable.getSignature());
-            System.out.println(tabs + "local_variable :: " + vertex.getName());
         } else if (vertex instanceof AssignmentInMethod) {
             CtExecutable<?> executable = ((AssignmentInMethod) vertex).getLocation();
-            if (executable instanceof CtMethod<?>) {
-                System.out.println(tabs + "class :: " + ((CtMethod<?>)executable).getDeclaringType().getQualifiedName());
-            } else if (executable instanceof CtConstructor<?>) {
-                System.out.println(tabs + "class :: " + ((CtConstructor<?>)executable).getDeclaringType().getQualifiedName());
-            } else {
-                System.out.println(tabs + "Странный родитель метода/конструктора");
+            if (executable != null) {
+                if (executable instanceof CtMethod<?>) {
+                    System.out.println(tabs + "class :: " + ((CtMethod<?>) executable).getDeclaringType().getQualifiedName());
+                } else if (executable instanceof CtConstructor<?>) {
+                    System.out.println(tabs + "class :: " + ((CtConstructor<?>) executable).getDeclaringType().getQualifiedName());
+                } else {
+                    System.out.println(tabs + "Странный родитель метода/конструктора");
+                }
+                System.out.println(tabs + executable.getSignature());
+                System.out.println(tabs + "assignment :: " + vertex.getName());
             }
-            System.out.println(tabs + executable.getSignature());
-            System.out.println(tabs + "assignment :: " + vertex.getName());
         } else if (vertex instanceof ClassField) {
             CtClass<?> ctClass = ((ClassField) vertex).getLocation();
-            System.out.println(tabs + "class :: " + ctClass.getSimpleName());
-            System.out.println(tabs + "field :: " + vertex.getName());
+            if (ctClass == null) {
+                System.out.println(tabs + "class :: " + ctClass.getSimpleName());
+                System.out.println(tabs + "field :: " + vertex.getName());
+            }
         } else {
             System.out.println(tabs + "Новый вид Datum!!!!!!!");
         }
@@ -107,6 +115,13 @@ public class ResultGraph {
 
     public List<ResultEdge> getEdges() {
         return edges;
+    }
+
+    public List<FollowedDatum> getNodes() {
+        return nodes;
+    }
+    public FollowedDatum getStart() {
+        return start;
     }
 }
 //public class ResultGraph {

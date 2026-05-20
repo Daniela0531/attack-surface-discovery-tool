@@ -4,6 +4,7 @@ import com.example.auxiliary_functions.Functions;
 import com.example.structure.graph.CpgGraph;
 import com.example.structure.graph.Edge;
 import spoon.Launcher;
+import spoon.MavenLauncher;
 import spoon.reflect.CtModel;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
@@ -41,13 +42,20 @@ public class StructureSpoon {
     }
 
     public CtModel initSpoon() throws IOException {
-        Launcher launcher = new Launcher();
+        MavenLauncher launcher = new MavenLauncher(source.toRealPath().toString(), MavenLauncher.SOURCE_TYPE.APP_SOURCE);
+//        Launcher launcher = new Launcher();
 
         // Указываем путь к исходникам вашего проекта
-        launcher.addInputResource(source.toRealPath().toString());
+//        launcher.addInputResource(source.toRealPath().toString());
 
         // Отключаем режим classpath для анализа без полной компиляции
         launcher.getEnvironment().setNoClasspath(true);
+        launcher.getEnvironment().setShouldCompile(false);
+
+        // Добавьте эту строку перед buildModel()
+        launcher.getEnvironment().setComplianceLevel(17); // Укажите вашу версию Java
+//        launcher.getEnvironment().setSourceVersion(17);
+//        launcher.getEnvironment().setTargetVersion(17);
 
         // Строим модель
         this.model = launcher.buildModel();
@@ -198,7 +206,7 @@ public class StructureSpoon {
             // 1. Получаем объект класса/интерфейса из ссылки
             CtType<?> targetClass = typeReference.getTypeDeclaration();
             if (targetClass == null) {
-                System.err.println("Не удалось найти объявление класса для: " + targetClass.getQualifiedName());
+                System.err.println("Не удалось найти объявление класса для");
                 return false;
             }
 
@@ -287,7 +295,7 @@ public class StructureSpoon {
                     return null;
                 }
                 CtTypeReference<?> typeRef = ((CtLocalVariable<?>) initialization).getDefaultExpression().getType();
-                if (typeRef.getTypeDeclaration() instanceof CtInterface<?>) {
+                if (typeRef != null && typeRef.getTypeDeclaration() instanceof CtInterface<?>) {
                     return null;
                 }
                 return typeRef;

@@ -1,22 +1,426 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CPG Graph Viewer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <title>ResultGraph Visualizer - Multiple Graphs</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; overflow: hidden; height: 100vh; }
+
+        #header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        #sidebar {
+            width: 320px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #graph-selector {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        #graph-selector select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background: #34495e;
+            color: white;
+            border: 1px solid #46607a;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #graph-info {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        #node-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .node-list li {
+            padding: 8px;
+            margin: 4px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .node-list li:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .node-type {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .type-MethodArgument { background: #e74c3c; }
+        .type-LocalVariableInMethod { background: #3498db; }
+        .type-AssignmentInMethod { background: #2ecc71; }
+        .type-ClassField { background: #f39c12; }
+
+        #graph-container {
+            flex: 1;
+            background: #f5f5f5;
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            cursor: move;
+        }
+
+        .node { cursor: pointer; }
+        .node circle { stroke-width: 2px; transition: all 0.3s; }
+        .node:hover circle { stroke-width: 4px; filter: brightness(0.9); }
+        .node text { font-size: 12px; font-weight: bold; dominant-baseline: middle; text-anchor: middle; fill: #fff; }
+        .node-label { font-size: 10px; fill: #333; text-anchor: middle; dominant-baseline: hanging; }
+        .edge { stroke: #999; stroke-width: 2px; stroke-dasharray: 5,5; transition: all 0.3s; }
+        .edge:hover { stroke: #3498db; stroke-width: 3px; }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 20;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover { background: #2980b9; }
+
+        .status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 20;
+        }
+
+        h3 { margin-bottom: 15px; font-size: 16px; }
+    </style>
 </head>
 <body>
-<div id="toolbar">
-<!--    <button onclick="loadFullGraph()">Показать весь граф</button>-->
-    <span id="info"></span>
+<div id="header">
+    <h1>📊 ResultGraph Visualizer - Multiple Graphs</h1>
+    <p>Интерактивная визуализация множества графов зависимостей</p>
 </div>
-<div id="cy"></div>
-<div id="details-panel">
-    <h3>Информация об узле</h3>
+<div id="container">
+    <div id="sidebar">
+        <div id="graph-selector">
+            <h3>🎯 Выбор графа</h3>
+            <select id="graph-select" onchange="switchGraph()">
+                <option value="">-- Загрузка графов --</option>
+            </select>
+        </div>
+
+        <div class="info-panel" id="graph-info">
+            <p>Загрузка...</p>
+        </div>
+
+        <h3>📋 Узлы графа</h3>
+        <ul id="node-list" class="node-list"></ul>
+    </div>
+
+    <div id="graph-container">
+        <div class="controls">
+            <button onclick="zoomIn()">➕ Приблизить</button>
+            <button onclick="zoomOut()">➖ Отдалить</button>
+            <button onclick="resetZoom()">🔄 Сброс</button>
+            <button onclick="previousGraph()">◀ Предыдущий</button>
+            <button onclick="nextGraph()">Следующий ▶</button>
+        </div>
+        <div id="status" class="status">⏳ Загрузка графов...</div>
+    </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+    let svg, g, zoom, width, height, simulation;
+    let allGraphs = [];
+    let currentGraphIndex = 0;
+    let nodeMap = new Map();
+
+    async function loadGraphs() {
+        try {
+            const response = await fetch('/api/graphs');
+            const data = await response.json();
+            allGraphs = data.graphs;
+
+            console.log(`Загружено графов: ${allGraphs.length}`);
+
+            if (allGraphs.length > 0) {
+                updateGraphSelector();
+                currentGraphIndex = 0;
+                displayGraph(currentGraphIndex);
+                document.getElementById('status').innerHTML = `✅ Загружено ${allGraphs.length} графов`;
+            } else {
+                document.getElementById('status').innerHTML = '⚠️ Нет графов для отображения';
+                document.getElementById('graph-info').innerHTML = '<p>Нет загруженных графов</p>';
+            }
+
+            setTimeout(() => {
+                document.getElementById('status').style.opacity = '0';
+            }, 3000);
+        } catch (error) {
+            console.error('Ошибка загрузки:', error);
+            document.getElementById('status').innerHTML = '❌ Ошибка загрузки графов';
+        }
+    }
+
+    function updateGraphSelector() {
+        const select = document.getElementById('graph-select');
+        select.innerHTML = '';
+
+        allGraphs.forEach((graph, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            const nodeCount = graph.data.nodes.length;
+            option.textContent = `${graph.name} (${nodeCount} узлов)`;
+            select.appendChild(option);
+        });
+    }
+
+    function switchGraph() {
+        const select = document.getElementById('graph-select');
+        currentGraphIndex = parseInt(select.value);
+        displayGraph(currentGraphIndex);
+    }
+
+    function previousGraph() {
+        if (currentGraphIndex > 0) {
+            currentGraphIndex--;
+            displayGraph(currentGraphIndex);
+            document.getElementById('graph-select').value = currentGraphIndex;
+        }
+    }
+
+    function nextGraph() {
+        if (currentGraphIndex < allGraphs.length - 1) {
+            currentGraphIndex++;
+            displayGraph(currentGraphIndex);
+            document.getElementById('graph-select').value = currentGraphIndex;
+        }
+    }
+
+    function displayGraph(index) {
+        if (index < 0 || index >= allGraphs.length) return;
+
+        const graphData = allGraphs[index].data;
+        updateSidebar(graphData, index);
+        renderGraph(graphData);
+
+        document.getElementById('status').innerHTML = `📊 Отображение графа ${index + 1} из ${allGraphs.length}`;
+        setTimeout(() => {
+            document.getElementById('status').style.opacity = '0';
+        }, 2000);
+    }
+
+    function updateSidebar(graphData, index) {
+        const info = document.getElementById('graph-info');
+        const nodeCount = graphData.nodes.length;
+        const edgeCount = graphData.edges.length;
+
+        // Подсчёт типов узлов
+        const typeCount = {};
+        graphData.nodes.forEach(node => {
+            typeCount[node.type] = (typeCount[node.type] || 0) + 1;
+        });
+
+        info.innerHTML = `
+            <p><strong>📊 Граф ${index + 1} из ${allGraphs.length}</strong></p>
+            <p><strong>🔘 Узлов:</strong> ${nodeCount}</p>
+            <p><strong>🔗 Рёбер:</strong> ${edgeCount}</p>
+            <p><strong>🏁 Стартовая нода:</strong> ${graphData.startId ? 'Да' : 'Нет'}</p>
+            <hr style="margin: 10px 0; border-color: rgba(255,255,255,0.2);">
+            <p><strong>📈 Типы узлов:</strong></p>
+            <ul style="margin-left: 20px;">
+                ${Object.entries(typeCount).map(([type, count]) =>
+                    `<li>${type}: ${count}</li>`
+                ).join('')}
+            </ul>
+        `;
+
+        // Обновляем список узлов
+        const nodeList = document.getElementById('node-list');
+        nodeList.innerHTML = '';
+        graphData.nodes.forEach(node => {
+            const li = document.createElement('li');
+            const shortType = node.type.replace('InMethod', '');
+            li.innerHTML = `
+                <span class="node-type type-${node.type}">${shortType.substring(0, 4)}</span>
+                <strong>${node.name}</strong>
+                <div style="font-size: 10px; margin-top: 2px; color: #aaa;">${node.details?.className || ''}</div>
+            `;
+            li.onclick = () => highlightNode(node.id);
+            nodeList.appendChild(li);
+        });
+    }
+
+    function renderGraph(data) {
+        width = document.getElementById('graph-container').clientWidth;
+        height = document.getElementById('graph-container').clientHeight;
+
+        d3.select("#graph-container svg").remove();
+
+        svg = d3.select("#graph-container")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        g = svg.append("g");
+
+        zoom = d3.zoom().scaleExtent([0.1, 3]).on("zoom", (event) => {
+            g.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+
+        const colorMap = {
+            'MethodArgument': '#e74c3c',
+            'LocalVariableInMethod': '#3498db',
+            'AssignmentInMethod': '#2ecc71',
+            'ClassField': '#f39c12'
+        };
+
+        const link = g.append("g").selectAll("line")
+            .data(data.edges).enter()
+            .append("line")
+            .attr("class", "edge")
+            .attr("stroke", d => d.type === 'dataflow' ? '#3498db' : '#999');
+
+        const node = g.append("g").selectAll(".node")
+            .data(data.nodes).enter()
+            .append("g")
+            .attr("class", "node")
+            .call(drag(simulation));
+
+        node.append("circle")
+            .attr("r", 22)
+            .attr("fill", d => colorMap[d.type] || '#95a5a6')
+            .attr("stroke", d => d.id === data.startId ? "#ff0" : "#fff")
+            .attr("stroke-width", d => d.id === data.startId ? 4 : 2);
+
+        node.append("text")
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "middle")
+            .attr("fill", "#fff")
+            .attr("font-weight", "bold")
+            .text(d => d.type === 'MethodArgument' ? '📥' :
+                      d.type === 'LocalVariableInMethod' ? '📍' :
+                      d.type === 'AssignmentInMethod' ? '✏️' : '📁');
+
+        node.append("text")
+            .attr("class", "node-label")
+            .attr("dy", "30")
+            .text(d => d.name.length > 15 ? d.name.substring(0,12)+'...' : d.name);
+
+        node.append("title").text(d => `${d.type}\n${d.name}\n${d.details?.info || ''}`);
+
+        simulation = d3.forceSimulation(data.nodes)
+            .force("link", d3.forceLink(data.edges).id(d => d.id).distance(120))
+            .force("charge", d3.forceManyBody().strength(-200))
+            .force("center", d3.forceCenter(width/2, height/2))
+            .force("collision", d3.forceCollide().radius(35));
+
+        simulation.on("tick", () => {
+            link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+            node.attr("transform", d => `translate(${d.x},${d.y})`);
+        });
+    }
+
+    function drag(simulation) {
+        function dragstarted(event) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            event.subject.fx = event.subject.x;
+            event.subject.fy = event.subject.y;
+        }
+        function dragged(event) {
+            event.subject.fx = event.x;
+            event.subject.fy = event.y;
+        }
+        function dragended(event) {
+            if (!event.active) simulation.alphaTarget(0);
+            event.subject.fx = null;
+            event.subject.fy = null;
+        }
+        return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+    }
+
+    function highlightNode(nodeId) {
+        d3.selectAll(".node circle").attr("stroke-width", d => d.id === nodeId ? 4 : 2);
+        d3.selectAll(".edge").attr("stroke-width", d =>
+            d.source.id === nodeId || d.target.id === nodeId ? 3 : 1.5);
+    }
+
+    function zoomIn() { svg.transition().call(zoom.scaleBy, 1.2); }
+    function zoomOut() { svg.transition().call(zoom.scaleBy, 0.8); }
+    function resetZoom() { svg.transition().call(zoom.transform, d3.zoomIdentity); }
+
+    // Загружаем графы при старте
+    loadGraphs();
+
+    // Обновляем размер при изменении окна
+    window.addEventListener('resize', () => {
+        if (simulation) {
+            width = document.getElementById('graph-container').clientWidth;
+            height = document.getElementById('graph-container').clientHeight;
+            svg.attr("width", width).attr("height", height);
+            simulation.force("center", d3.forceCenter(width/2, height/2));
+            simulation.alpha(0.3).restart();
+        }
+    });
+</script>
 </body>
 </html>

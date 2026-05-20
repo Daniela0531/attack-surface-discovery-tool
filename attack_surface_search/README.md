@@ -200,3 +200,6 @@ int x = field;	CtFieldRead
 int x = this.field;	CtFieldRead
 int x = obj.field;	CtFieldRead
 int x = Class.STATIC_FIELD;	CtFieldRead
+
+
+npm start  
