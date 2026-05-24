@@ -4,7 +4,7 @@ import com.example.analizer.followed_data.ClassField;
 import com.example.analizer.followed_data.FollowedDatum;
 import com.example.analizer.followed_data.LocalVariableInMethod;
 import com.example.analizer.followed_data.MethodArgument;
-import com.example.analizer.followed_data.operation.AssignmentInMethod;
+import com.example.analizer.followed_data.AssignmentInMethod;
 import com.example.result_structure.ResultEdge;
 import com.example.result_structure.ResultGraph;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.example.generators.OperytionType.*;
 
 public class ClassToJsonWriter {
     private Path target;
@@ -123,13 +125,92 @@ public class ClassToJsonWriter {
 ////        System.out.println();
 //    }
 
-    private void printJson(String str, int tabsInd) throws IOException {
+    private void printJson(OperytionType type, String methodSignature, int tabsInd) throws IOException {
         String tabs = "  ".repeat(tabsInd);
         String childTabs = "  ".repeat(tabsInd + 1);
         String jsonString = "\n" +
                 tabs + "{\n" +
-                childTabs + "\"name\": " + "\"" + str + "\",\n" +
-                childTabs + "\"children\": [";
+                childTabs + "\"type\": " + "\"" + type.toString() + "\",\n";
+        switch (type) {
+            case ASSIGNMENT -> jsonString +=
+                    childTabs + "\"from_variable\": " + "\"" + methodSignature + "\",\n" +
+                    childTabs + "\"to_param\": " + "\"" + methodSignature + "\",\n";
+            case UNKNOWN -> jsonString +=
+                    childTabs + "\"operation\": " + "\"" + methodSignature + "\",\n";
+        }
+        jsonString += childTabs + "\"children\": [";
+        Files.write(
+                target,
+                jsonString.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
+    }
+
+    private void printAssignmentToJson(AssignmentInMethod vertex, int tabsInd) throws IOException {
+        String tabs = "  ".repeat(tabsInd);
+        String childTabs = "  ".repeat(tabsInd + 1);
+        String jsonString = "\n" +
+                tabs + "{\n" +
+                childTabs + "\"type\": " + "\"" + "ASSIGNMENT" + "\",\n" +
+                childTabs + "\"from_variable\": " + "\"" + vertex.getAssignmentParam() + "\",\n" +
+                childTabs + "\"to_param\": " + "\"" + vertex.getName() + "\",\n";
+        jsonString += childTabs + "\"children\": [";
+        Files.write(
+                target,
+                jsonString.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
+    }
+
+    private void printLocalVariableToJson(LocalVariableInMethod vertex, int tabsInd) throws IOException {
+        String tabs = "  ".repeat(tabsInd);
+        String childTabs = "  ".repeat(tabsInd + 1);
+        String jsonString = "\n" +
+                tabs + "{\n" +
+                childTabs + "\"type\": " + "\"" + "ASSIGNMENT" + "\",\n" +
+//                childTabs + "\"from_variable\": " + "\"" + vertex.getAssignmentParam() + "\",\n" +
+                childTabs + "\"to_param\": " + "\"" + vertex.getName() + "\",\n";
+        jsonString += childTabs + "\"children\": [";
+        Files.write(
+                target,
+                jsonString.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
+    }
+
+    private void printFieldToJson(ClassField vertex, int tabsInd) throws IOException {
+        String tabs = "  ".repeat(tabsInd);
+        String childTabs = "  ".repeat(tabsInd + 1);
+        String jsonString = "\n" +
+                tabs + "{\n" +
+                childTabs + "\"type\": " + "\"" + "ASSIGNMENT" + "\",\n" +
+//                childTabs + "\"from_variable\": " + "\"" + vertex.getAssignmentParam() + "\",\n" +
+                childTabs + "\"to_param\": " + "\"" + vertex.getName() + "\",\n";
+        jsonString += childTabs + "\"children\": [";
+        Files.write(
+                target,
+                jsonString.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
+    }
+
+    private void printMethodJson(MethodArgument vertex, int tabsInd) throws IOException {
+        String tabs = "  ".repeat(tabsInd);
+        String childTabs = "  ".repeat(tabsInd + 1);
+        String jsonString = "\n" +
+                tabs + "{\n" +
+                childTabs + "\"type\": " + "\"" + "METHOD_PARAM" + "\",\n";
+        if (vertex.getLocation() instanceof CtMethod<?>)
+            jsonString += childTabs + "\"class\": " + "\"" + ((CtMethod<?>)vertex.getLocation()).getDeclaringType().getSimpleName() + "\",\n";
+        else
+            jsonString += childTabs + "\"class\": " + "\"" + ((CtConstructor<?>)vertex.getLocation()).getDeclaringType().getSimpleName() + "\",\n";
+
+        jsonString += childTabs + "\"methodSignature\": " + "\"" + vertex.getLocation().getSignature() + "\",\n";
+
+        if (vertex.getParameterImplName() != null)
+            jsonString += childTabs + "\"from_variable\": " + "\"" + vertex.getParameterImplName() + "\",\n";
+        jsonString += childTabs + "\"to_param\": " + "\"" + vertex.getName() + "\",\n";
+        jsonString += childTabs + "\"children\": [";
         Files.write(
                 target,
                 jsonString.getBytes(),
@@ -146,52 +227,49 @@ public class ClassToJsonWriter {
         if (vertex instanceof MethodArgument) {
             CtExecutable<?> executable = ((MethodArgument)vertex).getLocation();
             if (executable != null) {
-                if (executable instanceof CtMethod<?>) {
-//                    printJson(((CtMethod<?>) executable).getDeclaringType().getQualifiedName(), i);
-                } else if (executable instanceof CtConstructor<?>) {
-//                    printJson(((CtConstructor<?>) executable).getDeclaringType().getQualifiedName(), i);
-                } else {
-                    printJson("Странный родитель метода/конструктора", i);
+                if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
+                    printMethodJson((MethodArgument) vertex, i);
                 }
+//                else {
+//                    printJson(METHOD_PARAM, vertex,"Странный родитель метода/конструктора", i);
+//                }
 //                System.out.println(tabs + executable.getSignature());
 //                System.out.println(tabs + "from :: " + ((MethodArgument) vertex).getParameterImplName());
 //                System.out.println(tabs + "to parameter :: " + vertex.getName());
 //                String jsonString = "\n" + tabs + executable.getSignature() + "\n" +
 //                        tabs + ((MethodArgument) vertex).getParameterImplName() + "\n" +
 //                        tabs + vertex.getName();
-                printJson(executable.getSignature(), i);
+
             }
         } else if (vertex instanceof LocalVariableInMethod) {
             CtExecutable<?> executable = ((LocalVariableInMethod) vertex).getLocation();
             if (executable != null) {
-                if (executable instanceof CtMethod<?>) {
-//                    printJson(((CtMethod<?>) executable).getDeclaringType().getQualifiedName(), i);
-                } else if (executable instanceof CtConstructor<?>) {
-//                    printJson(((CtConstructor<?>) executable).getDeclaringType().getQualifiedName(), i);
-                } else {
-                    printJson("Странный родитель метода/конструктора", i);
+                if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
+                    printLocalVariableToJson((LocalVariableInMethod) vertex, i);
                 }
+//                else {
+//                    printLocalVariableToJson(ASSIGNMENT, "Странный родитель метода/конструктора", i);
+//                }
 //                System.out.println(tabs + executable.getSignature());
 //                System.out.println(tabs + "local_variable :: " + vertex.getName());
 //                String jsonString = "\n" + tabs + executable.getSignature() + "\n" +
 //                        tabs + "local_variable :: " + vertex.getName();
-                printJson(executable.getSignature(), i);
+
             }
         } else if (vertex instanceof AssignmentInMethod) {
             CtExecutable<?> executable = ((AssignmentInMethod) vertex).getLocation();
             if (executable != null) {
-                if (executable instanceof CtMethod<?>) {
-//                    printJson(((CtMethod<?>) executable).getDeclaringType().getQualifiedName(), i);
-                } else if (executable instanceof CtConstructor<?>) {
-//                    printJson(((CtConstructor<?>) executable).getDeclaringType().getQualifiedName(), i);
-                } else {
-                    printJson("Странный родитель метода/конструктора", i);
+                if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
+                    printAssignmentToJson((AssignmentInMethod) vertex, i);
                 }
+//                else {
+//                    printJson(ASSIGNMENT, "Странный родитель метода/конструктора", i);
+//                }
 //                System.out.println(tabs + executable.getSignature());
 //                System.out.println(tabs + "assignment :: " + vertex.getName());
 //                String jsonString = "\n" + tabs + executable.getSignature() +
 //                        tabs + "assignment :: " + vertex.getName();
-                printJson(executable.getSignature(), i);
+
             }
         } else if (vertex instanceof ClassField) {
             CtClass<?> ctClass = ((ClassField) vertex).getLocation();
@@ -200,12 +278,13 @@ public class ClassToJsonWriter {
 //                System.out.println(tabs + "field :: " + vertex.getName());
 //                String jsonString = "\n" + tabs + "class :: " + ctClass.getSimpleName() +
 //                        tabs + "field :: " + vertex.getName();
-                printJson(vertex.getName(), i);
+                printFieldToJson((ClassField) vertex, i);
             }
-        } else {
-//            System.out.println(tabs + "Новый вид Datum!!!!!!!");
-            printJson("Новый вид Datum!!!!!!!", i);
         }
+//        else {
+////            System.out.println(tabs + "Новый вид Datum!!!!!!!");
+//            printJson(UNKNOWN, "Новый вид Datum!!!!!!!", i);
+//        }
 
         List<FollowedDatum> neighbors = getNeighbors(vertex, resultGraph);
         if (neighbors.isEmpty()) {
@@ -220,7 +299,7 @@ public class ClassToJsonWriter {
         }
         for (int j = 0; j < neighbors.size(); ++j) {
             if (!visited.contains(neighbors.get(j))) {
-                dfsRecursivePrint(resultGraph, neighbors.get(j), visited, extraTabsIn, i + 1);
+                dfsRecursivePrint(resultGraph, neighbors.get(j), visited, extraTabsIn, i + 2);
                 if (j < neighbors.size() - 1) {
                     String jsonString = ",";
                     Files.write(
@@ -229,8 +308,8 @@ public class ClassToJsonWriter {
                             StandardOpenOption.CREATE,
                             StandardOpenOption.APPEND);
                 } else {
-                    String jsonString = "\n" + tabs +"]\n" +
-                            parentTabs + "}";
+                    String jsonString = "\n" + childTabs +"]\n" +
+                            tabs + "}";
                     Files.write(
                             target,
                             jsonString.getBytes(),
@@ -249,4 +328,8 @@ public class ClassToJsonWriter {
         }
         return neighbors;
     }
+}
+
+enum OperytionType {
+    ASSIGNMENT, METHOD_PARAM, UNKNOWN
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TreeView from './TreeView';
-import jsonData from './result.json';
+import jsonData from '../../result.json';
 
 const App = () => {
   const [data, setData] = useState(null);

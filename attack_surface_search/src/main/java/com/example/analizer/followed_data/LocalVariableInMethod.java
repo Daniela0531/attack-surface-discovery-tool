@@ -62,5 +62,9 @@ public class LocalVariableInMethod implements FollowedDatumInMethodContext {
     public CtLocalVariable<?> getVariableAccess() {
         return variableAccess;
     }
+
+    public String getAssignmentParam() {
+        return variableAccess.getDefaultExpression().toString();
+    }
 }
 

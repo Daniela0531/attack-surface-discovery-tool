@@ -2,9 +2,8 @@ package com.example.analizer;
 
 //import com.example.analizer.followed_data.ExpressionInMethod;
 import com.example.analizer.followed_data.*;
-import com.example.analizer.followed_data.operation.AssignmentInMethod;
+import com.example.analizer.followed_data.AssignmentInMethod;
 import com.example.auxiliary_functions.Functions;
-import com.example.generators.JsonToClassGenerator;
 import com.example.result_structure.ResultEdge;
 import com.example.result_structure.ResultGraph;
 import com.example.structure.StructureSpoon;
@@ -35,8 +34,6 @@ public class NewAnalyzer {
         while (!queueForNextClass.isEmpty()) {
             // извлекает и удаляет первый в очереди
             FollowedDatum curDatum = queueForNextClass.poll();
-//            System.out.println(curDatum.getName());
-
             // получаем детей для bfs
             ArrayList<FollowedDatum> newData = getAllChildrenByDatum(curDatum);
             if (!newData.isEmpty()) {
@@ -51,9 +48,6 @@ public class NewAnalyzer {
             }
             isVisited.add(curDatum);
             resultGraph.addNode(curDatum);
-            if (curDatum instanceof ClassField) {
-                System.out.println("curDatum :: " + curDatum.getName());
-            }
         }
         return resultGraph;
     }
@@ -67,7 +61,8 @@ public class NewAnalyzer {
         } else if (followedDatum instanceof ClassField) {
             // TODO анализ полей класса
             return newData;
-        } else {
+        }
+        else {
             System.out.println("неизвестный тип FollowedDatum");
         }
         return newData;
@@ -123,7 +118,7 @@ public class NewAnalyzer {
                 }
             }
             else if (statement instanceof CtLocalVariable<?>) {
-                System.out.println("CtLocalVariable :: " + ((CtLocalVariable<?>) statement).getSimpleName());
+//                System.out.println("CtLocalVariable :: " + ((CtLocalVariable<?>) statement).getSimpleName());
                 CtExpression<?> defaultValue = ((CtLocalVariable<?>) statement).getDefaultExpression();
                 if (defaultValue == null) {
                     System.out.println("Странная инициализация локальной переменной");
@@ -131,13 +126,13 @@ public class NewAnalyzer {
                 }
                 // создать новую datum
                 FollowedDatum newDatum = new LocalVariableInMethod((CtLocalVariable<?>) statement);
-                System.out.println("CtLocalVariable :: создать новую datum " + newDatum.getName());
+//                System.out.println("CtLocalVariable :: создать новую datum " + newDatum.getName());
                 newData.add(newDatum);
                 // запуск рекурсии
                 analyseAllOperations(parentMethod, statement, newDatum, newData);
             }
             else if (statement instanceof CtFieldWrite) {
-                System.out.println("CtFieldWrite");
+//                System.out.println("CtFieldWrite");
                 // запись в поле
                 // создать новую datum
                 FollowedDatum newDatum = new ClassField(((CtFieldWrite<?>) statement).getVariable().getDeclaration());
@@ -159,7 +154,7 @@ public class NewAnalyzer {
                         // запуск рекурсии
                         analyseAllOperations(parentMethod, statement, newDatum, newData);
                     } else if (assigned instanceof CtFieldRead) {
-                        System.out.println("CtFieldWrite");
+//                        System.out.println("CtFieldWrite");
                         FollowedDatum newDatum = new ClassField(((CtFieldWrite<?>) statement).getVariable().getDeclaration());
                         newData.add(newDatum);
                     }

@@ -1,7 +1,7 @@
 package com.example.result_structure;
 
 import com.example.analizer.followed_data.*;
-import com.example.analizer.followed_data.operation.AssignmentInMethod;
+import com.example.analizer.followed_data.AssignmentInMethod;
 import spoon.reflect.declaration.*;
 
 import java.util.ArrayList;

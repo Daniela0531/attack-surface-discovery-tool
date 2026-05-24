@@ -42,18 +42,18 @@ public class StructureSpoon {
     }
 
     public CtModel initSpoon() throws IOException {
-        MavenLauncher launcher = new MavenLauncher(source.toRealPath().toString(), MavenLauncher.SOURCE_TYPE.APP_SOURCE);
-//        Launcher launcher = new Launcher();
+//        MavenLauncher launcher = new MavenLauncher(source.toRealPath().toString(), MavenLauncher.SOURCE_TYPE.APP_SOURCE);
+        Launcher launcher = new Launcher();
 
         // Указываем путь к исходникам вашего проекта
-//        launcher.addInputResource(source.toRealPath().toString());
+        launcher.addInputResource(source.toRealPath().toString());
 
         // Отключаем режим classpath для анализа без полной компиляции
         launcher.getEnvironment().setNoClasspath(true);
         launcher.getEnvironment().setShouldCompile(false);
 
         // Добавьте эту строку перед buildModel()
-        launcher.getEnvironment().setComplianceLevel(17); // Укажите вашу версию Java
+//        launcher.getEnvironment().setComplianceLevel(17); // Укажите вашу версию Java
 //        launcher.getEnvironment().setSourceVersion(17);
 //        launcher.getEnvironment().setTargetVersion(17);
 
@@ -191,16 +191,16 @@ public class StructureSpoon {
         } else if (edge.getFrom() instanceof CtConstructor<?>) {
             allStatements.addAll(((CtConstructor<?>) edge.getFrom()).getBody().getStatements());
         } else {
-            System.out.println("Странный метод интерфейса! не является методом!!!");
-            System.out.println("getSignature :: " + edge.getFrom().getSignature());
-            System.out.println("getType :: " + edge.getFrom().getClass().getSimpleName());
+//            System.out.println("Странный метод интерфейса! не является методом!!!");
+//            System.out.println("getSignature :: " + edge.getFrom().getSignature());
+//            System.out.println("getType :: " + edge.getFrom().getClass().getSimpleName());
             return false;
         }
         CtInvocation<?> invocation = (CtInvocation<?>) edge.getCallExpression();
         // Получаем целевой объект (то, слева от точки)
         CtExpression<?> target = invocation.getTarget();
 
-        System.out.println("Целевой объект вызова: " + target);
+//        System.out.println("Целевой объект вызова: " + target);
         CtTypeReference<?> typeReference = recursiveGetNewTypeToResolveIterfaceMethod(edge.getFrom(), target);
         if (typeReference != null) {
             // 1. Получаем объект класса/интерфейса из ссылки
@@ -248,7 +248,7 @@ public class StructureSpoon {
             // - метода этого же класса без явного вызова this - я вызываю метод интерфейса, но я класс -> значит что это не может быть вызов моего метода
             // + Вызов статического метода через явный импорт - если я интерфейс -> там есть явная реализация static method -> её и берём, всё супер
             // + вызов статического метода через вызов класса - если я интерфейс -> там есть явная реализация static method -> её и берём, всё супер
-            System.out.println("  → Вызов статического метода, нужно взять его реализацию");
+//            System.out.println("  → Вызов статического метода, нужно взять его реализацию");
             // TODO добавить методы интерфейсов с реализацией в nodes графа
 //            graph.addNode(edge.getTo());
             return null;
@@ -256,13 +256,13 @@ public class StructureSpoon {
         else if (target instanceof CtThisAccess) {
             // варианты:
             // - явный вызов метода от this - я вызываю метод интерфейса, но я класс -> значит что это не может быть вызов моего метода
-            System.out.println("  → Вызов через this (текущий объект) - такого не может быть!!!");
+//            System.out.println("  → Вызов через this (текущий объект) - такого не может быть!!!");
             return null;
         }
         else if (target instanceof CtSuperAccess) {
             // варианты:
             // - вызов метода родительского класса - работает только для классов, а я метод интерфейса - не может быть
-            System.out.println("  → Вызов через super (родительский класс) - такого не может быть!!!");
+//            System.out.println("  → Вызов через super (родительский класс) - такого не может быть!!!");
             return null;
         }
 //        else if (target instanceof CtFieldRead) {
@@ -281,7 +281,7 @@ public class StructureSpoon {
             // учтено ранее : + Поле класса - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
             // учтено ранее : + Статическое поле - смогу определить реализацию ТОЛЬКО при явно присваивании в ЭТОМ же методе
             CtVariableRead<?> varRead = (CtVariableRead<?>) target;
-            System.out.println("  → Вызов через переменную: " + varRead.getVariable().getSimpleName());
+//            System.out.println("  → Вызов через переменную: " + varRead.getVariable().getSimpleName());
             CtStatement initialization = findLastAssignmentBeforeRead(varRead, parentExecutable);
             if (initialization instanceof CtAssignment<?,?>) {
                 CtTypeReference<?> typeRef = ((CtAssignment<?,?>) initialization).getAssignment().getType();
@@ -291,7 +291,7 @@ public class StructureSpoon {
                 return typeRef;
             } else if (initialization instanceof CtLocalVariable<?>) {
                 if (((CtLocalVariable<?>) initialization).getDefaultExpression() == null) {
-                    System.out.println("Не верно найдено место инициализации локальной переменной");
+//                    System.out.println("Не верно найдено место инициализации локальной переменной");
                     return null;
                 }
                 CtTypeReference<?> typeRef = ((CtLocalVariable<?>) initialization).getDefaultExpression().getType();
@@ -301,13 +301,13 @@ public class StructureSpoon {
                 return typeRef;
             }
             // нет рекурсии, так как это локальная переменная и мы больше ничего не можем
-            System.out.println("Не верно найдено место инициализации локальной переменной");
+//            System.out.println("Не верно найдено место инициализации локальной переменной");
             return null;
         }
         else if (target instanceof CtInvocation) {
             // варианты:
             // + вызов метода (класса/интерфейса) TODO чо делать?
-            System.out.println("  → Вызов через результат другого вызова (цепочка): " + target);
+//            System.out.println("  → Вызов через результат другого вызова (цепочка): " + target);
             // рекурсия с последующей обработкой после выхода
             CtTypeReference<?> returnType = ((CtInvocation<?>) target).getExecutable().getType();
             if (!(returnType instanceof CtInterface<?>)) {
@@ -316,7 +316,7 @@ public class StructureSpoon {
             return recursiveGetNewTypeToResolveIterfaceMethod(parentExecutable, ((CtInvocation<?>) target).getTarget());
         }
         // варианты:
-        // литералы ("string".method()) и прочая дичь TODO - чо делать??
+        // литералы ("string".method()) и прочая дичь TODO - что делать??
         System.out.println("  → Другой тип: " + target.getClass().getSimpleName());
         return null;
     }

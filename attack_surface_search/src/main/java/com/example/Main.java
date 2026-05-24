@@ -3,15 +3,16 @@ import com.example.all_traces.AnalyzeAllInputStructures;
 import com.example.generators.ClassToJsonWriter;
 import com.example.structure.StructureSpoon;
 
+import java.io.IOException;
 import java.nio.file.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloack/keycloak/adapters");
+    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloak/keycloak/adapters");
 //    services
     public static void main(String[] args) throws Exception {
-//        String pathToProject = "/Users/daniela/Desktop/maga_diplom/test/";
+        String pathToProject = "/Users/daniela/Desktop/maga_diplom/ForTest";
 
         // копирование проекта в вспомогательную директорию
 
@@ -107,6 +108,7 @@ public class Main {
         start = System.nanoTime();
         AnalyzeAllInputStructures analyzeAllInputStructures = new AnalyzeAllInputStructures();
         analyzeAllInputStructures.buildAllTraces(structureSpoon);
+        analyzeAllInputStructures.print();
         end = System.nanoTime();
         System.out.println("Анализ структуры проекта завершён за :: ");
         System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
@@ -117,7 +119,7 @@ public class Main {
 //        end = System.nanoTime();
 //        System.out.println("Вывод результата за :: ");
 //        System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
-        Path resultJson = Paths.get("/Users/daniela/Desktop/maga_diplom/repo/attack_surface_search/src/main/front/src/result.json");
+        Path resultJson = Paths.get("/Users/daniela/Desktop/maga_diplom/repo/attack_surface_search/src/main/result.json");
         Files.write(Paths.get(resultJson.toUri()), "".getBytes());
         ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
         classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());

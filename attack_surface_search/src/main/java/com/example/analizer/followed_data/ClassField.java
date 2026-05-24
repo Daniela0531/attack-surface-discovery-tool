@@ -45,5 +45,8 @@ public class ClassField implements FollowedDatum {
         return field.getSimpleName();
     }
 
+//    public String getAssignmentParam() {
+//        return
+//    }
 }
 
