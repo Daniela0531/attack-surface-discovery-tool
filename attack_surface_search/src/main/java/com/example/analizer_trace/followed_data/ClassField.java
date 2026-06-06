@@ -1,10 +1,7 @@
-package com.example.analizer.followed_data;
+package com.example.analizer_trace.followed_data;
 
-import com.example.analizer.followed_data.location.FollowedDatumLocation;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtField;
-import spoon.reflect.declaration.CtParameter;
-import spoon.reflect.declaration.CtType;
 
 public class ClassField implements FollowedDatum {
     private CtClass<?> location;

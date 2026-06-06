@@ -1,5 +1,6 @@
 package com.example;
 import com.example.all_traces.AnalyzeAllInputStructures;
+import com.example.entry_points.EntryPointsAnalyzer;
 import com.example.generators.ClassToJsonWriter;
 import com.example.structure.StructureSpoon;
 
@@ -9,10 +10,11 @@ import java.nio.file.*;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloak/keycloak/adapters");
+//    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloak/keycloak/admin/client");
+    private static Path dirForProjectCopy = Paths.get("preproccesed_project");
 //    services
     public static void main(String[] args) throws Exception {
-        String pathToProject = "/Users/daniela/Desktop/maga_diplom/ForTest";
+        String pathToProject = "/Users/daniela/Desktop/5_year/2_sem/scalable_distribute_systems/java_scalable_distribute_systems";
 
         // копирование проекта в вспомогательную директорию
 
@@ -26,7 +28,7 @@ public class Main {
 //            return;
 //        }
 //        System.out.println("Создание клона проекта завершено!");
-//
+
 //        // при успешном переносе исходника в директорию для работы
 //        // выполнить препроцессинг кода
 //        System.out.println("Препроцессирую текст кода проекта ...");
@@ -107,7 +109,11 @@ public class Main {
         System.out.println("============== анализ всех трасс =============");
         start = System.nanoTime();
         AnalyzeAllInputStructures analyzeAllInputStructures = new AnalyzeAllInputStructures();
-        analyzeAllInputStructures.buildAllTraces(structureSpoon);
+
+//        analyzeAllInputStructures.buildAllTraces(structureSpoon);
+        EntryPointsAnalyzer entryPointsAnalyzer = new EntryPointsAnalyzer();
+        analyzeAllInputStructures.buildTracesForEntryPoints(entryPointsAnalyzer.findEntryPoints(structureSpoon), structureSpoon);
+
         analyzeAllInputStructures.print();
         end = System.nanoTime();
         System.out.println("Анализ структуры проекта завершён за :: ");

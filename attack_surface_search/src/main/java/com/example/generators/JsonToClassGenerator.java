@@ -1,6 +1,5 @@
 package com.example.generators;
 
-import com.example.analizer.followed_data.MethodArgument;
 import com.example.input_structure.InputStructureLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.example.analizer.followed_data.FollowedDatum;

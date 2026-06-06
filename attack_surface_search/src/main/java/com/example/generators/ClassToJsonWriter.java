@@ -1,10 +1,10 @@
 package com.example.generators;
 
-import com.example.analizer.followed_data.ClassField;
-import com.example.analizer.followed_data.FollowedDatum;
-import com.example.analizer.followed_data.LocalVariableInMethod;
-import com.example.analizer.followed_data.MethodArgument;
-import com.example.analizer.followed_data.AssignmentInMethod;
+import com.example.analizer_trace.followed_data.ClassField;
+import com.example.analizer_trace.followed_data.FollowedDatum;
+import com.example.analizer_trace.followed_data.LocalVariableInMethod;
+import com.example.analizer_trace.followed_data.MethodArgument;
+import com.example.analizer_trace.followed_data.AssignmentInMethod;
 import com.example.result_structure.ResultEdge;
 import com.example.result_structure.ResultGraph;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static com.example.generators.OperytionType.*;
 
 public class ClassToJsonWriter {
     private Path target;

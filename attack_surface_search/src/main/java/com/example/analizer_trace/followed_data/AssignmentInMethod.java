@@ -1,4 +1,4 @@
-package com.example.analizer.followed_data;
+package com.example.analizer_trace.followed_data;
 
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.CtConstructor;

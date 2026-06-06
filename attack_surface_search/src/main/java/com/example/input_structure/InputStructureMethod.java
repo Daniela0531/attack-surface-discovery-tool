@@ -1,7 +1,7 @@
 package com.example.input_structure;
 
-import com.example.analizer.Method;
-import com.example.analizer.followed_data.location.MethodLocation;
+import com.example.analizer_trace.Method;
+import com.example.analizer_trace.followed_data.location.MethodLocation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;

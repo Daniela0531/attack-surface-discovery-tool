@@ -1,4 +1,4 @@
-package com.example.analizer;
+package com.example.analizer_trace;
 
 public class Method {
     private String name;

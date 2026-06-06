@@ -1,6 +1,6 @@
 package com.example.result_structure;
 
-import com.example.analizer.followed_data.FollowedDatum;
+import com.example.analizer_trace.followed_data.FollowedDatum;
 
 public class ResultEdge {
     FollowedDatum from;

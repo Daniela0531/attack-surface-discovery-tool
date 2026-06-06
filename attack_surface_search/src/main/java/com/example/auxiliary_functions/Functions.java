@@ -1,22 +1,17 @@
 package com.example.auxiliary_functions;
 
-import com.example.analizer.Method;
-import com.example.analizer.followed_data.FollowedDatum;
-import com.example.analizer.followed_data.MethodArgument;
-import com.example.analizer.followed_data.location.MethodLocation;
+import com.example.analizer_trace.followed_data.FollowedDatum;
 import com.example.structure.graph.Condition;
 import com.example.structure.graph.Edge;
 import com.example.structure.graph.Label;
 import com.example.structure.graph.RelationType;
 import com.example.input_structure.InputStructureMethod;
-import spoon.reflect.CtModel;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Functions {
     public boolean checkIsMethodMatchesStructure(CtMethod<?> ctMethod, InputStructureMethod inputStructureMethod) {

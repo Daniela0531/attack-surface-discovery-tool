@@ -1,6 +1,6 @@
-package com.example.analizer.followed_data;
+package com.example.analizer_trace.followed_data;
 
-import com.example.analizer.followed_data.location.FollowedDatumLocation;
+import com.example.analizer_trace.followed_data.location.FollowedDatumLocation;
 import spoon.reflect.declaration.CtConstructor;
 import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.declaration.CtMethod;

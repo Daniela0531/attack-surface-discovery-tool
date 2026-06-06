@@ -1,8 +1,8 @@
-package com.example.analizer;
+package com.example.analizer_trace;
 
 //import com.example.analizer.followed_data.ExpressionInMethod;
-import com.example.analizer.followed_data.*;
-import com.example.analizer.followed_data.AssignmentInMethod;
+import com.example.analizer_trace.followed_data.*;
+import com.example.analizer_trace.followed_data.AssignmentInMethod;
 import com.example.auxiliary_functions.Functions;
 import com.example.result_structure.ResultEdge;
 import com.example.result_structure.ResultGraph;

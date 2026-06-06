@@ -1,6 +1,5 @@
-package com.example.analizer.followed_data;
+package com.example.analizer_trace.followed_data;
 
-import com.example.analizer.followed_data.location.FollowedDatumLocation;
 import spoon.reflect.declaration.CtExecutable;
 
 public interface FollowedDatumInMethodContext extends FollowedDatum {

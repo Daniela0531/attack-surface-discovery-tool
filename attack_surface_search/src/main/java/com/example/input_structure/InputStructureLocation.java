@@ -1,6 +1,6 @@
 package com.example.input_structure;
 
-import com.example.analizer.Method;
+import com.example.analizer_trace.Method;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class InputStructureLocation {

@@ -1,8 +1,8 @@
-package com.example.analizer.followed_data.location;
+package com.example.analizer_trace.followed_data.location;
 
-import com.example.analizer.Method;
+import com.example.analizer_trace.Method;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.example.analizer.followed_data.LocationType;
+import com.example.analizer_trace.followed_data.LocationType;
 
 public class ClassLocation implements FollowedDatumLocation {
     @JsonProperty("package")
