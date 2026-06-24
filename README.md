@@ -1,9 +1,38 @@
-# attack-surface-discovery-tool
+# Запуск инструмента
 
-## Запуск
+## Запуск backend
 
-скомпелировать Main.java из директории src/main/java:  
-`javac org/example/Main.java`  
+Необходимо перейти в папку `src/main/java/` и запустить класс Main
+с помощью IDE или команды:
+```shell
+java Main
+```
 
-исполнить файл, передав в аргументы командной строки имя файла, по которому строить поверхность атаки:  
-`java org/example/Main file-name`  
+Если не установлена `java`, выполнить:
+```shell
+sudo apt update
+sudo apt install openjdk-21-jdk
+
+export JAVA_HOME=/путь/к/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
+## Запуск front
+
+При первом запуске проекта в папке `src/main/front` необходимо выполнить команду:
+```shell
+npm install
+npm start
+```
+При повторном запуске только:
+```shell
+npm start
+```
+
+На странице браузера `http://localhost:8000` будет доступен UI приложения.
+
+Если не установлен `npm`:
+```shell
+sudo apt update
+sudo apt install npm -y
+```
