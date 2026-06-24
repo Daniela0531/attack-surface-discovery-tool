@@ -1,5 +1,7 @@
 package com.example.generators;
 
+import com.example.entry_points.EntryPoint;
+import com.example.entry_points.InputEntryPoint;
 import com.example.input_structure.InputStructureLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.example.analizer.followed_data.FollowedDatum;
@@ -8,12 +10,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.example.analizer.project_structure.ProjectStructureNode;
 import com.example.input_structure.InputStructureMethod;
 import spoon.reflect.CtModel;
+import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtParameter;
 import spoon.reflect.declaration.CtType;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JsonToClassGenerator {
 //    String inputStructureJson = "project_structure/structure.json"; // Путь к вашему JSON-файлу
@@ -85,6 +90,22 @@ public class JsonToClassGenerator {
         return location;
     }
 
+    public static InputEntryPoint[] createEntryPointsFromJson(String inputArrJson) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        InputEntryPoint[] entryPointsInput = new InputEntryPoint[0];
+        try {
+            File jsonFile = new File(inputArrJson);
+
+            // Читаем JSON и создаем объект
+            entryPointsInput = mapper.readValue(jsonFile, InputEntryPoint[].class);
+//            System.out.println(entryPointsInput.length);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return entryPointsInput;
+    }
+
 //    public static CtParameter<?> createInputStructureFromJson(String inputMethodJson, CtModel ctModel) throws Exception {
 //        ObjectMapper mapper = new ObjectMapper();
 //        InputStructureLocation location = new InputStructureLocation();
@@ -101,9 +122,10 @@ public class JsonToClassGenerator {
 //        return location;
 //    }
 
-    public static CtParameter<?> createInputStructureFromJson(String inputMethodJson, CtModel ctModel) {
+
+    public static CtParameter<?> createArrEntryPointsFromJson(String inputMethodJsonFile, CtModel ctModel) {
         try {
-            File jsonFile = new File(inputMethodJson);
+            File jsonFile = new File(inputMethodJsonFile);
             // 1. Читаем JSON файл
             ObjectMapper objectMapper = new ObjectMapper();
             var jsonNode = objectMapper.readTree(jsonFile);

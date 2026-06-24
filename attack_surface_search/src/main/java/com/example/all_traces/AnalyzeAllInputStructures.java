@@ -2,6 +2,7 @@ package com.example.all_traces;
 
 import com.example.analizer_trace.NewAnalyzer;
 import com.example.analizer_trace.followed_data.MethodArgument;
+import com.example.entry_points.EntryPoint;
 import com.example.result_structure.ResultGraph;
 import com.example.structure.StructureSpoon;
 import spoon.reflect.declaration.CtExecutable;
@@ -37,14 +38,18 @@ public class AnalyzeAllInputStructures {
         System.out.println("всего переходов в другие методы: " + allEdges);
     }
 
-    public void buildTracesForEntryPoints(List<CtExecutable> allNodes, StructureSpoon structureSpoon) {
+    public void buildTracesForEntryPoints(List<EntryPoint> allNodes, StructureSpoon structureSpoon) {
         NewAnalyzer analyzer = new NewAnalyzer(structureSpoon);
-        for (CtExecutable<?> executable : allNodes) {
-            if (executable instanceof CtMethod<?>) {
-                for (CtParameter<?> parameter : executable.getParameters()) {
-                    ResultGraph resultGraph = analyzer.analyzeDatumAndGetResult(new MethodArgument(parameter));
-                    this.allResults.add(resultGraph);
-                }
+        for (EntryPoint entryPoint : allNodes) {
+            if (entryPoint.getCtExecutable() instanceof CtMethod<?>) {
+
+                ResultGraph resultGraph = analyzer.analyzeDatumAndGetResult(
+                        new MethodArgument(
+                                entryPoint.getCtExecutable().getParameters().get(entryPoint.getPositionInMethod())
+                        )
+                );
+                this.allResults.add(resultGraph);
+
             }
         }
 

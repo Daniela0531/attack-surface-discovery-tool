@@ -39,9 +39,9 @@ public class EntryPointsAnalyzer {
             "jakarta.ws.rs.Path"
     );
 
-    public List<CtExecutable> findEntryPoints(StructureSpoon structureSpoon) {
+    public List<EntryPoint> findEntryPoints(StructureSpoon structureSpoon) {
         CpgGraph graph = structureSpoon.getGraph();
-        List<CtExecutable> result = new ArrayList<>();
+        List<EntryPoint> result = new ArrayList<>();
         for (CtExecutable ctExecutable : graph.getNodes()) {
             boolean methodHasRestAnnotation = ctExecutable.getAnnotations().stream()
                     .anyMatch(annotation -> REST_METHOD_ANNOTATIONS.contains(annotation.getType().getQualifiedName()));
@@ -70,7 +70,9 @@ public class EntryPointsAnalyzer {
                 if (ctExecutable.getSimpleName().equals("health")) {
                     System.out.println("health with right annotation");
                 }
-                result.add(ctExecutable);
+                for (int i = 0; i < ctExecutable.getParameters().size(); ++i) {
+                    result.add(new EntryPoint(ctExecutable, i));
+                }
             }
         }
         return result;

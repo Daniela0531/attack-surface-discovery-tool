@@ -4,11 +4,11 @@ import com.example.auxiliary_functions.Functions;
 import com.example.structure.graph.CpgGraph;
 import com.example.structure.graph.Edge;
 import spoon.Launcher;
-import spoon.MavenLauncher;
 import spoon.reflect.CtModel;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtTypeReference;
+import spoon.reflect.visitor.Filter;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.io.FileWriter;
@@ -41,7 +41,7 @@ public class StructureSpoon {
         return graph;
     }
 
-    public CtModel initSpoon() throws IOException {
+    public CtModel initSpoonAndModel() throws IOException {
 //        MavenLauncher launcher = new MavenLauncher(source.toRealPath().toString(), MavenLauncher.SOURCE_TYPE.APP_SOURCE);
         Launcher launcher = new Launcher();
 
@@ -156,10 +156,10 @@ public class StructureSpoon {
                 if (isMethodOfInterface(edge.getTo())) {
                     CtMethod<?> interfaceMethod = (CtMethod<?>) edge.getTo();
                     if (tryToResolveInterfaceMethod(edge)) {
-                        System.out.println("разрешили метод интерфейса!!" +
-                                "\nвместо :: " + Functions.getFullSignatureForMethod(interfaceMethod) +
-                                "\nбудет :: " + Functions.getFullSignatureForMethod((CtMethod<?>) edge.getTo())
-                        );
+//                        System.out.println("разрешили метод интерфейса!!" +
+//                                "\nвместо :: " + Functions.getFullSignatureForMethod(interfaceMethod) +
+//                                "\nбудет :: " + Functions.getFullSignatureForMethod((CtMethod<?>) edge.getTo())
+//                        );
 //                        continue;
                     }
                     graph.addEdge(edge);
@@ -451,6 +451,21 @@ public class StructureSpoon {
 
     public Map<CtMethod<?>, List<CtMethod<?>>> getImplementationMap() {
         return implementationMap;
+    }
+
+    public CtExecutable<?> getCtExecutableByFullSignature(String fullSignature) {
+        System.out.println(fullSignature);
+        for (CtElement ctExecutable : model.getElements(new TypeFilter<>(CtMethod.class))) {
+            if (Functions.getFullSignatureForMethod((CtMethod<?>) ctExecutable).equals(fullSignature)) {
+                return (CtExecutable<?>) ctExecutable;
+            }
+        }
+        for (CtElement ctExecutable : model.getElements(new TypeFilter<>(CtConstructor.class))) {
+            if (Functions.getFullSignatureForConstructor((CtConstructor<?>) ctExecutable).equals(fullSignature)) {
+                return (CtExecutable<?>) ctExecutable;
+            }
+        }
+        return null;
     }
 }
 

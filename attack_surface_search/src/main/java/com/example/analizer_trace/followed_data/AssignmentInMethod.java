@@ -27,7 +27,7 @@ public class AssignmentInMethod implements FollowedDatumInMethodContext {
         if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
             this.executable = executable;
         } else {
-            System.out.println("VariableAccessInMethod инициировали выражением не метода и не конструктора");
+//            System.out.println("VariableAccessInMethod инициировали выражением не метода и не конструктора");
             this.executable = null;
         }
     }

@@ -3,55 +3,370 @@
   "children": [
     {
       "type": "METHOD_PARAM",
-      "class": "Controller",
-      "methodSignature": "getValue(java.lang.String)",
-      "to_param": "key",
+      "class": "TodoJpaResource",
+      "methodSignature": "createTodo(java.lang.String,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "username",
+      "children": [
+        {
+          "type": "METHOD_PARAM",
+          "class": "Todo",
+          "methodSignature": "setUsername(java.lang.String)",
+          "from_variable": "username",
+          "to_param": "username",
+          "children": [
+            {
+              "type": "ASSIGNMENT",
+              "from_variable": "username",
+              "to_param": "username",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "createTodo(java.lang.String,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "todo",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "deleteTodo(java.lang.String,int)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "deleteTodo(java.lang.String,int)",
+      "to_param": "id",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "retrieveAllTodos(java.lang.String)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "retrieveOneTodo(java.lang.String,int)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "retrieveOneTodo(java.lang.String,int)",
+      "to_param": "id",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "updateTodo(java.lang.String,int,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "updateTodo(java.lang.String,int,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "id",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoJpaResource",
+      "methodSignature": "updateTodo(java.lang.String,int,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "todo",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "ViaCepController",
+      "methodSignature": "getCep(java.lang.String)",
+      "to_param": "cep",
       "children": [
         {
           "type": "ASSIGNMENT",
-          "to_param": "data",
+          "to_param": "cepModel",
           "children": []
         },
         {
           "type": "METHOD_PARAM",
-          "class": "DataService",
-          "methodSignature": "findById(java.lang.String)",
-          "from_variable": "key",
-          "to_param": "key",
+          "class": "ResponseEntity",
+          "methodSignature": "ok(java.lang.Object)",
+          "from_variable": "cepModel",
+          "to_param": "body",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "createTodo(java.lang.String,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "username",
+      "children": [
+        {
+          "type": "ASSIGNMENT",
+          "to_param": "createTodo",
+          "children": []
+        },
+        {
+          "type": "METHOD_PARAM",
+          "class": "TodoService",
+          "methodSignature": "addTodo(java.lang.String,java.lang.String,java.time.LocalDate,boolean)",
+          "from_variable": "username",
+          "to_param": "username",
           "children": [
             {
+              "type": "ASSIGNMENT",
+              "to_param": "todo",
+              "children": []
+            },
+            {
               "type": "METHOD_PARAM",
-              "class": "DataRepository",
-              "methodSignature": "get(java.lang.String)",
-              "from_variable": "key",
-              "to_param": "key",
+              "class": "Todo",
+              "methodSignature": "com.darshan.mytodobackend.todoappbackend.todo.Todo(java.lang.Integer,java.lang.String,java.lang.String,java.time.LocalDate,boolean)",
+              "from_variable": "username",
+              "to_param": "username",
               "children": [
                 {
                   "type": "ASSIGNMENT",
-                  "to_param": "resultSet",
-                  "children": []
-                },
-                {
-                  "type": "METHOD_PARAM",
-                  "class": "DataRepository",
-                  "methodSignature": "chooseShoulder(java.lang.String)",
-                  "from_variable": "key",
-                  "to_param": "key",
+                  "from_variable": "username",
+                  "to_param": "username",
                   "children": []
                 }
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "createTodo(java.lang.String,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "todo",
+      "children": [
         {
-          "type": "METHOD_PARAM",
-          "class": "String",
-          "methodSignature": "format(java.lang.String,java.lang.Object[])",
-          "from_variable": "key",
-          "to_param": "arg1",
+          "type": "ASSIGNMENT",
+          "to_param": "createTodo",
           "children": []
         }
       ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "deleteTodo(java.lang.String,int)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "deleteTodo(java.lang.String,int)",
+      "to_param": "id",
+      "children": [
+        {
+          "type": "METHOD_PARAM",
+          "class": "TodoService",
+          "methodSignature": "deleteById(int)",
+          "from_variable": "id",
+          "to_param": "id",
+          "children": [
+            {
+              "type": "ASSIGNMENT",
+              "to_param": "predicate",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "retrieveAllTodos(java.lang.String)",
+      "to_param": "username",
+      "children": [
+        {
+          "type": "METHOD_PARAM",
+          "class": "TodoService",
+          "methodSignature": "findByUsername(java.lang.String)",
+          "from_variable": "username",
+          "to_param": "username",
+          "children": [
+            {
+              "type": "ASSIGNMENT",
+              "to_param": "predicate",
+              "children": []
+            },
+            {
+              "type": "METHOD_PARAM",
+              "class": "String",
+              "methodSignature": "equalsIgnoreCase(java.lang.String)",
+              "from_variable": "username",
+              "to_param": "arg0",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "retrieveOneTodo(java.lang.String,int)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "retrieveOneTodo(java.lang.String,int)",
+      "to_param": "id",
+      "children": [
+        {
+          "type": "METHOD_PARAM",
+          "class": "TodoService",
+          "methodSignature": "findById(int)",
+          "from_variable": "id",
+          "to_param": "id",
+          "children": [
+            {
+              "type": "ASSIGNMENT",
+              "to_param": "predicate",
+              "children": []
+            },
+            {
+              "type": "ASSIGNMENT",
+              "to_param": "todo",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "updateTodo(java.lang.String,int,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "username",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "updateTodo(java.lang.String,int,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "id",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "TodoResource",
+      "methodSignature": "updateTodo(java.lang.String,int,com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+      "to_param": "todo",
+      "children": [
+        {
+          "type": "METHOD_PARAM",
+          "class": "TodoService",
+          "methodSignature": "updateTodo(com.darshan.mytodobackend.todoappbackend.todo.Todo)",
+          "from_variable": "todo",
+          "to_param": "todo",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "AuthController",
+      "methodSignature": "logoutUser(javax.servlet.http.HttpServletRequest)",
+      "to_param": "request",
+      "children": [
+        {
+          "type": "ASSIGNMENT",
+          "to_param": "headerAuth",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "AuthController",
+      "methodSignature": "registerUser(com.gourav.restapi.controllers.payload.request.SignupRequest)",
+      "to_param": "signUpRequest",
+      "children": [
+        {
+          "type": "ASSIGNMENT",
+          "to_param": "user",
+          "children": []
+        },
+        {
+          "type": "ASSIGNMENT",
+          "to_param": "strRoles",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "PetsController",
+      "methodSignature": "createPet(com.gourav.restapi.models.Pets)",
+      "to_param": "pets",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "PetsController",
+      "methodSignature": "deletePet(org.bson.types.ObjectId)",
+      "to_param": "id",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "PetsController",
+      "methodSignature": "getPetById(org.bson.types.ObjectId)",
+      "to_param": "id",
+      "children": []
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "PetsController",
+      "methodSignature": "modifyPetById(org.bson.types.ObjectId,com.gourav.restapi.models.Pets)",
+      "to_param": "id",
+      "children": [
+        {
+          "type": "METHOD_PARAM",
+          "class": "Pets",
+          "methodSignature": "setId(org.bson.types.ObjectId)",
+          "from_variable": "id",
+          "to_param": "id",
+          "children": [
+            {
+              "type": "ASSIGNMENT",
+              "from_variable": "id",
+              "to_param": "id",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "METHOD_PARAM",
+      "class": "PetsController",
+      "methodSignature": "modifyPetById(org.bson.types.ObjectId,com.gourav.restapi.models.Pets)",
+      "to_param": "pets",
+      "children": []
     }
   ]
 }

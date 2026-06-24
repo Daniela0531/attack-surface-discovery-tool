@@ -1,1 +1,0 @@
-JavaFileReader::analise::data
