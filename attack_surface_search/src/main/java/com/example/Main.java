@@ -9,6 +9,8 @@ import com.example.structure.StructureSpoon;
 import spoon.reflect.declaration.CtExecutable;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +22,48 @@ public class Main {
 //    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloak/keycloak/admin/client");
     private static Path dirForProjectCopy = Paths.get("preproccesed_project");
 //    services
+    private static void printHelp() {
+        System.out.println("Attack Surface Discovery Tool");
+        System.out.println();
+        System.out.println("Инструмент статического анализа Java-проектов.");
+        System.out.println("Строит граф вызовов, находит точки входа и трассирует пути распространения данных.");
+        System.out.println();
+        System.out.println("Использование:");
+        System.out.println("  java -jar attack_surface_search.jar [--help]");
+        System.out.println();
+        System.out.println("Флаги:");
+        System.out.println("  --help, -h    Показать это сообщение");
+        System.out.println();
+        System.out.println("После запуска программа запросит:");
+        System.out.println("  Абсолютный путь до папки с исходниками анализируемого Java-проекта");
+        System.out.println();
+        System.out.println("Что делает программа:");
+        System.out.println("  1. Копирует исходники в рабочую директорию preproccesed_project/");
+        System.out.println("  2. Строит модель проекта через Spoon (AST + граф вызовов)");
+        System.out.println("  3. Находит точки входа (entry points)");
+        System.out.println("  4. Трассирует пути для каждой точки входа");
+        System.out.println("  5. Выводит результат в консоль и записывает в result.json");
+        System.out.println();
+        System.out.println("Пример:");
+        System.out.println("  java -jar attack_surface_search.jar");
+        System.out.println("  > Введите абсолютный путь до локальной папки компьютера: C:\\projects\\my-app\\src");
+    }
+
     public static void main(String[] args) throws Exception {
-        String pathToProject = "/Users/daniela/Desktop/5_year/1_sem/design";
-        pathToProject = "/Users/daniela/Desktop/keycloack/keycloak/services";
-        pathToProject = "/Users/daniela/Desktop/maga_diplom/main_test";
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+        System.setErr(new PrintStream(System.err, true, StandardCharsets.UTF_8));
+
+        if (args.length > 0 && (args[0].equals("--help") || args[0].equals("-h"))) {
+            printHelp();
+            return;
+        }
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите абсолютный путь до локальной папки компьютера: ");
-        pathToProject = scanner.nextLine(); // Читает всю строку до переноса
+        String pathToProject = scanner.nextLine();
 
-        scanner.close(); // Всегда закрывайте Scanner
+        scanner.close();
 
         // копирование проекта в вспомогательную директорию
 

@@ -51,6 +51,8 @@ public class StructureSpoon {
         // Отключаем режим classpath для анализа без полной компиляции
         launcher.getEnvironment().setNoClasspath(true);
         launcher.getEnvironment().setShouldCompile(false);
+        launcher.getEnvironment().setIgnoreDuplicateDeclarations(true);
+        launcher.getEnvironment().setIgnoreSyntaxErrors(true);
 
         // Добавьте эту строку перед buildModel()
 //        launcher.getEnvironment().setComplianceLevel(17); // Укажите вашу версию Java
