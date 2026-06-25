@@ -29,13 +29,11 @@ public class Main {
         System.out.println("Строит граф вызовов, находит точки входа и трассирует пути распространения данных.");
         System.out.println();
         System.out.println("Использование:");
-        System.out.println("  java -jar attack_surface_search.jar [--help]");
+        System.out.println("  java -jar attack_surface_search.jar [--path <путь>] [--help]");
         System.out.println();
         System.out.println("Флаги:");
+        System.out.println("  --path, -p    Путь до папки с исходниками анализируемого Java-проекта");
         System.out.println("  --help, -h    Показать это сообщение");
-        System.out.println();
-        System.out.println("После запуска программа запросит:");
-        System.out.println("  Абсолютный путь до папки с исходниками анализируемого Java-проекта");
         System.out.println();
         System.out.println("Что делает программа:");
         System.out.println("  1. Копирует исходники в рабочую директорию preproccesed_project/");
@@ -44,9 +42,10 @@ public class Main {
         System.out.println("  4. Трассирует пути для каждой точки входа");
         System.out.println("  5. Выводит результат в консоль и записывает в result.json");
         System.out.println();
-        System.out.println("Пример:");
-        System.out.println("  java -jar attack_surface_search.jar");
-        System.out.println("  > Введите абсолютный путь до локальной папки компьютера: C:\\projects\\my-app\\src");
+        System.out.println("Примеры:");
+        System.out.println("  java -jar attack_surface_search.jar --path C:\\projects\\my-app\\src");
+        System.out.println("  java -jar attack_surface_search.jar -p C:\\projects\\my-app\\src");
+        System.out.println("  java -jar attack_surface_search.jar   (интерактивный ввод пути)");
     }
 
     public static void main(String[] args) throws Exception {
@@ -58,12 +57,20 @@ public class Main {
             return;
         }
 
-        Scanner scanner = new Scanner(System.in);
+        String pathToProject = null;
+        for (int i = 0; i < args.length - 1; i++) {
+            if (args[i].equals("--path") || args[i].equals("-p")) {
+                pathToProject = args[i + 1];
+                break;
+            }
+        }
 
-        System.out.print("Введите абсолютный путь до локальной папки компьютера: ");
-        String pathToProject = scanner.nextLine();
-
-        scanner.close();
+        if (pathToProject == null) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Введите абсолютный путь до локальной папки компьютера: ");
+            pathToProject = scanner.nextLine();
+            scanner.close();
+        }
 
         // копирование проекта в вспомогательную директорию
 
