@@ -52,14 +52,21 @@ public class Main {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         System.setErr(new PrintStream(System.err, true, StandardCharsets.UTF_8));
 
-        if (args.length > 0 && (args[0].equals("--help") || args[0].equals("-h"))) {
-            printHelp();
-            return;
+        for (String arg : args) {
+            if (arg.equals("--help") || arg.equals("-h")) {
+                printHelp();
+                return;
+            }
         }
 
         String pathToProject = null;
-        for (int i = 0; i < args.length - 1; i++) {
+        for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--path") || args[i].equals("-p")) {
+                if (i + 1 >= args.length) {
+                    System.err.println("Ошибка: флаг " + args[i] + " требует значение (путь).");
+                    printHelp();
+                    return;
+                }
                 pathToProject = args[i + 1];
                 break;
             }
@@ -139,8 +146,8 @@ public class Main {
 
         analyzeAllInputStructures.print();
 
-        Path resultJson = Paths.get("/Users/daniela/Desktop/maga_diplom/repo/attack_surface_search/src/main/result.json");
-        Files.write(Paths.get(resultJson.toUri()), "".getBytes());
+        Path resultJson = Paths.get("result.json");
+        Files.write(resultJson, "".getBytes());
         ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
         classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());
     }
