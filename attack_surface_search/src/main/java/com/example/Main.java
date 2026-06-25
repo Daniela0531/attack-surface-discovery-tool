@@ -29,10 +29,11 @@ public class Main {
         System.out.println("Строит граф вызовов, находит точки входа и трассирует пути распространения данных.");
         System.out.println();
         System.out.println("Использование:");
-        System.out.println("  java -jar attack_surface_search.jar [--path <путь>] [--help]");
+        System.out.println("  java -jar attack_surface_search.jar [--path <путь>] [--out <файл>] [--help]");
         System.out.println();
         System.out.println("Флаги:");
         System.out.println("  --path, -p    Путь до папки с исходниками анализируемого Java-проекта");
+        System.out.println("  --out,  -o    Путь к выходному JSON-файлу (по умолчанию: result.json)");
         System.out.println("  --help, -h    Показать это сообщение");
         System.out.println();
         System.out.println("Что делает программа:");
@@ -40,11 +41,11 @@ public class Main {
         System.out.println("  2. Строит модель проекта через Spoon (AST + граф вызовов)");
         System.out.println("  3. Находит точки входа (entry points)");
         System.out.println("  4. Трассирует пути для каждой точки входа");
-        System.out.println("  5. Выводит результат в консоль и записывает в result.json");
+        System.out.println("  5. Выводит результат в консоль и записывает в указанный JSON-файл");
         System.out.println();
         System.out.println("Примеры:");
         System.out.println("  java -jar attack_surface_search.jar --path C:\\projects\\my-app\\src");
-        System.out.println("  java -jar attack_surface_search.jar -p C:\\projects\\my-app\\src");
+        System.out.println("  java -jar attack_surface_search.jar -p C:\\projects\\my-app\\src -o C:\\results\\out.json");
         System.out.println("  java -jar attack_surface_search.jar   (интерактивный ввод пути)");
     }
 
@@ -60,6 +61,7 @@ public class Main {
         }
 
         String pathToProject = null;
+        String pathToOutput = "result.json";
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--path") || args[i].equals("-p")) {
                 if (i + 1 >= args.length) {
@@ -68,7 +70,13 @@ public class Main {
                     return;
                 }
                 pathToProject = args[i + 1];
-                break;
+            } else if (args[i].equals("--out") || args[i].equals("-o")) {
+                if (i + 1 >= args.length) {
+                    System.err.println("Ошибка: флаг " + args[i] + " требует значение (путь к файлу).");
+                    printHelp();
+                    return;
+                }
+                pathToOutput = args[i + 1];
             }
         }
 
@@ -102,8 +110,11 @@ public class Main {
 
         start = System.nanoTime();
         StructureSpoon structureSpoon = new StructureSpoon(dirForProjectCopy);
+        System.out.println("[DEBUG] Запуск buildModel (Spoon) ...");
         structureSpoon.initSpoonAndModel();
+        System.out.println("[DEBUG] buildModel завершён. Запуск initCpgGraph ...");
         structureSpoon.initCpgGraph();
+        System.out.println("[DEBUG] initCpgGraph завершён.");
         end = System.nanoTime();
         System.out.println("Структура проекта построена за :: ");
         System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
@@ -146,8 +157,10 @@ public class Main {
 
         analyzeAllInputStructures.print();
 
-        Path resultJson = Paths.get("result.json");
+        Path resultJson = Paths.get(pathToOutput);
+        Files.createDirectories(resultJson.toAbsolutePath().getParent());
         Files.write(resultJson, "".getBytes());
+        System.out.println("Результат будет записан в: " + resultJson.toAbsolutePath());
         ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
         classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());
     }
