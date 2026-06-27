@@ -9,6 +9,8 @@ import com.example.structure.StructureSpoon;
 import spoon.reflect.declaration.CtExecutable;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +22,70 @@ public class Main {
 //    private static Path dirForProjectCopy = Paths.get("preproccesed_project/keycloak/keycloak/admin/client");
     private static Path dirForProjectCopy = Paths.get("preproccesed_project");
 //    services
+    private static void printHelp() {
+        System.out.println("Attack Surface Discovery Tool");
+        System.out.println();
+        System.out.println("Инструмент статического анализа Java-проектов.");
+        System.out.println("Строит граф вызовов, находит точки входа и трассирует пути распространения данных.");
+        System.out.println();
+        System.out.println("Использование:");
+        System.out.println("  java -jar attack_surface_search.jar [--path <путь>] [--out <файл>] [--help]");
+        System.out.println();
+        System.out.println("Флаги:");
+        System.out.println("  --path, -p    Путь до папки с исходниками анализируемого Java-проекта");
+        System.out.println("  --out,  -o    Путь к выходному JSON-файлу (по умолчанию: result.json)");
+        System.out.println("  --help, -h    Показать это сообщение");
+        System.out.println();
+        System.out.println("Что делает программа:");
+        System.out.println("  1. Копирует исходники в рабочую директорию preproccesed_project/");
+        System.out.println("  2. Строит модель проекта через Spoon (AST + граф вызовов)");
+        System.out.println("  3. Находит точки входа (entry points)");
+        System.out.println("  4. Трассирует пути для каждой точки входа");
+        System.out.println("  5. Выводит результат в консоль и записывает в указанный JSON-файл");
+        System.out.println();
+        System.out.println("Примеры:");
+        System.out.println("  java -jar attack_surface_search.jar --path C:\\projects\\my-app\\src");
+        System.out.println("  java -jar attack_surface_search.jar -p C:\\projects\\my-app\\src -o C:\\results\\out.json");
+        System.out.println("  java -jar attack_surface_search.jar   (интерактивный ввод пути)");
+    }
+
     public static void main(String[] args) throws Exception {
-        String pathToProject = "/Users/daniela/Desktop/5_year/1_sem/design";
-        pathToProject = "/Users/daniela/Desktop/keycloack/keycloak/services";
-        pathToProject = "/Users/daniela/Desktop/maga_diplom/main_test";
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+        System.setErr(new PrintStream(System.err, true, StandardCharsets.UTF_8));
 
-        Scanner scanner = new Scanner(System.in);
+        for (String arg : args) {
+            if (arg.equals("--help") || arg.equals("-h")) {
+                printHelp();
+                return;
+            }
+        }
 
-        System.out.print("Введите абсолютный путь до локальной папки компьютера: ");
-        pathToProject = scanner.nextLine(); // Читает всю строку до переноса
+        String pathToProject = null;
+        String pathToOutput = "result.json";
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("--path") || args[i].equals("-p")) {
+                if (i + 1 >= args.length) {
+                    System.err.println("Ошибка: флаг " + args[i] + " требует значение (путь).");
+                    printHelp();
+                    return;
+                }
+                pathToProject = args[i + 1];
+            } else if (args[i].equals("--out") || args[i].equals("-o")) {
+                if (i + 1 >= args.length) {
+                    System.err.println("Ошибка: флаг " + args[i] + " требует значение (путь к файлу).");
+                    printHelp();
+                    return;
+                }
+                pathToOutput = args[i + 1];
+            }
+        }
 
-        scanner.close(); // Всегда закрывайте Scanner
+        if (pathToProject == null) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Введите абсолютный путь до локальной папки компьютера: ");
+            pathToProject = scanner.nextLine();
+            scanner.close();
+        }
 
         // копирование проекта в вспомогательную директорию
 
@@ -55,8 +110,11 @@ public class Main {
 
         start = System.nanoTime();
         StructureSpoon structureSpoon = new StructureSpoon(dirForProjectCopy);
+        System.out.println("[DEBUG] Запуск buildModel (Spoon) ...");
         structureSpoon.initSpoonAndModel();
+        System.out.println("[DEBUG] buildModel завершён. Запуск initCpgGraph ...");
         structureSpoon.initCpgGraph();
+        System.out.println("[DEBUG] initCpgGraph завершён.");
         end = System.nanoTime();
         System.out.println("Структура проекта построена за :: ");
         System.out.println("Время: " + (end - start) / 1_000_000 + " мс");
@@ -99,8 +157,10 @@ public class Main {
 
         analyzeAllInputStructures.print();
 
-        Path resultJson = Paths.get("/Users/daniela/Desktop/maga_diplom/repo/attack_surface_search/src/main/result.json");
-        Files.write(Paths.get(resultJson.toUri()), "".getBytes());
+        Path resultJson = Paths.get(pathToOutput);
+        Files.createDirectories(resultJson.toAbsolutePath().getParent());
+        Files.write(resultJson, "".getBytes());
+        System.out.println("Результат будет записан в: " + resultJson.toAbsolutePath());
         ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
         classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());
     }
