@@ -54,10 +54,37 @@ public class StructureSpoon {
         launcher.getEnvironment().setIgnoreDuplicateDeclarations(true);
         launcher.getEnvironment().setIgnoreSyntaxErrors(true);
 
-        // Добавьте эту строку перед buildModel()
+//        чтобы сохранить модель
+//        // 1. Строим модель как обычно
+//        Launcher launcher = new Launcher();
+//        launcher.addInputResource("<путь_к_исходникам>");
 //        launcher.getEnvironment().setComplianceLevel(17); // Укажите вашу версию Java
-//        launcher.getEnvironment().setSourceVersion(17);
-//        launcher.getEnvironment().setTargetVersion(17);
+//        launcher.buildModel();
+//
+//// 2. Сохраняем Factory (модель) в файл
+//        Factory factory = launcher.getFactory();
+//        SerializationModelStreamer streamer = new SerializationModelStreamer();
+//
+//        try (FileOutputStream fos = new FileOutputStream("model.ser")) {
+//            streamer.save(factory, fos);
+//            System.out.println("Модель успешно сохранена в model.ser");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        чтобы потом ей воспользоваться
+//        SerializationModelStreamer streamer = new SerializationModelStreamer();
+//
+//        try (FileInputStream fis = new FileInputStream("model.ser")) {
+//            Factory loadedFactory = streamer.load(fis);
+//            CtModel model = loadedFactory.getModel();
+//
+//            // Теперь можно работать с загруженной моделью
+//            // Например, вывести все классы
+//            model.getAllTypes().forEach(System.out::println);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Строим модель
         this.model = launcher.buildModel();

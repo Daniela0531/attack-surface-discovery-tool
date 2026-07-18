@@ -19,6 +19,7 @@ repositories {
 //}
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.28'
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     // Основной модуль для работы с объектами (POJO)
@@ -41,10 +42,29 @@ dependencies {
 //    implementation 'fr.inria.gforge.spoon:spoon-core:10.4.0'
     implementation 'fr.inria.gforge.spoon:spoon-core:11.2.0'
     // Эта библиотека просто направит логи Spoon в консоль
-    implementation 'org.slf4j:slf4j-simple:2.0.9'
+//    implementation 'org.slf4j:slf4j-simple:2.0.9'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.code.gson:gson:2.10.1'
+
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // H2 Database (in-memory для тестов)
+    runtimeOnly 'com.h2database:h2'
+
+    // Для JSON полей
+    implementation 'com.vladmihalcea:hibernate-types-55:2.21.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Явно указываем logback
+    implementation 'ch.qos.logback:logback-classic'
+
+//    // Исключаем slf4j-simple
+//    implementation('org.slf4j:slf4j-api') {
+//        version {
+//            strictly '2.0.9'
+//        }
+//    }
 }
 
 test {

@@ -6,7 +6,7 @@ import com.example.analizer_trace.followed_data.LocalVariableInMethod;
 import com.example.analizer_trace.followed_data.MethodArgument;
 import com.example.analizer_trace.followed_data.AssignmentInMethod;
 import com.example.result_structure.ResultEdge;
-import com.example.result_structure.ResultGraph;
+import com.example.result_structure.ResultTrace;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtConstructor;
@@ -31,7 +31,7 @@ public class ClassToJsonWriter {
         this.mapper = new ObjectMapper();
     }
 //
-    public void writeToJson(List<ResultGraph> results) throws Exception {
+    public void writeToJson(List<ResultTrace> results) throws Exception {
         Files.write(
                 target,
                 "{\n  \"name\": \"root\",\n  \"children\": [".getBytes(),
@@ -51,6 +51,33 @@ public class ClassToJsonWriter {
                         StandardOpenOption.APPEND);
             }
         }
+        Files.write(
+                target,
+                "\n  ]\n}".getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
+    }
+
+    public void writeToJson(ResultTrace result) throws Exception {
+        Files.write(
+                target,
+                "{\n  \"name\": \"root\",\n  \"children\": [".getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND);
+        Set<FollowedDatum> visited = new HashSet<>();
+//        System.out.print("DFS (рекурсивный): ");
+        int i = 2;
+//        for (int j = 0; j < result.size(); ++j) {
+            dfsRecursivePrint(result, result.getStart(), visited, 1, i);
+//            if (j < result.size() - 1) {
+//                String jsonString = ",";
+//                Files.write(
+//                        target,
+//                        jsonString.getBytes(),
+//                        StandardOpenOption.CREATE,
+//                        StandardOpenOption.APPEND);
+//            }
+//        }
         Files.write(
                 target,
                 "\n  ]\n}".getBytes(),
@@ -216,7 +243,7 @@ public class ClassToJsonWriter {
                 StandardOpenOption.APPEND);
     }
 
-    private void dfsRecursivePrint(ResultGraph resultGraph, FollowedDatum vertex, Set<FollowedDatum> visited, int extraTabsIn, int i) throws IOException {
+    private void dfsRecursivePrint(ResultTrace resultTrace, FollowedDatum vertex, Set<FollowedDatum> visited, int extraTabsIn, int i) throws IOException {
         visited.add(vertex);
         String tabs = "  ".repeat(i);
         String childTabs = "  ".repeat(i + 1);
@@ -284,7 +311,7 @@ public class ClassToJsonWriter {
 //            printJson(UNKNOWN, "Новый вид Datum!!!!!!!", i);
 //        }
 
-        List<FollowedDatum> neighbors = getNeighbors(vertex, resultGraph);
+        List<FollowedDatum> neighbors = getNeighbors(vertex, resultTrace);
         if (neighbors.isEmpty()) {
             String jsonString = "]\n" +
                     tabs + "}";
@@ -297,7 +324,7 @@ public class ClassToJsonWriter {
         }
         for (int j = 0; j < neighbors.size(); ++j) {
             if (!visited.contains(neighbors.get(j))) {
-                dfsRecursivePrint(resultGraph, neighbors.get(j), visited, extraTabsIn, i + 2);
+                dfsRecursivePrint(resultTrace, neighbors.get(j), visited, extraTabsIn, i + 2);
                 if (j < neighbors.size() - 1) {
                     String jsonString = ",";
                     Files.write(
@@ -318,9 +345,9 @@ public class ClassToJsonWriter {
         }
     }
 
-    public ArrayList<FollowedDatum> getNeighbors(FollowedDatum vertex, ResultGraph resultGraph) {
+    public ArrayList<FollowedDatum> getNeighbors(FollowedDatum vertex, ResultTrace resultTrace) {
         ArrayList<FollowedDatum> neighbors = new ArrayList<>();
-        for (ResultEdge edge : resultGraph.getEdges()) {
+        for (ResultEdge edge : resultTrace.getEdges()) {
             if (edge.getFrom() == vertex)
                 neighbors.add(edge.getTo());
         }

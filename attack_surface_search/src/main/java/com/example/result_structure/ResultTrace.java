@@ -9,12 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ResultGraph {
+public class ResultTrace {
     FollowedDatum start = null;
     List<FollowedDatum> nodes = new ArrayList<>();
     List<ResultEdge> edges = new ArrayList<>();
 
-    public ResultGraph(FollowedDatum start) {
+    public ResultTrace(FollowedDatum start) {
         this.start = start;
         this.nodes = new ArrayList<>();
         this.edges = new ArrayList<>();

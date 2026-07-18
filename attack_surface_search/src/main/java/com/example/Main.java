@@ -61,7 +61,7 @@ public class Main {
         }
 
         String pathToProject = null;
-        String pathToOutput = "result.json";
+        String pathToOutputName = "result";
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--path") || args[i].equals("-p")) {
                 if (i + 1 >= args.length) {
@@ -76,7 +76,7 @@ public class Main {
                     printHelp();
                     return;
                 }
-                pathToOutput = args[i + 1];
+                pathToOutputName = args[i + 1];
             }
         }
 
@@ -157,12 +157,30 @@ public class Main {
 
         analyzeAllInputStructures.print();
 
-        Path resultJson = Paths.get(pathToOutput);
-        Files.createDirectories(resultJson.toAbsolutePath().getParent());
-        Files.write(resultJson, "".getBytes());
-        System.out.println("Результат будет записан в: " + resultJson.toAbsolutePath());
-        ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
-        classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());
+//        Path resultJson = Paths.get(pathToOutputName + ".json");
+//        Files.createDirectories(resultJson.toAbsolutePath().getParent());
+//        Files.write(resultJson, "".getBytes());
+//        System.out.println("Результат будет записан в: " + resultJson.toAbsolutePath());
+//        ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(resultJson);
+//        classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults());
+
+        pathToOutputName = "result";
+        int n = analyzeAllInputStructures.getAllResults().size(); // количество файлов
+        Path resultJson = Paths.get(pathToOutputName + ".json");
+//        Files.createDirectories(resultJson.toAbsolutePath().getParent());
+        String outputDir = "./results";
+//
+//        // Создаем папку
+        Files.createDirectories(Paths.get(outputDir));
+
+        // Создаем файлы
+        for (int i = 0; i < n; ++i) {
+            Path file = Paths.get(outputDir, "result" + i + ".json");
+            Files.write(file, "".getBytes());
+//            System.out.println("Результат будет записан в: " + resultJson.toAbsolutePath());
+            ClassToJsonWriter classToJsonWriter = new ClassToJsonWriter(file);
+            classToJsonWriter.writeToJson(analyzeAllInputStructures.getAllResults().get(i));
+        }
     }
 
 }

@@ -3,7 +3,7 @@ package com.example.all_traces;
 import com.example.analizer_trace.NewAnalyzer;
 import com.example.analizer_trace.followed_data.MethodArgument;
 import com.example.entry_points.EntryPoint;
-import com.example.result_structure.ResultGraph;
+import com.example.result_structure.ResultTrace;
 import com.example.structure.StructureSpoon;
 import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.declaration.CtMethod;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnalyzeAllInputStructures {
-    List<ResultGraph> allResults;
+    List<ResultTrace> allResults;
     public AnalyzeAllInputStructures() {
         this.allResults = new ArrayList<>();
     }
@@ -23,15 +23,15 @@ public class AnalyzeAllInputStructures {
         for (CtExecutable<?> executable : structureSpoon.getGraph().getNodes()) {
             if (executable instanceof CtMethod<?>) {
                 for (CtParameter<?> parameter : executable.getParameters()) {
-                    ResultGraph resultGraph = analyzer.analyzeDatumAndGetResult(new MethodArgument(parameter));
-                    this.allResults.add(resultGraph);
+                    ResultTrace resultTrace = analyzer.analyzeDatumAndGetResult(new MethodArgument(parameter));
+                    this.allResults.add(resultTrace);
                 }
             }
         }
 
         int allEdges = 0;
-        for (ResultGraph resultGraph : allResults) {
-            allEdges += resultGraph.getEdges().size();
+        for (ResultTrace resultTrace : allResults) {
+            allEdges += resultTrace.getEdges().size();
         }
 
         System.out.println("всего методов: " + allResults.size());
@@ -43,19 +43,19 @@ public class AnalyzeAllInputStructures {
         for (EntryPoint entryPoint : allNodes) {
             if (entryPoint.getCtExecutable() instanceof CtMethod<?>) {
 
-                ResultGraph resultGraph = analyzer.analyzeDatumAndGetResult(
+                ResultTrace resultTrace = analyzer.analyzeDatumAndGetResult(
                         new MethodArgument(
                                 entryPoint.getCtExecutable().getParameters().get(entryPoint.getPositionInMethod())
                         )
                 );
-                this.allResults.add(resultGraph);
+                this.allResults.add(resultTrace);
 
             }
         }
 
         int allEdges = 0;
-        for (ResultGraph resultGraph : allResults) {
-            allEdges += resultGraph.getEdges().size();
+        for (ResultTrace resultTrace : allResults) {
+            allEdges += resultTrace.getEdges().size();
         }
 
         System.out.println("всего методов: " + allResults.size());
@@ -63,13 +63,13 @@ public class AnalyzeAllInputStructures {
     }
 
     public void print() {
-        for (ResultGraph resultGraph : allResults) {
-            resultGraph.print();
+        for (ResultTrace resultTrace : allResults) {
+            resultTrace.print();
         }
         System.out.println("всего методов: " + allResults.size());
     }
 
-    public List<ResultGraph> getAllResults() {
+    public List<ResultTrace> getAllResults() {
         return allResults;
     }
 

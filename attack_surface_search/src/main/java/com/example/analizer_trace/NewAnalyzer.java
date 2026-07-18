@@ -5,7 +5,7 @@ import com.example.analizer_trace.followed_data.*;
 import com.example.analizer_trace.followed_data.AssignmentInMethod;
 import com.example.auxiliary_functions.Functions;
 import com.example.result_structure.ResultEdge;
-import com.example.result_structure.ResultGraph;
+import com.example.result_structure.ResultTrace;
 import com.example.structure.StructureSpoon;
 import com.example.structure.graph.Edge;
 import spoon.reflect.code.*;
@@ -22,9 +22,9 @@ public class NewAnalyzer {
         this.structureSpoon = structureSpoon;
     }
 
-    public ResultGraph analyzeDatumAndGetResult(FollowedDatum followedDatum) {
+    public ResultTrace analyzeDatumAndGetResult(FollowedDatum followedDatum) {
         this.startFollowedDatum = followedDatum;
-        ResultGraph resultGraph = new ResultGraph(
+        ResultTrace resultTrace = new ResultTrace(
                 startFollowedDatum
         );
         Queue<FollowedDatum> queueForNextClass = new ArrayDeque<>();
@@ -40,16 +40,16 @@ public class NewAnalyzer {
                 for (FollowedDatum datum : newData) {
                     if (!Functions.contains(isVisited, datum)) {
                         queueForNextClass.add(datum);
-                        resultGraph.addEdge(
+                        resultTrace.addEdge(
                                 new ResultEdge(curDatum, datum)
                         );
                     }
                 }
             }
             isVisited.add(curDatum);
-            resultGraph.addNode(curDatum);
+            resultTrace.addNode(curDatum);
         }
-        return resultGraph;
+        return resultTrace;
     }
 
     // анализируем метод и конструктор, все операции в нём

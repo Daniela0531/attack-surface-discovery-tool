@@ -203,3 +203,5 @@ int x = Class.STATIC_FIELD;	CtFieldRead
 
 
 npm start  
+
+/Users/daniela/Desktop/maga_diplom
