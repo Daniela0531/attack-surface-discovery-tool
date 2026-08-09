@@ -8,10 +8,11 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
 
-
         // 2. Запускаем Spring Boot (контроллер)
         SpringApplication.run(Application.class, args);
         // 1. Запускаем ваш Main класс
         Main.main(args);
     }
 }
+
+// /Users/daniela/Desktop/maga_diplom/main_test/SpringBootRestApi

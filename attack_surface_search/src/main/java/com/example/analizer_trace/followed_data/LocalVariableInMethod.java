@@ -11,9 +11,11 @@ public class LocalVariableInMethod implements FollowedDatumInMethodContext {
     private CtLocalVariable<?> variableAccess;
 //    private
     private CtExecutable<?> executable;
+    private boolean isOutsideMethod = false;
 
-//    public CtAssignmentInMethod() {
-//    }
+    public Boolean isOutsideLib() {
+        return isOutsideMethod;
+    }
 
     public LocalVariableInMethod(CtLocalVariable<?> variableAccess) {
 //        this.location = location;
@@ -22,9 +24,13 @@ public class LocalVariableInMethod implements FollowedDatumInMethodContext {
         CtExecutable<?> executable = variableAccess.getParent(CtExecutable.class);
         if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
             this.executable = executable;
+            if (executable.getReference().getDeclaration() == null || executable.getReference().getDeclaration().getBody() == null) {
+                this.isOutsideMethod = true;
+            }
         } else {
 //            System.out.println("VariableAccessInMethod инициировали выражением не метода и не конструктора");
             this.executable = null;
+            this.isOutsideMethod = false;
         }
     }
 
@@ -52,6 +58,11 @@ public class LocalVariableInMethod implements FollowedDatumInMethodContext {
     @Override
     public String getName() {
         return variableAccess.getSimpleName();
+    }
+
+    @Override
+    public String getMethodName() {
+        return executable.getSignature();
     }
 
     @Override

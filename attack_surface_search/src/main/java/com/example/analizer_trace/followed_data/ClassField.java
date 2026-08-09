@@ -42,6 +42,11 @@ public class ClassField implements FollowedDatum {
         return field.getSimpleName();
     }
 
+    @Override
+    public String getMethodName() {
+        return null;
+    }
+
 //    public String getAssignmentParam() {
 //        return
 //    }

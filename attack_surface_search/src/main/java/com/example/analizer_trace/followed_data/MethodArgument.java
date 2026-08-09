@@ -14,6 +14,11 @@ public class MethodArgument implements FollowedDatumInMethodContext {
     private String parameterImplName;
     private CtExecutable<?> executable;
     private CtExecutable<?> parent;
+    private boolean isOutsideMethod = false;
+
+    public Boolean isOutsideLib() {
+        return isOutsideMethod;
+    }
 
 //    public MethodArgument() {
 //    }
@@ -28,9 +33,16 @@ public class MethodArgument implements FollowedDatumInMethodContext {
         CtExecutable<?> executable = parameter.getParent(CtExecutable.class);
         if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
             this.executable = executable;
+            if (executable.getReference().getDeclaration() == null || executable.getReference().getDeclaration().getBody() == null) {
+                this.isOutsideMethod = true;
+            } else {
+                System.out.println("declaration " + executable.getReference().getDeclaration().getSignature());
+                System.out.println("body " + executable.getReference().getDeclaration().getBody().toString());
+            }
         } else {
             System.out.println("MethodArgument инициировали аргументом не метода и не конструктора");
             this.executable = null;
+//            this.isOutsideMethod = false;
         }
     }
 
@@ -55,6 +67,12 @@ public class MethodArgument implements FollowedDatumInMethodContext {
         CtExecutable<?> executable = parameter.getParent(CtExecutable.class);
         if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
             this.executable = executable;
+            if (executable.getReference().getDeclaration() == null || executable.getReference().getDeclaration().getBody() == null) {
+                this.isOutsideMethod = true;
+            } else {
+                System.out.println("declaration " + executable.getReference().getDeclaration().getSignature());
+                System.out.println("body " + executable.getReference().getDeclaration().getBody().toString());
+            }
         } else {
             System.out.println("MethodArgument инициировали аргументом не метода и не конструктора");
             this.executable = null;
@@ -90,6 +108,11 @@ public class MethodArgument implements FollowedDatumInMethodContext {
     @Override
     public String getName() {
         return parameter.getSimpleName();
+    }
+
+    @Override
+    public String getMethodName() {
+        return executable.getSignature();
     }
 
     @Override

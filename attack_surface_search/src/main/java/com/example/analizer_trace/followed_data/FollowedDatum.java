@@ -7,5 +7,7 @@ public interface FollowedDatum {
      boolean isEquals(FollowedDatum datum);
 
     String getName();
+    String getMethodName();
+//    Boolean isOutsideLib();
 }
 

@@ -34,12 +34,12 @@ public class ClassToJsonWriter {
     public void writeToJson(List<ResultTrace> results) throws Exception {
         Files.write(
                 target,
-                "{\n  \"name\": \"root\",\n  \"children\": [".getBytes(),
+                "".getBytes(),
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND);
         Set<FollowedDatum> visited = new HashSet<>();
 //        System.out.print("DFS (рекурсивный): ");
-        int i = 2;
+        int i = 1;
         for (int j = 0; j < results.size(); ++j) {
             dfsRecursivePrint(results.get(j), results.get(j).getStart(), visited, 1, i);
             if (j < results.size() - 1) {
@@ -59,14 +59,14 @@ public class ClassToJsonWriter {
     }
 
     public void writeToJson(ResultTrace result) throws Exception {
-        Files.write(
-                target,
-                "{\n  \"name\": \"root\",\n  \"children\": [".getBytes(),
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND);
+//        Files.write(
+//                target,
+//                ,
+//                StandardOpenOption.CREATE,
+//                StandardOpenOption.APPEND);
         Set<FollowedDatum> visited = new HashSet<>();
 //        System.out.print("DFS (рекурсивный): ");
-        int i = 2;
+        int i = 0;
 //        for (int j = 0; j < result.size(); ++j) {
             dfsRecursivePrint(result, result.getStart(), visited, 1, i);
 //            if (j < result.size() - 1) {
@@ -78,11 +78,11 @@ public class ClassToJsonWriter {
 //                        StandardOpenOption.APPEND);
 //            }
 //        }
-        Files.write(
-                target,
-                "\n  ]\n}".getBytes(),
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND);
+//        Files.write(
+//                target,
+//                "\n  ]\n}".getBytes(),
+//                StandardOpenOption.CREATE,
+//                StandardOpenOption.APPEND);
     }
 //
 //    private void writeBodyToJson(List<ResultGraph> results, int extraTabs, Boolean isLast) throws Exception {
@@ -235,6 +235,7 @@ public class ClassToJsonWriter {
         if (vertex.getParameterImplName() != null)
             jsonString += childTabs + "\"from_variable\": " + "\"" + vertex.getParameterImplName() + "\",\n";
         jsonString += childTabs + "\"to_param\": " + "\"" + vertex.getName() + "\",\n";
+        jsonString += childTabs + "\"is_external\": " + vertex.isOutsideLib() + ",\n";
         jsonString += childTabs + "\"children\": [";
         Files.write(
                 target,

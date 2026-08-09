@@ -14,6 +14,11 @@ public class AssignmentInMethod implements FollowedDatumInMethodContext {
     private CtAssignment<?,?> assignment;
 //    private
     private CtExecutable<?> executable;
+    private boolean isOutsideMethod = false;
+
+    public Boolean isOutsideLib() {
+        return isOutsideMethod;
+    }
 
 //    public CtAssignmentInMethod() {
 //    }
@@ -26,9 +31,14 @@ public class AssignmentInMethod implements FollowedDatumInMethodContext {
         CtExecutable<?> executable = assignment.getParent(CtExecutable.class);
         if (executable instanceof CtMethod<?> || executable instanceof CtConstructor<?>) {
             this.executable = executable;
+//            this.isOutsideMethod = executable.getReference().getDeclaration() == null;
+            if (executable.getReference().getDeclaration() == null || executable.getReference().getDeclaration().getBody() == null) {
+                this.isOutsideMethod = true;
+            }
         } else {
 //            System.out.println("VariableAccessInMethod инициировали выражением не метода и не конструктора");
             this.executable = null;
+            this.isOutsideMethod = false;
         }
     }
 
@@ -77,6 +87,12 @@ public class AssignmentInMethod implements FollowedDatumInMethodContext {
     public String getName() {
         return variableAccess.getVariable().getSimpleName();
     }
+
+    @Override
+    public String getMethodName() {
+        return executable.getSignature();
+    }
+
 
     @Override
     public FollowedDatumInMethodContext get() {
